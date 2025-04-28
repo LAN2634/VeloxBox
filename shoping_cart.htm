@@ -1,0 +1,463 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Carrito de Compras Belox Box </title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <style>
+    /* [Tu CSS completo, no lo repito para ahorrar espacio porque ya está muy bien hecho] */
+    /* Solo agregaré el estilo del botón Eliminar Todo */
+
+    .clear-cart-btn {
+      width: 100%;
+      padding: 15px;
+      background-color: #e74c3c;
+      color: white;
+      border: none;
+      border-radius: 4px;
+      font-size: 1.1rem;
+      font-weight: bold;
+      cursor: pointer;
+      margin-top: 10px;
+      transition: background-color 0.3s;
+    }
+
+    .clear-cart-btn:hover {
+      background-color: #c0392b;
+    }
+       /* Estilos generales */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+body {
+    background-color: #f8f9fa;
+    color: #333;
+    line-height: 1.6;
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+/* Header */
+header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px 0;
+    margin-bottom: 30px;
+    border-bottom: 1px solid #e1e1e1;
+}
+
+h1 {
+    color: #2c3e50;
+    font-size: 2rem;
+}
+
+h1 i {
+    margin-right: 10px;
+    color: black;
+}
+
+h2 {
+    color: #2c3e50;
+    margin-bottom: 20px;
+    font-size: 1.5rem;
+}
+
+h2 i {
+    margin-right: 10px;
+    color: black;
+}
+
+.cart-icon {
+    position: relative;
+    font-size: 1.5rem;
+    color: #2c3e50;
+    cursor: pointer;
+}
+
+.cart-count {
+    position: absolute;
+    top: -10px;
+    right: -10px;
+    background-color: #e74c3c;
+    color: white;
+    border-radius: 50%;
+    width: 20px;
+    height: 20px;
+    font-size: 0.8rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* Productos */
+.products {
+    margin-bottom: 40px;
+}
+
+.product-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: 20px;
+}
+
+.product-card {
+    background: white;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    transition: transform 0.3s ease;
+}
+
+.product-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+}
+
+.product-image {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+}
+
+.product-title {
+    padding: 15px 15px 5px;
+    font-size: 1.1rem;
+    color: #2c3e50;
+}
+
+.product-price {
+    padding: 0 15px;
+    font-weight: bold;
+    color: black;
+    font-size: 1.2rem;
+    margin-bottom: 15px;
+}
+
+.add-to-cart {
+    display: block;
+    width: calc(100% - 30px);
+    margin: 0 15px 15px;
+    padding: 10px;
+    background-color: #3498db;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-weight: bold;
+    transition: background-color 0.3s;
+}
+
+.add-to-cart:hover {
+    background-color: #2980b9;
+}
+
+/* Carrito */
+.cart {
+    background: white;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+
+.cart-items {
+    margin-bottom: 20px;
+}
+
+.cart-item {
+    display: flex;
+    padding: 15px 0;
+    border-bottom: 1px solid #eee;
+    align-items: center;
+}
+
+.cart-item-image {
+    width: 80px;
+    height: 80px;
+    object-fit: cover;
+    border-radius: 4px;
+    margin-right: 15px;
+}
+
+.cart-item-details {
+    flex: 1;
+}
+
+.cart-item-details h4 {
+    margin-bottom: 5px;
+    color: #2c3e50;
+}
+
+.cart-item-details p {
+    color: #7f8c8d;
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+
+.quantity-controls {
+    display: flex;
+    align-items: center;
+}
+
+.quantity-btn {
+    width: 25px;
+    height: 25px;
+    background: #f1f1f1;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+.quantity {
+    margin: 0 10px;
+    min-width: 20px;
+    text-align: center;
+}
+
+.remove-item {
+    background: none;
+    border: none;
+    color: #e74c3c;
+    font-size: 1.2rem;
+    cursor: pointer;
+    margin-left: 15px;
+}
+
+.cart-summary {
+    border-top: 2px solid #eee;
+    padding-top: 20px;
+}
+
+.cart-summary div {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 10px;
+    font-size: 1.1rem;
+}
+
+.total {
+    font-weight: bold;
+    font-size: 1.3rem;
+    margin: 20px 0;
+}
+
+.total span:last-child {
+    color: #27ae60;
+}
+
+.checkout-btn {
+    width: 100%;
+    padding: 15px;
+    background-color: #27ae60;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    font-size: 1.1rem;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.checkout-btn:hover {
+    background-color: #219653;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .product-grid {
+        grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    }
+    
+    .cart-item {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+    
+    .cart-item-image {
+        margin-bottom: 10px;
+    }
+    
+    .remove-item {
+        align-self: flex-end;
+        margin-top: 10px;
+    }
+}
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <h1><i class="fas fa-store"></i>BeloxBox</h1>
+      <div class="cart-icon">
+        <i class="fas fa-shopping-cart"></i>
+        <span class="cart-count">0</span>
+      </div>
+    </header>
+
+    <main>
+      <!-- Sección de Productos -->
+      <section class="products">
+        <h2>Productos Disponibles</h2>
+        <div class="product-grid">
+          <!-- Producto -->
+          <div class="product-card" data-title="Zapatos Deportivos" data-price="59.99" data-image="https://via.placeholder.com/300x200?text=Zapatos">
+            <img src="https://imgs.search.brave.com/sw7WqaVuQQSpJKXUzCQeO6nLi7UIZU4KVx9Cui0DClQ/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly9pLnBp/bmltZy5jb20vb3Jp/Z2luYWxzLzcxL2Ji/LzZhLzcxYmI2YTA5/ZmJlOTQ4ZjBmYjU3/MjMwNTQyOGFjNGY1/LmpwZw" alt="Zapatos" class="product-image">
+            <h3 class="product-title">Papos Deportivos</h3>
+            <p class="product-price">$59.99</p>
+            <button class="add-to-cart">Añadir al carrito</button>
+          </div>
+
+          <div class="product-card" data-title="Camisa Casual" data-price="29.99" data-image="https://via.placeholder.com/300x200?text=Camisa">
+            <img src="https://imgs.search.brave.com/Nuf8u7ctbrU8jApQow32Bhk6_3OlKtJn8GHAHtJL0HM/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly9odHRw/Mi5tbHN0YXRpYy5j/b20vRF9RX05QXzJY/Xzc5OTkwMi1DQlQ3/OTc4MzYwMTc5MF8x/MDIwMjQtRS1naW1u/YXNpby1zaG9ydC1j/b24tbGljcmEtZGVw/b3J0aXZhLTItZW4t/MS1ob21icmUtY29y/cmVyLWd5bS53ZWJw" alt="Camisa" class="product-image">
+            <h3 class="product-title">Short</h3>
+            <p class="product-price">$29.99</p>
+            <button class="add-to-cart">Añadir al carrito</button>
+          </div>
+
+          <div class="product-card" data-title="Pantalón Jeans" data-price="39.99" data-image="https://via.placeholder.com/300x200?text=Pantalon">
+            <img src="https://http2.mlstatic.com/D_NQ_NP_756137-MLM53185844614_012023-O-pants-gym-hombre-ropa-gym-slim-fit-deportivo-comodo-y-moda.webp" alt="Pantalón" class="product-image">
+            <h3 class="product-title">Pantalón Jeans</h3>
+            <p class="product-price">$39.99</p>
+            <button class="add-to-cart">Añadir al carrito</button>
+          </div>
+
+          <div class="product-card" data-title="Reloj Inteligente" data-price="129.99" data-image="https://via.placeholder.com/300x200?text=Reloj">
+            <img src="https://i5.walmartimages.com/asr/e8067e4a-9fbe-4fe9-a20d-e88b51af66fb.b4d9dd0cc5c417d3c2d1411619082d6d.jpeg?odnHeight=612&odnWidth=612&odnBg=FFFFFF" alt="Reloj" class="product-image">
+            <h3 class="product-title">Guantes box</h3>
+            <p class="product-price">$129.99</p>
+            <button class="add-to-cart">Añadir al carrito</button>
+          </div>
+        </div>
+      </section>
+
+      <!-- Sección del Carrito -->
+      <section class="cart">
+        <h2><i class="fas fa-shopping-cart"></i> Tu Carrito</h2>
+        <div class="cart-items"></div>
+
+        <div class="cart-summary">
+          <div class="subtotal">
+            <span>Subtotal:</span>
+            <span class="subtotal-amount">$0.00</span>
+          </div>
+          <div class="shipping">
+            <span>Envío:</span>
+            <span class="shipping-amount">$5.99</span>
+          </div>
+          <div class="total">
+            <span>Total:</span>
+            <span class="total-amount">$5.99</span>
+          </div>
+          <button class="checkout-btn">Proceder al Pago</button>
+          <button class="clear-cart-btn">Eliminar Todo</button>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <script>
+    // JavaScript para controlar el carrito
+    const addToCartButtons = document.querySelectorAll('.add-to-cart');
+    const cartItemsContainer = document.querySelector('.cart-items');
+    const cartCount = document.querySelector('.cart-count');
+    const subtotalAmount = document.querySelector('.subtotal-amount');
+    const totalAmount = document.querySelector('.total-amount');
+    const clearCartBtn = document.querySelector('.clear-cart-btn');
+
+    let cart = [];
+
+    addToCartButtons.forEach(button => {
+      button.addEventListener('click', () => {
+        const productCard = button.parentElement;
+        const title = productCard.getAttribute('data-title');
+        const price = parseFloat(productCard.getAttribute('data-price'));
+        const image = productCard.querySelector('.product-image').getAttribute('src');
+
+        const existingItem = cart.find(item => item.title === title);
+        if (existingItem) {
+          existingItem.quantity++;
+        } else {
+          cart.push({ title, price, image, quantity: 1 });
+        }
+        updateCart();
+      });
+    });
+
+    function updateCart() {
+      cartItemsContainer.innerHTML = '';
+
+      cart.forEach(item => {
+        const cartItem = document.createElement('div');
+        cartItem.classList.add('cart-item');
+
+        cartItem.innerHTML = `
+          <img src="${item.image}" alt="${item.title}" class="cart-item-image">
+          <div class="cart-item-details">
+            <h4>${item.title}</h4>
+            <p>$${item.price.toFixed(2)}</p>
+            <div class="quantity-controls">
+              <button class="quantity-btn decrease">-</button>
+              <span class="quantity">${item.quantity}</span>
+              <button class="quantity-btn increase">+</button>
+            </div>
+          </div>
+          <button class="remove-item"><i class="fas fa-trash"></i></button>
+        `;
+
+        cartItemsContainer.appendChild(cartItem);
+
+        // Botones de cantidad
+        cartItem.querySelector('.decrease').addEventListener('click', () => {
+          if (item.quantity > 1) {
+            item.quantity--;
+          } else {
+            cart = cart.filter(prod => prod.title !== item.title);
+          }
+          updateCart();
+        });
+
+        cartItem.querySelector('.increase').addEventListener('click', () => {
+          item.quantity++;
+          updateCart();
+        });
+
+        // Botón de eliminar individual
+        cartItem.querySelector('.remove-item').addEventListener('click', () => {
+          cart = cart.filter(prod => prod.title !== item.title);
+          updateCart();
+        });
+      });
+
+      updateTotals();
+      updateCartCount();
+    }
+
+    function updateTotals() {
+      const subtotal = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+      subtotalAmount.textContent = `$${subtotal.toFixed(2)}`;
+      totalAmount.textContent = `$${(subtotal + 5.99).toFixed(2)}`; // Envío fijo
+    }
+
+    function updateCartCount() {
+      const count = cart.reduce((sum, item) => sum + item.quantity, 0);
+      cartCount.textContent = count;
+    }
+
+    // Botón Eliminar Todo
+    clearCartBtn.addEventListener('click', () => {
+      cart = [];
+      updateCart();
+    });
+  </script>
+</body>
+</html>
