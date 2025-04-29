@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Productos</title>
+    <link rel="stylesheet" href="./CSS/style.css" />
+  </head>
+  <body>
+    <header class="productos-header">
+      <button id="backButton" class="back-button">←</button>
+      <h1>Productos</h1>
+      <button id="addProductBtn" class="add-product-btn">
+        Añadir Producto
+      </button>
+    </header>
+
+    <div class="productos-container">
+      <div class="productos-filtros">
+        <button class="filter-btn active" data-filter="todos">Todos</button>
+        <button class="filter-btn" data-filter="activo">Activo</button>
+        <button class="filter-btn" data-filter="enPausa">En Pausa</button>
+        <button class="filter-btn" data-filter="agotado">Agotado</button>
+      </div>
+
+      <table class="productos-table">
+        <thead>
+          <tr>
+            <th><input type="checkbox" id="selectAll" /></th>
+            <th>Producto</th>
+            <th>Estado</th>
+            <th>Inventario</th>
+            <th>Categoría</th>
+          </tr>
+        </thead>
+        <tbody id="productosList"></tbody>
+      </table>
+    </div>
+    <script src="./JS/script.js"></script>
+  </body>
+</html>

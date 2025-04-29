@@ -1,0 +1,286 @@
+    /* [Tu CSS completo, no lo repito para ahorrar espacio porque ya está muy bien hecho] */
+    /* Solo agregaré el estilo del botón Eliminar Todo */
+
+    .clear-cart-btn {
+        width: 100%;
+        padding: 15px;
+        background-color: #e74c3c;
+        color: white;
+        border: none;
+        border-radius: 4px;
+        font-size: 1.1rem;
+        font-weight: bold;
+        cursor: pointer;
+        margin-top: 10px;
+        transition: background-color 0.3s;
+      }
+  
+      .clear-cart-btn:hover {
+        background-color: #c0392b;
+      }
+         /* Estilos generales */
+  * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  }
+  
+  body {
+      background-color: #f8f9fa;
+      color: #333;
+      line-height: 1.6;
+  }
+  
+  .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 20px;
+  }
+  
+  /* Header */
+  header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 20px 0;
+      margin-bottom: 30px;
+      border-bottom: 1px solid #e1e1e1;
+  }
+  
+  h1 {
+      color: #2c3e50;
+      font-size: 2rem;
+  }
+  
+  h1 i {
+      margin-right: 10px;
+      color: black;
+  }
+  
+  h2 {
+      color: #2c3e50;
+      margin-bottom: 20px;
+      font-size: 1.5rem;
+  }
+  
+  h2 i {
+      margin-right: 10px;
+      color: black;
+  }
+  
+  .cart-icon {
+      position: relative;
+      font-size: 1.5rem;
+      color: #2c3e50;
+      cursor: pointer;
+  }
+  
+  .cart-count {
+      position: absolute;
+      top: -10px;
+      right: -10px;
+      background-color: #e74c3c;
+      color: white;
+      border-radius: 50%;
+      width: 20px;
+      height: 20px;
+      font-size: 0.8rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+  }
+  
+  /* Productos */
+  .products {
+      margin-bottom: 40px;
+  }
+  
+  .product-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+      gap: 20px;
+  }
+  
+  .product-card {
+      background: white;
+      border-radius: 8px;
+      overflow: hidden;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+      transition: transform 0.3s ease;
+  }
+  
+  .product-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+  }
+  
+  .product-image {
+      width: 100%;
+      height: 200px;
+      object-fit: cover;
+  }
+  
+  .product-title {
+      padding: 15px 15px 5px;
+      font-size: 1.1rem;
+      color: #2c3e50;
+  }
+  
+  .product-price {
+      padding: 0 15px;
+      font-weight: bold;
+      color: black;
+      font-size: 1.2rem;
+      margin-bottom: 15px;
+  }
+  
+  .add-to-cart {
+      display: block;
+      width: calc(100% - 30px);
+      margin: 0 15px 15px;
+      padding: 10px;
+      background-color: #3498db;
+      color: white;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      font-weight: bold;
+      transition: background-color 0.3s;
+  }
+  
+  .add-to-cart:hover {
+      background-color: #2980b9;
+  }
+  
+  /* Carrito */
+  .cart {
+      background: white;
+      padding: 20px;
+      border-radius: 8px;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+  }
+  
+  .cart-items {
+      margin-bottom: 20px;
+  }
+  
+  .cart-item {
+      display: flex;
+      padding: 15px 0;
+      border-bottom: 1px solid #eee;
+      align-items: center;
+  }
+  
+  .cart-item-image {
+      width: 80px;
+      height: 80px;
+      object-fit: cover;
+      border-radius: 4px;
+      margin-right: 15px;
+  }
+  
+  .cart-item-details {
+      flex: 1;
+  }
+  
+  .cart-item-details h4 {
+      margin-bottom: 5px;
+      color: #2c3e50;
+  }
+  
+  .cart-item-details p {
+      color: #7f8c8d;
+      font-weight: bold;
+      margin-bottom: 10px;
+  }
+  
+  .quantity-controls {
+      display: flex;
+      align-items: center;
+  }
+  
+  .quantity-btn {
+      width: 25px;
+      height: 25px;
+      background: #f1f1f1;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      font-weight: bold;
+  }
+  
+  .quantity {
+      margin: 0 10px;
+      min-width: 20px;
+      text-align: center;
+  }
+  
+  .remove-item {
+      background: none;
+      border: none;
+      color: #e74c3c;
+      font-size: 1.2rem;
+      cursor: pointer;
+      margin-left: 15px;
+  }
+  
+  .cart-summary {
+      border-top: 2px solid #eee;
+      padding-top: 20px;
+  }
+  
+  .cart-summary div {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 10px;
+      font-size: 1.1rem;
+  }
+  
+  .total {
+      font-weight: bold;
+      font-size: 1.3rem;
+      margin: 20px 0;
+  }
+  
+  .total span:last-child {
+      color: #27ae60;
+  }
+  
+  .checkout-btn {
+      width: 100%;
+      padding: 15px;
+      background-color: #27ae60;
+      color: white;
+      border: none;
+      border-radius: 4px;
+      font-size: 1.1rem;
+      font-weight: bold;
+      cursor: pointer;
+      transition: background-color 0.3s;
+  }
+  
+  .checkout-btn:hover {
+      background-color: #219653;
+  }
+  
+  /* Responsive */
+  @media (max-width: 768px) {
+      .product-grid {
+          grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+      }
+      
+      .cart-item {
+          flex-direction: column;
+          align-items: flex-start;
+      }
+      
+      .cart-item-image {
+          margin-bottom: 10px;
+      }
+      
+      .remove-item {
+          align-self: flex-end;
+          margin-top: 10px;
+      }
+  }

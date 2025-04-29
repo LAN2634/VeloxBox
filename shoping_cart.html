@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Carrito de Compras Belox Box </title>
+  <link rel="stylesheet" href="./CSS/style_cart.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+ 
+</head>
+<body>
+  <div class="container">
+    <header>
+      <h1><i class="fas fa-store"></i>VeloxBox</h1>
+      <div class="cart-icon">
+        <i class="fas fa-shopping-cart"></i>
+        <span class="cart-count">0</span>
+      </div>
+    </header>
+
+    <main>
+      <!-- Sección de Productos -->
+      <section class="products">
+        <h2>Productos Disponibles</h2>
+        <div class="product-grid">
+          <!-- Producto -->
+          <div class="product-card" data-title="Zapatos Deportivos" data-price="59.99" data-image="https://via.placeholder.com/300x200?text=Zapatos">
+            <img src="https://imgs.search.brave.com/sw7WqaVuQQSpJKXUzCQeO6nLi7UIZU4KVx9Cui0DClQ/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly9pLnBp/bmltZy5jb20vb3Jp/Z2luYWxzLzcxL2Ji/LzZhLzcxYmI2YTA5/ZmJlOTQ4ZjBmYjU3/MjMwNTQyOGFjNGY1/LmpwZw" alt="Zapatos" class="product-image">
+            <h3 class="product-title">Papos Deportivos</h3>
+            <p class="product-price">$59.99</p>
+            <button class="add-to-cart">Añadir al carrito</button>
+          </div>
+
+          <div class="product-card" data-title="Camisa Casual" data-price="29.99" data-image="https://via.placeholder.com/300x200?text=Camisa">
+            <img src="https://imgs.search.brave.com/Nuf8u7ctbrU8jApQow32Bhk6_3OlKtJn8GHAHtJL0HM/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly9odHRw/Mi5tbHN0YXRpYy5j/b20vRF9RX05QXzJY/Xzc5OTkwMi1DQlQ3/OTc4MzYwMTc5MF8x/MDIwMjQtRS1naW1u/YXNpby1zaG9ydC1j/b24tbGljcmEtZGVw/b3J0aXZhLTItZW4t/MS1ob21icmUtY29y/cmVyLWd5bS53ZWJw" alt="Camisa" class="product-image">
+            <h3 class="product-title">Short</h3>
+            <p class="product-price">$29.99</p>
+            <button class="add-to-cart">Añadir al carrito</button>
+          </div>
+
+          <div class="product-card" data-title="Pantalón Jeans" data-price="39.99" data-image="https://via.placeholder.com/300x200?text=Pantalon">
+            <img src="https://http2.mlstatic.com/D_NQ_NP_756137-MLM53185844614_012023-O-pants-gym-hombre-ropa-gym-slim-fit-deportivo-comodo-y-moda.webp" alt="Pantalón" class="product-image">
+            <h3 class="product-title">Pantalón Jeans</h3>
+            <p class="product-price">$39.99</p>
+            <button class="add-to-cart">Añadir al carrito</button>
+          </div>
+
+          <div class="product-card" data-title="Reloj Inteligente" data-price="129.99" data-image="https://via.placeholder.com/300x200?text=Reloj">
+            <img src="https://i5.walmartimages.com/asr/e8067e4a-9fbe-4fe9-a20d-e88b51af66fb.b4d9dd0cc5c417d3c2d1411619082d6d.jpeg?odnHeight=612&odnWidth=612&odnBg=FFFFFF" alt="Reloj" class="product-image">
+            <h3 class="product-title">Guantes box</h3>
+            <p class="product-price">$129.99</p>
+            <button class="add-to-cart">Añadir al carrito</button>
+          </div>
+        </div>
+      </section>
+
+      <!-- Sección del Carrito -->
+      <section class="cart">
+        <h2><i class="fas fa-shopping-cart"></i> Tu Carrito</h2>
+        <div class="cart-items"></div>
+
+        <div class="cart-summary">
+          <div class="subtotal">
+            <span>Subtotal:</span>
+            <span class="subtotal-amount">$0.00</span>
+          </div>
+          <div class="shipping">
+            <span>Envío:</span>
+            <span class="shipping-amount">$5.99</span>
+          </div>
+          <div class="total">
+            <span>Total:</span>
+            <span class="total-amount">$5.99</span>
+          </div>
+          <button class="checkout-btn">Proceder al Pago</button>
+          <button class="clear-cart-btn">Eliminar Todo</button>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <script src="./JS/cart.js"></script>
+</body>
+</html>

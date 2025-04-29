@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Añadir Producto</title>
+    <link rel="stylesheet" href="./CSS/style.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/quill@1.3.7/dist/quill.snow.css"/>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+  </head>
+  <body>
+    <div class="container">
+      <header>
+        <button class="back-button">←</button>
+        <h1>Añadir producto</h1>
+      </header>
+
+      <form id="productForm">
+        <section class="card">
+          <label for="title">Título</label>
+          <input
+            type="text"
+            id="title"
+            placeholder="Ingresa el título"
+            required
+          />
+          <div class="error-message" id="error-title"></div>
+
+          <label for="description">Descripción</label>
+          <div id="editor"></div>
+          <div class="error-message" id="error-description"></div>
+        </section>
+
+        <section class="card">
+          <label>Elementos multimedia</label>
+          <div class="upload-area" id="uploadArea">
+            <p>Agrega imágenes o videos aquí</p>
+            <button type="button" id="uploadBtn">Haz click aquí</button>
+            <input
+              type="file"
+              id="fileInput"
+              multiple
+              hidden
+              accept="image/*,video/*"
+              required
+            />
+            <div id="previewArea"></div>
+          </div>
+          <div class="error-message" id="error-media"></div>
+          <button type="button" id="resetBtn">Reiniciar</button>
+        </section>
+
+        <section class="card grid-2">
+          <div>
+            <label for="category">Elegir categoría</label>
+            <select id="category" required>
+              <option value="">Selecciona una categoría</option>
+              <option value="Playeras">Playeras</option>
+              <option value="Pantalones">Pantalones</option>
+              <option value="Tenis">Tenis</option>
+              <option value="Accesorios">Accesorios</option>
+              <option value="Sudaderas">Sudaderas</option>
+            </select>
+            <div class="error-message" id="error-category"></div>
+          </div>
+          <div>
+            <label for="newCategory">Crear categoría</label>
+            <input type="text" id="newCategory" placeholder="Nueva categoría" />
+            <button type="button" id="addCategoryBtn">Agregar</button>
+          </div>
+          <div>
+            <label for="deleteCategory">Eliminar categoría</label>
+            <select id="deleteCategory">
+              <option value="">Selecciona para eliminar</option>
+            </select>
+            <button type="button" id="deleteCategoryBtn" class="delete-btn">
+              Eliminar
+            </button>
+          </div>
+        </section>
+
+        <section class="card grid-2">
+          <div>
+            <label for="price">Precio</label>
+            <input
+              type="number"
+              id="price"
+              placeholder="$0.00"
+              min="0.01"
+              step="0.01"
+              required
+            />
+            <div class="error-message" id="error-price"></div>
+          </div>
+          <div>
+            <label for="inventory">Inventario</label>
+            <input
+              type="number"
+              id="inventory"
+              placeholder="0"
+              min="0"
+              required
+            />
+            <div class="error-message" id="error-inventory"></div>
+          </div>
+          <div>
+            <label for="discount">Descuento (%)</label>
+            <input
+              type="number"
+              id="discount"
+              placeholder="0%"
+              min="0"
+              max="100"
+            />
+          </div>
+          <div>
+            <label for="priceDiscount">Precio con descuento</label>
+            <input
+              type="number"
+              id="priceDiscount"
+              placeholder="$0.00"
+              readonly
+            />
+          </div>
+          <div>
+            <label for="size">Tallas</label>
+            <input type="text" id="size" placeholder="Ej: S, M, L" required />
+            <div class="error-message" id="error-size"></div>
+          </div>
+          <div>
+            <label for="color">Color</label>
+            <input type="text" id="color" placeholder="Color" required />
+            <div class="error-message" id="error-color"></div>
+          </div>
+        </section>
+
+        <div class="buttons">
+          <button type="button" class="cancel">Cancelar</button>
+          <button type="submit" class="save">Guardar Producto</button>
+        </div>
+      </form>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/quill@1.3.7/dist/quill.min.js"></script>
+    <script src="./JS/"></script>
+  </body>
+</html>
