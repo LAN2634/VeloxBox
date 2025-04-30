@@ -13,17 +13,18 @@
       <button id="addProductBtn" class="add-product-btn">
         Añadir Producto
       </button>
-      <button id="deleteProductBtn" class="delete-product-btn" disabled>
-        Eliminar
-      </button>
+
     </header>
 
     <div class="productos-container">
       <div class="productos-filtros">
-        <button class="filter-btn active" data-filter="todos">Todos</button>
-        <button class="filter-btn" data-filter="activo">Activo</button>
-        <button class="filter-btn" data-filter="enPausa">En Pausa</button>
-        <button class="filter-btn" data-filter="agotado">Agotado</button>
+        <button class="filter-btn active" data-filter="todos"><h3>Todos</h3></button>
+        <button class="filter-btn" data-filter="Activo"><h3>Activo</h3></button>
+        <button class="filter-btn" data-filter="Pausa"><h3>En Pausa</h3></button>
+        <button class="filter-btn" data-filter="agotado"><h3>Agotado</h3></button>
+        <button id="deleteProductBtn" class="delete-product-btn" disabled>
+          Eliminar
+        </button>
       </div>
 
       <table class="productos-table">
@@ -40,5 +41,6 @@
       </table>
     </div>
     <script src="./JS/script.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
   </body>
 </html>

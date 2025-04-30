@@ -7,13 +7,16 @@ document.querySelectorAll('.back-button').forEach(btn => {
 if (document.querySelector('.productos-container')) {
     document.addEventListener('DOMContentLoaded', () => {
         const loadProducts = () => JSON.parse(localStorage.getItem('products')) || [];
-        
+        // Cargar productos desde localStorage y renderizar
         const renderProducts = (products) => {
             const tbody = document.getElementById('productosList');
             tbody.innerHTML = products.map(product => `
                 <tr data-id="${product.id}">
                     <td><input type="checkbox" class="product-checkbox"></td>
-                    <td>${product.title}</td>
+                    <td>
+                    <img src="${product.miniatura}" class="miniatura-tabla">
+                    ${product.title}
+                    </td>
                     <td><span class="estado estado-${product.status}" style="cursor:pointer;">${product.status}</span></td>
                     <td>${product.inventory}</td>
                     <td>${product.category}</td>
@@ -30,7 +33,7 @@ if (document.querySelector('.productos-container')) {
                     const index = products.findIndex(p => p.id === id);
                     if (index !== -1) {
                         const currentStatus = products[index].status;
-                        products[index].status = currentStatus === 'activo' ? 'enPausa' : 'activo';
+                        products[index].status = currentStatus === 'Activo' ? 'Pausa' : 'Activo';
 
                         localStorage.setItem('products', JSON.stringify(products));
                         renderProducts(products);
@@ -93,18 +96,39 @@ if (document.querySelector('.productos-container')) {
 
         // Eliminar productos seleccionados
         deleteBtn.addEventListener('click', () => {
-            if (!deleteBtn.disabled && confirm('¿Eliminar los productos seleccionados?')) {
-                const products = loadProducts();
-                const remaining = products.filter(p => {
+            if (!deleteBtn.disabled) {
+              Swal.fire({
+                title: '¿Estás seguro?',
+                text: 'Esto eliminará los productos seleccionados. Esta acción no se puede deshacer.',
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#e74c3c',
+                cancelButtonColor: '#6c757d',
+                confirmButtonText: 'Sí, eliminar',
+                cancelButtonText: 'Cancelar'
+              }).then((result) => {
+                if (result.isConfirmed) {
+                  const products = loadProducts();
+                  const remaining = products.filter(p => {
                     const row = document.querySelector(`tr[data-id="${p.id}"]`);
                     return !row.querySelector('.product-checkbox').checked;
-                });
-                localStorage.setItem('products', JSON.stringify(remaining));
-                renderProducts(remaining);
-                document.getElementById('selectAll').checked = false;
-                updateDeleteBtn();
+                  });
+                  localStorage.setItem('products', JSON.stringify(remaining));
+                  renderProducts(remaining);
+                  document.getElementById('selectAll').checked = false;
+                  updateDeleteBtn();
+          
+                  Swal.fire({
+                    title: '¡Eliminado!',
+                    text: 'Los productos fueron eliminados correctamente.',
+                    icon: 'success',
+                    confirmButtonColor: '#3085d6'
+                  });
+                }
+              });
             }
-        });
+          });
+          
 
             });
         }
@@ -155,6 +179,36 @@ if (document.getElementById('cancelBtn')) {
             fileInput.value = '';
         });
         
+        // Manejo de archivos en miniatura
+      const fileInputMiniatura = document.getElementById('fileInputMiniatura');
+      const previewMiniatura = document.getElementById('previewMiniatura');
+      let filesMiniatura = [];
+      
+      document.getElementById('uploadBtnMiniatura').addEventListener('click', () => fileInputMiniatura.click());
+      
+      fileInputMiniatura.addEventListener('change', (e) => {
+          filesMiniatura = Array.from(e.target.files);
+          previewMiniatura.innerHTML = '';
+          filesMiniatura.forEach(file => {
+              const reader = new FileReader();
+              reader.onload = (e) => {
+                  const element = file.type.startsWith('image') 
+                      ? `<img src="${e.target.result}">` 
+                      : `<video controls src="${e.target.result}"></video>`;
+                  previewMiniatura.innerHTML += element;
+              };
+              reader.readAsDataURL(file);
+              console.log("si se subio la miniatura")
+          });
+      });
+
+      //Reiniciar los archivos
+        document.getElementById('resetBtnMiniatura').addEventListener('click', () => {
+            filesMiniatura = [];
+            previewMiniatura.innerHTML = '';
+            fileInputMiniatura.value = '';
+        });
+        
 
 
 
@@ -193,57 +247,115 @@ if (document.getElementById('cancelBtn')) {
       });
 
       // Calculadora de descuento
-      document.getElementById('discount').addEventListener('input', (e) => {
-          const price = parseFloat(document.getElementById('price').value) || 0;
-          const discount = parseFloat(e.target.value) || 0;
-          document.getElementById('priceDiscount').value = (price - (price * discount / 100)).toFixed(2);
-      });
+      function actualizarPrecioConDescuento() {
+        const price = parseFloat(document.getElementById('price').value) || 0;
+        const discount = parseFloat(document.getElementById('discount').value) || 0;
+        const precioFinal = price - (price * discount / 100);
+        document.getElementById('priceDiscount').value = precioFinal.toFixed(2);
+    }
+    
+    document.getElementById('price').addEventListener('input', actualizarPrecioConDescuento);
+    document.getElementById('discount').addEventListener('input', actualizarPrecioConDescuento);
+    
 
       // Envío de formulario
       document.getElementById('productForm').addEventListener('submit', (e) => {
-          e.preventDefault();
-          
-          const newProduct = {
-              id: Date.now(),
-              title: document.getElementById('title').value,
-              description: quill.root.innerHTML,
-              price: parseFloat(document.getElementById('price').value),
-              inventory: parseInt(document.getElementById('inventory').value),
-              category: document.getElementById('category').value,
-              status: 'activo',
-              media: files.map(file => URL.createObjectURL(file))
-          };
-
-          // Validación
-          let isValid = true;
-          document.querySelectorAll('.error-message').forEach(el => el.textContent = '');
-          
-          if (!newProduct.title) {
-              document.getElementById('error-title').textContent = 'El título es requerido';
-              isValid = false;
-          }
-          if (quill.getText().trim().length < 10) {
-              document.getElementById('error-description').textContent = 'La descripción debe tener al menos 10 caracteres';
-              isValid = false;
-          }
-          if (files.length === 0) {
-              document.getElementById('error-media').textContent = 'Debes subir al menos un archivo';
-              isValid = false;
-          }
-
-          if (isValid) {
-              const products = JSON.parse(localStorage.getItem('products')) || [];
-              products.push(newProduct);
-              localStorage.setItem('products', JSON.stringify(products));
-
-              Swal.fire({
-                  icon: 'success',
-                  title: 'Producto guardado!',
-                  showConfirmButton: false,
-                  timer: 1500
-              }).then(() => window.location.href = 'productos.html');
-          }
+        e.preventDefault();
+      
+        let isValid = true;
+      
+        // Limpiar errores previos
+        document.querySelectorAll('.error-message').forEach(el => el.textContent = '');
+      
+        // Validaciones personalizadas
+        const title = document.getElementById('title');
+        const price = document.getElementById('price');
+        const inventory = document.getElementById('inventory');
+        const category = document.getElementById('category');
+        const size = document.getElementById('size');
+        const color = document.getElementById('color');
+        const files = document.getElementById('fileInput').files;
+      
+        const description = quill.getText().trim();
+        
+        if (!title.value.trim()) {
+          document.getElementById('error-title').textContent = 'El título es requerido';
+          isValid = false;
+        }
+      
+        if (description.length < 10) {
+          document.getElementById('error-description').textContent = 'La descripción debe tener al menos 10 caracteres';
+          isValid = false;
+        }
+      
+        if (files.length === 0) {
+          document.getElementById('error-media').textContent = 'Debes subir al menos un archivo';
+          isValid = false;
+        }
+      
+        if (!category.value) {
+          document.getElementById('error-category').textContent = 'Selecciona una categoría';
+          isValid = false;
+        }
+      
+        if (!price.value || parseFloat(price.value) <= 0) {
+          document.getElementById('error-price').textContent = 'El precio debe ser mayor a 0';
+          isValid = false;
+        }
+      
+        if (inventory.value === '' || parseInt(inventory.value) < 0) {
+          document.getElementById('error-inventory').textContent = 'El inventario no puede ser negativo';
+          isValid = false;
+        }
+      
+        if (!size.value.trim()) {
+          document.getElementById('error-size').textContent = 'Las tallas son requeridas';
+          isValid = false;
+        }
+      
+        if (!color.value.trim()) {
+          document.getElementById('error-color').textContent = 'El color es requerido';
+          isValid = false;
+        }
+      
+        if (!isValid) {
+          Swal.fire({
+            title: 'Error',
+            text: 'Por favor corrige los errores antes de continuar.',
+            icon: 'error',
+            confirmButtonColor: '#e74c3c'
+          });
+          return;
+        }
+      
+        // Si todo es válido, continuar y guardar
+        const newProduct = {
+          id: Date.now(),
+          title: title.value,
+          description: quill.root.innerHTML,
+          price: parseFloat(price.value),
+          inventory: parseInt(inventory.value),
+          category: category.value,
+          status: 'Activo',
+          media: Array.from(files).map(file => URL.createObjectURL(file)),
+          miniatura: filesMiniatura.length > 0 ? URL.createObjectURL(filesMiniatura[0]) : '',
+          size: size.value,
+          color: color.value
+        };
+      
+        const products = JSON.parse(localStorage.getItem('products')) || [];
+        products.push(newProduct);
+        localStorage.setItem('products', JSON.stringify(products));
+      
+        Swal.fire({
+          icon: 'success',
+          title: 'Producto guardado!',
+          showConfirmButton: false,
+          timer: 1500
+        }).then(() => window.location.href = 'productos.html');
       });
+      
+
 
       // Inicializar categorías
       updateCategories();

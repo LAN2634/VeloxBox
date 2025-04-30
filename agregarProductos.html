@@ -16,8 +16,8 @@
         <button class="back-button">←</button>
         <h1>Añadir producto</h1>
       </header>
-
-      <form id="productForm">
+ 
+      <form id="productForm" novalidate>
         <section class="card">
           <label for="title">Título</label>
           <input
@@ -31,6 +31,25 @@
           <label for="description">Descripción</label>
           <div id="editor"></div>
           <div class="error-message" id="error-description"></div>
+        </section>
+<!--Aqui esta el selector multimedia, ambos-->
+
+        <section class="card">
+          <label>Miniatura del Producto</label>
+          <div class="upload-area" id="uploadAreaMiniatura">
+            <p>Agrega la miniatura</p>
+            <button type="button" id="uploadBtnMiniatura">Haz click aquí</button>
+            <input
+              type="file"
+              id="fileInputMiniatura"
+              hidden
+              accept="image/*,video/*"
+              required
+            />
+            <div id="previewMiniatura"></div>
+          </div>
+          <div class="error-message" id="error-media"></div>
+          <button type="button" id="resetBtnMiniatura">Reiniciar</button>
         </section>
 
         <section class="card">
@@ -51,6 +70,9 @@
           <div class="error-message" id="error-media"></div>
           <button type="button" id="resetBtn">Reiniciar</button>
         </section>
+
+      
+<!--Aqui termina el selector multimedia, ambos-->
 
         <section class="card grid-2">
           <div>
