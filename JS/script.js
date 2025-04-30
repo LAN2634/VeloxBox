@@ -5,44 +5,112 @@ document.querySelectorAll('.back-button').forEach(btn => {
 
 // Funcionalidad para productos.html
 if (document.querySelector('.productos-container')) {
-  document.addEventListener('DOMContentLoaded', () => {
-      const loadProducts = () => JSON.parse(localStorage.getItem('products')) || [];
-      const renderProducts = (products) => {
-          const tbody = document.getElementById('productosList');
-          tbody.innerHTML = products.map(product => `
-              <tr>
-                  <td><input type="checkbox"></td>
-                  <td>${product.title}</td>
-                  <td><span class="estado estado-${product.status}">${product.status}</span></td>
-                  <td>${product.inventory}</td>
-                  <td>${product.category}</td>
-              </tr>
-          `).join('');
-      };
+    document.addEventListener('DOMContentLoaded', () => {
+        const loadProducts = () => JSON.parse(localStorage.getItem('products')) || [];
+        
+        const renderProducts = (products) => {
+            const tbody = document.getElementById('productosList');
+            tbody.innerHTML = products.map(product => `
+                <tr data-id="${product.id}">
+                    <td><input type="checkbox" class="product-checkbox"></td>
+                    <td>${product.title}</td>
+                    <td><span class="estado estado-${product.status}" style="cursor:pointer;">${product.status}</span></td>
+                    <td>${product.inventory}</td>
+                    <td>${product.category}</td>
+                </tr>
+            `).join('');
 
-      // Filtros
-      document.querySelectorAll('.filter-btn').forEach(btn => {
-          btn.addEventListener('click', () => {
-              document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
-              btn.classList.add('active');
-              const filter = btn.dataset.filter;
-              const products = loadProducts();
-              const filtered = filter === 'todos' ? products : products.filter(p => p.status === filter);
-              renderProducts(filtered);
-          });
-      });
+            // Cambiar estado al hacer clic en el estado
+            tbody.querySelectorAll('.estado').forEach(span => {
+                span.addEventListener('click', () => {
+                    const row = span.closest('tr');
+                    const id = parseInt(row.dataset.id);
+                    const products = loadProducts();
 
-      // Carga inicial
-      renderProducts(loadProducts());
-      
-      // Botón añadir producto
-      document.getElementById('addProductBtn').addEventListener('click', () => {
-          window.location.href = 'agregarProductos.html';
-      });
-  });
-}
+                    const index = products.findIndex(p => p.id === id);
+                    if (index !== -1) {
+                        const currentStatus = products[index].status;
+                        products[index].status = currentStatus === 'activo' ? 'enPausa' : 'activo';
+
+                        localStorage.setItem('products', JSON.stringify(products));
+                        renderProducts(products);
+                        console.log("Si se pudo cambiar el estado")
+                    }
+                });
+            });
+
+            // Actualizar funcionalidad del checkbox de "Seleccionar todos"
+            const selectAllCheckbox = document.getElementById('selectAll');
+            const productCheckboxes = document.querySelectorAll('.product-checkbox');
+            selectAllCheckbox.addEventListener('change', () => {
+                productCheckboxes.forEach(cb => cb.checked = selectAllCheckbox.checked);
+            });
+        };
+
+        // Filtros
+        document.querySelectorAll('.filter-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+                const filter = btn.dataset.filter;
+                const products = loadProducts();
+                const filtered = filter === 'todos' ? products : products.filter(p => p.status === filter);
+                renderProducts(filtered);
+            });
+        });
+
+        // Carga inicial
+        renderProducts(loadProducts());
+
+        // Botón añadir producto
+        document.getElementById('addProductBtn').addEventListener('click', () => {
+            window.location.href = 'agregarProductos.html';
+
+        });
+
+                
+        // Crear botón Eliminar
+        const deleteBtn = document.getElementById('deleteProductBtn');
+        deleteBtn.disabled = true; // Deshabilitar inicialmente
+        // Función para actualizar el botón Eliminar
+        function updateDeleteBtn() {
+            const anyChecked = !!document.querySelector('.product-checkbox:checked');
+            deleteBtn.disabled = !anyChecked;
+            deleteBtn.style.backgroundColor = anyChecked ? 'red' : '#ccc';
+            deleteBtn.style.cursor = anyChecked ? 'pointer' : 'not-allowed';
+        }
+
+        // Eventos para checkboxes
+        document.addEventListener('change', (e) => {
+            if (e.target.id === 'selectAll') {
+                document.querySelectorAll('.product-checkbox').forEach(cb => cb.checked = e.target.checked);
+                updateDeleteBtn();
+            }
+            if (e.target.classList.contains('product-checkbox')) {
+                updateDeleteBtn();
+            }
+        });
+
+        // Eliminar productos seleccionados
+        deleteBtn.addEventListener('click', () => {
+            if (!deleteBtn.disabled && confirm('¿Eliminar los productos seleccionados?')) {
+                const products = loadProducts();
+                const remaining = products.filter(p => {
+                    const row = document.querySelector(`tr[data-id="${p.id}"]`);
+                    return !row.querySelector('.product-checkbox').checked;
+                });
+                localStorage.setItem('products', JSON.stringify(remaining));
+                renderProducts(remaining);
+                document.getElementById('selectAll').checked = false;
+                updateDeleteBtn();
+            }
+        });
+
+            });
+        }
 
 // Funcionalidad para agregarProductos.html
+
 if (document.getElementById('productForm')) {
   document.addEventListener('DOMContentLoaded', () => {
       // Editor Quill
@@ -50,6 +118,13 @@ if (document.getElementById('productForm')) {
           theme: 'snow',
           modules: { toolbar: true }
       });
+// Funcionalidad para agregarProductos.html
+if (document.getElementById('cancelBtn')) {
+    document.getElementById('cancelBtn').addEventListener('click', () => {
+        window.location.href = 'productos.html';  // Regresa a productos.html
+    });
+  }
+  
 
       // Manejo de archivos
       const fileInput = document.getElementById('fileInput');
@@ -72,6 +147,16 @@ if (document.getElementById('productForm')) {
               reader.readAsDataURL(file);
           });
       });
+
+      //Reiniciar los archivos
+        document.getElementById('resetBtn').addEventListener('click', () => {
+            files = [];
+            previewArea.innerHTML = '';
+            fileInput.value = '';
+        });
+        
+
+
 
       // Manejo de categorías
       let categories = JSON.parse(localStorage.getItem('categories')) || [];

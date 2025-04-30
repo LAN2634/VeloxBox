@@ -253,10 +253,46 @@ select {
   background-color: #4caf50;
 }
 
-.estado-enpausa {
+.estado-enPausa{
   background-color: #757575;
 }
 
 .estado-agotado {
   background-color: #ff9800;
+}
+
+/* Botón Eliminar (igual al de Añadir pero gris y con estado activo rojo) */
+.delete-product-btn {
+  background-color: #ccc;      /* gris cuando está deshabilitado */
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 8px;
+  cursor: not-allowed;
+  margin-left: 10px;
+}
+
+.delete-product-btn.active {
+  background-color: red;       /* rojo cuando hay selección */
+  cursor: pointer;
+}
+
+
+/* Responsivo a pantallas */
+@media (max-width: 768px) {
+  .fila {
+    flex-direction: column;
+    gap: 0;
+    }
+      
+  .campo {
+    width: 100%;
+    }
+      
+  .acciones {
+    flex-direction: column;
+    }
+      
+  .formulario {
+    padding: 20px;}
 }
