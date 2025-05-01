@@ -342,7 +342,8 @@ if (document.getElementById('cancelBtn')) {
           size: size.value,
           color: color.value
         };
-      
+        console.log("Miniatura guardada:", newProduct.miniatura);
+        console.log("Archivos guardados:", newProduct.media);
         const products = JSON.parse(localStorage.getItem('products')) || [];
         products.push(newProduct);
         localStorage.setItem('products', JSON.stringify(products));
