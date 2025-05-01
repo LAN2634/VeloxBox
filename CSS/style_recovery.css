@@ -1,0 +1,164 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Arial', sans-serif;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: url('') no-repeat center center fixed;
+    background-size: cover;
+    overflow: hidden;
+    position: relative;
+}
+
+/* Overlay para mejorar la legibilidad del texto */
+body::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.6); /* Fondo oscuro semi-transparente */
+    z-index: 1;
+}
+
+/* Contenedor del formulario */
+.recovery-container {
+    background: rgba(255, 255, 255, 0.1); /* Fondo semi-transparente claro */
+    border-radius: 16px; /* Bordes redondeados */
+    padding: 30px; /* Espaciado interno */
+    width: 100%;
+    max-width: 400px; /* Ancho máximo */
+    box-shadow: 0 8px 15px rgba(0, 0, 0, 0.3); /* Sombra */
+    text-align: center; /* Centrado del texto */
+    z-index: 2; /* Asegura que esté por encima del overlay */
+    color: white; /* Color del texto */
+}
+
+/* Título de la página */
+.recovery-container h2 {
+    font-size: 28px;
+    font-weight: bold;
+    margin-bottom: 20px;
+    text-shadow: 0px 5px 15px rgba(0, 0, 0, 0.6);
+}
+
+/* Descripción */
+.recovery-container p {
+    font-size: 16px;
+    margin-bottom: 20px;
+    text-shadow: 0px 5px 15px rgba(0, 0, 0, 0.6);
+}
+
+/* Campos de entrada */
+.recovery-container input {
+    width: 100%;
+    padding: 12px;
+    margin-bottom: 15px;
+    border: none;
+    border-radius: 8px;
+    font-size: 14px;
+    background: rgba(255, 255, 255, 0.2); /* Fondo semi-transparente claro */
+    color: white; /* Color del texto */
+}
+
+/* Placeholder */
+.recovery-container input::placeholder {
+    color: #ccc; /* Color del texto placeholder */
+}
+
+/* Botón de recuperación */
+.recovery-container button {
+    width: 100%;
+    padding: 12px;
+    background-color: #ff7b58; /* Color de fondo */
+    color: white; /* Color del texto */
+    border: none;
+    border-radius: 8px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background 0.3s; /* Transición en el fondo */
+}
+
+/* Efecto hover en el botón */
+.recovery-container button:hover {
+    background-color: #d1654b; /* Color de fondo al pasar el mouse */
+}
+
+/* Enlace para volver al login */
+.recovery-container a {
+    color: #ff7b58; /* Color del enlace */
+    text-decoration: none; /* Sin subrayado */
+    font-size: 14px;
+    display: inline-block;
+    margin-top: 15px;
+}
+
+/* Efecto hover en el enlace */
+.recovery-container a:hover {
+    text-decoration: underline; /* Subrayado al pasar el mouse */
+}
+
+/* Diseño responsivo */
+@media (max-width: 480px) {
+    .recovery-container {
+        padding: 20px;
+    }
+
+    .recovery-container h2 {
+        font-size: 24px;
+    }
+
+    .recovery-container p {
+        font-size: 14px;
+    }
+
+    .recovery-container input,
+    .recovery-container button {
+        font-size: 14px;
+    }
+    
+}
+
+/* =======================
+* LOADER 
+======================== */
+.loader {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: black;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 100;
+}
+
+.spinner {
+    width: 60px;
+    height: 60px;
+    border: 6px solid #fff;
+    border-top-color: #ff5733;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+/* Ocultar loader cuando la página cargue */
+.hidden {
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.5s ease, visibility 0.5s;
+}

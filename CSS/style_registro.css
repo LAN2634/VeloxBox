@@ -1,0 +1,138 @@
+
+/* Estilo para el cuerpo del documento */
+body {
+    font-family: Arial, sans-serif; /* Fuente general */
+    background: url('') no-repeat center center fixed; /* Nueva imagen de fondo */
+    background-size: cover; /* Ajuste del tamaño de fondo */
+    display: flex; /* Diseño flexible */
+    justify-content: center; /* Centrar contenido horizontalmente */
+    align-items: center; /* Centrar contenido verticalmente */
+    height: 100vh; /* Altura completa de la ventana */
+    margin: 0; /* Sin márgenes */
+    color: #fff; /* Color del texto */
+}
+
+/* Contenedor del formulario de registro */
+.registro-container {
+    background: rgb(0, 0, 0); /* Fondo semitransparente oscuro */
+    border-radius: 16px; /* Bordes redondeados */
+    padding: 30px; /* Espaciado interno */
+    width: 360px; /* Ancho del contenedor */
+    box-shadow: 0 8px 15px rgba(0, 0, 0, 0.5); /* Sombra más pronunciada */
+    text-align: center; /* Centrado del texto */
+}
+
+/* Estilo del encabezado */
+.registro-container h2 {
+    font-size: 24px; /* Tamaño del texto */
+    margin-bottom: 20px; /* Espaciado inferior */
+    color: #fff; /* Color del texto */
+}
+
+/* Estilo para las etiquetas */
+.registro-container label {
+    display: block; /* Mostrar como bloque */
+    font-size: 14px; /* Tamaño del texto */
+    margin-bottom: 5px; /* Espaciado inferior */
+    text-align: left; /* Alineación a la izquierda */
+    color: #fff; /* Color del texto */
+    width: 100%; /* Ancho completo */
+}
+
+/* Estilo para los campos de entrada */
+.registro-container input {
+    width: 100%; /* Tamaño de los campos de entrada */
+    padding: 10px; /* Grosor de las líneas */
+    margin-bottom: 15px; /* Espaciado inferior */
+    border: none; /* Sin borde */
+    border-radius: 8px; /* Bordes redondeados */
+    font-size: 14px; /* Tamaño del texto */
+    background: rgba(255, 255, 255, 0.2); /* Fondo semitransparente claro */
+    color: #fff; /* Color del texto */
+}
+
+/* Placeholder dentro de los campos */
+.registro-container input::placeholder {
+    color: #ccc; /* Color del texto placeholder */
+}
+
+/* Botón de registro */
+.registro-container button {
+    width: 100%; /* Tamaño del botón */
+    padding: 12px; /* Espaciado interno */
+    background-color: #ff7b58; /* Color de fondo */
+    color: white; /* Color del texto */
+    border: none; /* Sin borde */
+    border-radius: 8px; /* Bordes redondeados */
+    font-size: 16px; /* Tamaño del texto */
+    cursor: pointer; /* Manito al pasar el mouse */
+    transition: background 0.3s; /* Transición en el fondo */
+}
+
+/* Efecto hover en el botón */
+.registro-container button:hover {
+    background-color: #d1654b; /* Color de fondo al pasar el mouse */
+}
+
+/* Enlaces adicionales */
+.registro-container a {
+    color: #ff7b58; /* Color del enlace */
+    text-decoration: none; /* Sin subrayado */
+    font-size: 14px; /* Tamaño del texto */
+}
+
+/* Efecto hover en los enlaces */
+.registro-container a:hover {
+    text-decoration: underline; /* Subrayado al pasar el mouse */
+}
+
+/* Contenedor para los enlaces adicionales */
+.registro-container .extra-links {
+    display: flex; /* Mostrar como flexbox */
+    justify-content: space-between; /* Distribuir equitativamente */
+    margin-top: 15px; /* Espaciado superior */
+}
+/* Contenedor para los enlaces adicionales */
+.container {
+    text-align: center; 
+    padding: 14px;
+    width: 100%;
+    color: white; 
+}
+
+/* =======================
+* LOADER 
+======================== */
+.loader {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: black;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 100;
+}
+
+.spinner {
+    width: 60px;
+    height: 60px;
+    border: 6px solid #fff;
+    border-top-color: #ff5733;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+/* Ocultar loader cuando la página cargue */
+.hidden {
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.5s ease, visibility 0.5s;
+}
