@@ -1,0 +1,780 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Velox Box - Menú Hamburguesa</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Arial', sans-serif;
+        }
+
+        body {
+            background-color: #f8f8f8;
+        }
+
+        header {
+            background-color: #000;
+            height: 70px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 25px;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+        }
+
+        .header-left {
+            display: flex;
+            align-items: center;
+        }
+
+        .hamburger-btn {
+            background: none;
+            border: none;
+            color: white;
+            font-size: 28px;
+            cursor: pointer;
+            padding: 10px 15px;
+            transition: transform 0.3s;
+            margin-right: 20px;
+        }
+
+        .hamburger-btn:hover {
+            transform: scale(1.1);
+        }
+
+        /* Botón VELOX BOX - Versión corregida */
+        .button {
+            margin: 0;
+            height: auto;
+            background: transparent;
+            padding: 0;
+            border: none;
+            cursor: pointer;
+            min-width: 200px;
+            /* Ancho mínimo para contener todo el texto */
+            text-align: left;
+            /* Alineación izquierda para mejor efecto */
+        }
+
+        .button {
+            --border-right: 6px;
+            --text-stroke-color: rgba(255, 255, 255, 0.6);
+            --animation-color: #ffffff;
+            --fs-size: 1.8em;
+            letter-spacing: 3px;
+            text-decoration: none;
+            font-size: var(--fs-size);
+            font-family: "Arial";
+            position: relative;
+            text-transform: uppercase;
+            color: transparent;
+            -webkit-text-stroke: 1px var(--text-stroke-color);
+            display: inline-block;
+            /* Importante para el contenedor */
+            overflow: visible;
+            /* Permite que el texto se muestre completo */
+        }
+
+        .actual-text,
+        .hover-text {
+            white-space: nowrap;
+            /* Evita que el texto se divida en varias líneas */
+        }
+
+        .hover-text {
+            position: absolute;
+            box-sizing: border-box;
+            color: var(--animation-color);
+            width: 0%;
+            left: 0;
+            top: 0;
+            border-right: var(--border-right) solid var(--animation-color);
+            overflow: hidden;
+            transition: 0.5s;
+            -webkit-text-stroke: 1px var(--animation-color);
+        }
+
+        .button:hover .hover-text {
+            width: 100%;
+            filter: drop-shadow(0 0 23px var(--animation-color));
+        }
+
+        /*Fin de el estilo de boton Velox box*/
+        .menu-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            z-index: 999;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.3s, visibility 0.3s;
+        }
+
+        .menu-overlay.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .menu-container {
+            position: fixed;
+            top: 70px;
+            left: 0;
+            width: 300px;
+            height: calc(100vh - 70px);
+            background-color: #222;
+            transform: translateX(-100%);
+            transition: transform 0.3s ease;
+            z-index: 1000;
+            overflow-y: auto;
+            padding: 20px 0;
+        }
+
+        .menu-container.active {
+            transform: translateX(0);
+        }
+
+        .menu-section {
+            margin-bottom: 25px;
+            border-bottom: 1px solid #333;
+            padding-bottom: 15px;
+        }
+
+        .menu-section:last-child {
+            border-bottom: none;
+        }
+
+        .menu-title {
+            color: #aaa;
+            font-size: 14px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            padding: 0 25px 10px;
+            margin-bottom: 10px;
+        }
+
+        .menu-item {
+            display: flex;
+            align-items: center;
+            color: white;
+            text-decoration: none;
+            padding: 12px 25px;
+            transition: background-color 0.2s;
+        }
+
+        .menu-item:hover {
+            background-color: #333;
+        }
+
+        .menu-item i {
+            margin-right: 15px;
+            font-size: 20px;
+            width: 24px;
+            text-align: center;
+        }
+
+        .menu-item-text {
+            font-size: 16px;
+        }
+
+        .content {
+            margin-top: 70px;
+            padding: 30px;
+        }
+
+
+
+
+        /**/
+        /* Responsive Design - Media Queries */
+        @media (max-width: 768px) {
+
+            /* Ajustes para tablets y móviles */
+            .button {
+                --fs-size: 1.5em;
+                /* Tamaño de fuente más pequeño */
+                min-width: 160px;
+                /* Ancho reducido */
+                letter-spacing: 2px;
+                /* Espaciado reducido */
+            }
+
+            .menu-container {
+                width: 250px;
+                /* Menú un poco más estrecho */
+            }
+
+            .content {
+                padding: 20px;
+                /* Menos padding */
+            }
+        }
+
+        @media (max-width: 480px) {
+
+            /* Ajustes específicos para móviles */
+            header {
+                height: 60px;
+                padding: 0 15px;
+            }
+
+            .hamburger-btn {
+                font-size: 24px;
+                margin-right: 10px;
+            }
+
+            .button {
+                --fs-size: 1.2em;
+                min-width: 120px;
+                letter-spacing: 1px;
+            }
+
+            .menu-container {
+                top: 60px;
+                width: 80%;
+                /* Ocupa el 80% del ancho */
+            }
+
+            .menu-item {
+                padding: 10px 15px;
+            }
+
+            .content {
+                padding: 15px;
+            }
+
+            h1 {
+                font-size: 24px;
+                /* Títulos más pequeños */
+            }
+        }
+
+        @media (max-width: 320px) {
+
+            /* Ajustes para pantallas muy pequeñas */
+            .button {
+                --fs-size: 1em;
+                min-width: 100px;
+            }
+
+            .menu-title {
+                font-size: 12px;
+            }
+
+            .menu-item-text {
+                font-size: 14px;
+            }
+        }
+
+
+        /* =======================
+        *          LOADER        *
+        ======================== */
+        .loader-i {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: black;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 100;
+        }
+
+        .spinner {
+            width: 60px;
+            height: 60px;
+            border: 6px solid #fff;
+            border-top-color: #000;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            0% {
+                transform: rotate(0deg);
+            }
+
+            100% {
+                transform: rotate(360deg);
+            }
+        }
+
+        /* Ocultar loader cuando la página cargue */
+        .hidden {
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.5s ease, visibility 0.5s;
+        }
+
+
+
+
+        /*
+*
+*
+*
+*
+*/
+        /*foother de la pagina*/
+        /* Estilos del footer */
+        footer {
+            background-color: rgb(30, 36, 34);
+            color: white;
+            padding: 40px 0 20px;
+        }
+
+        .footer-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+        }
+
+        .footer-section {
+            flex: 1;
+            min-width: 250px;
+            margin-bottom: 30px;
+            padding: 0 15px;
+        }
+
+        .footer-section h3 {
+            color: #ffffff;
+            margin-bottom: 20px;
+            font-size: 1.2em;
+        }
+
+        .footer-section p,
+        .footer-section a {
+            color: #ddd;
+            text-decoration: none;
+            display: block;
+            margin: 10px 0;
+            line-height: 1.6;
+        }
+
+        .footer-section a:hover {
+            color: #ffffff;
+        }
+
+        .follow-us {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .follow-us h3 {
+            color: white;
+            font-size: 1.5em;
+            margin-bottom: 20px;
+        }
+
+        .footer-bottom {
+            text-align: center;
+            padding-top: 20px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            margin-top: 30px;
+        }
+
+        /* Estilos para los iconos sociales (de Uiverse.io) */
+        .social-login-icons {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 20px;
+            -webkit-box-reflect: below 5px linear-gradient(transparent, #00000055);
+            margin-bottom: 30px;
+        }
+
+        .social-login-icons svg {
+            width: 40px;
+        }
+
+        .social-icon-1,
+        .social-icon-1-1,
+        .social-icon-2,
+        .social-icon-2-2,
+        .social-icon-3,
+        .social-icon-3-3,
+        .social-icon-4,
+        .social-icon-4-4 {
+            width: 50px;
+            height: 50px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50px;
+            margin: 20px 0 0px 0;
+        }
+
+        .icon svg {
+            fill: #ddd;
+        }
+
+        .socialcontainer {
+            height: 80px;
+            overflow: hidden;
+        }
+
+        .social-icon-1 {
+            transition-duration: 0.4s;
+            background-color: rgb(0, 0, 0);
+            transition-timing-function: cubic-bezier(0.46, -0.78, 0.5, 1.56);
+        }
+
+        .social-icon-1 svg,
+        .social-icon-2 svg,
+        .social-icon-3 svg,
+        .social-icon-4 svg {
+            opacity: 0;
+            transition-duration: 0.5s;
+            transition-delay: 0.2s;
+        }
+
+        .social-icon-1-1 {
+            transition-duration: 0.4s;
+            background-color: rgb(0, 0, 0, 0);
+        }
+
+        .socialcontainer:hover .social-icon-1 {
+            transform: translateY(-70px);
+        }
+
+        .socialcontainer:hover .social-icon-1 svg,
+        .socialcontainer:hover .social-icon-2 svg,
+        .socialcontainer:hover .social-icon-3 svg,
+        .socialcontainer:hover .social-icon-4 svg {
+            opacity: 1;
+        }
+
+        .social-icon-2 {
+            transition-duration: 0.4s;
+            transition-timing-function: cubic-bezier(0.46, -0.78, 0.5, 1.56);
+            background: linear-gradient(72.44deg, #ff7a00 11.92%, #ff0169 51.56%, #d300c5 85.69%);
+        }
+
+        .socialcontainer:hover .social-icon-2 {
+            transform: translateY(-70px);
+        }
+
+        .social-icon-3 {
+            transition-duration: 0.4s;
+            transition-timing-function: cubic-bezier(0.46, -0.78, 0.5, 1.56);
+            background: #316ff6;
+        }
+
+        .socialcontainer:hover .social-icon-3 {
+            transform: translateY(-70px);
+        }
+
+        .social-icon-4 {
+            transition-duration: 0.4s;
+            transition-timing-function: cubic-bezier(0.46, -0.78, 0.5, 1.56);
+            background: linear-gradient(180deg, rgba(129, 34, 144, 1) 0%, rgba(77, 34, 124, 1) 91%);
+        }
+
+        .socialcontainer:hover .social-icon-4 {
+            transform: translateY(-70px);
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .footer-section {
+                flex: 100%;
+                text-align: center;
+            }
+
+            .social-login-icons {
+                flex-wrap: wrap;
+                gap: 10px;
+            }
+        }
+
+        /*
+        
+        
+        CSS grids
+        
+        
+        
+        
+        
+        */
+
+        .parent {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            grid-template-rows: repeat(5, 1fr);
+            gap: 8px;
+        }
+
+
+        .div2 {
+            grid-column: span 3 / span 3;
+        }
+
+        .div3 {
+            grid-column-start: 5;
+        }
+
+        .div4 {
+            grid-column: span 5 / span 5;
+            grid-row-start: 2;
+        }
+
+        .div5 {
+            grid-column: span 5 / span 5;
+            grid-row: span 2 / span 2;
+            grid-row-start: 3;
+        }
+
+        .div6 {
+            grid-column: span 5 / span 5;
+            grid-row-start: 5;
+        }
+    </style>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+
+<body>
+    <!-- Loader -->
+    <div class="loader-i">
+        <div class="spinner"></div>
+    </div>
+
+    <header>
+        <div class="header-left">
+            <button class="hamburger-btn" id="hamburgerBtn">
+                <i class="fas fa-bars"></i>
+            </button>
+
+            <!-- Botón Velox Box - Versión corregida -->
+            <button class="button" data-text="VELOX BOX">
+                <span class="actual-text">&nbsp;VELOX BOX&nbsp;</span>
+                <span class="hover-text">&nbsp;VELOX BOX&nbsp;</span>
+            </button>
+        </div>
+    </header>
+
+    <div class="menu-overlay" id="menuOverlay"></div>
+
+    <div class="menu-container" id="menuContainer">
+        <div class="menu-section">
+            <div class="menu-title">Principal</div>
+            <a href="#" class="menu-item">
+                <i class="fas fa-home"></i>
+                <span class="menu-item-text">Inicio</span>
+            </a>
+            <a href="#" class="menu-item">
+                <i class="fas fa-calendar-alt"></i>
+                <span class="menu-item-text">Calendario</span>
+            </a>
+        </div>
+
+        <div class="menu-section">
+            <div class="menu-title">Contenido</div>
+            <a href="#" class="menu-item shirt-item">
+                <i class="fas fa-tshirt"></i>
+                <span class="menu-item-text">Playeras Deportivas</span>
+            </a>
+            <a href="#" class="menu-item pants-item">
+                <i class="fas fa-running"></i>
+                <span class="menu-item-text">Pants Deportivos</span>
+            </a>
+        </div>
+
+        <div class="menu-section">
+            <div class="menu-title">Configuración</div>
+            <a href="#" class="menu-item">
+                <i class="fas fa-cog"></i>
+                <span class="menu-item-text">Ajustes</span>
+            </a>
+            <a href="#" class="menu-item">
+                <i class="fas fa-user"></i>
+                <span class="menu-item-text">Perfil</span>
+            </a>
+            <a href="#" class="menu-item">
+                <i class="fas fa-sign-out-alt"></i>
+                <span class="menu-item-text">Cerrar sesión</span>
+            </a>
+        </div>
+    </div>
+
+    <div class="content">
+        <!--Aqui va el contenido de el cuerpo nose si sean grids-->
+
+        <div class="parent">
+            <div class="div1">1</div>
+            <div class="div2">2</div>
+            <div class="div3">3</div>
+            <div class="div4">4</div>
+            <div class="div5">5</div>
+            <div class="div6">6</div>
+        </div>
+
+    </div>
+    <!--foother-->
+    <footer>
+        <div class="follow-us">
+            <h3>Síguenos</h3>
+            <!-- Iconos de redes sociales animados -->
+            <div class="social-login-icons">
+                <!--Twiter-->
+                <div class="socialcontainer">
+                    <a href="https://x.com/?lang=es"">
+                                <div class=" icon social-icon-1-1">
+                        <svg viewBox="0 0 512 512" height="1.7em" xmlns="http://www.w3.org/2000/svg" class="svgIcontwit"
+                            fill="white">
+                            <path
+                                d="M389.2 48h70.6L305.6 224.2 487 464H345L233.7 318.6 106.5 464H35.8L200.7 275.5 26.8 48H172.4L272.9 180.9 389.2 48zM364.4 421.8h39.1L151.1 88h-42L364.4 421.8z">
+                            </path>
+                        </svg>
+                </div>
+                <div class="social-icon-1">
+                    <svg viewBox="0 0 512 512" height="1.7em" xmlns="http://www.w3.org/2000/svg" class="svgIcontwit"
+                        fill="white">
+                        <path
+                            d="M389.2 48h70.6L305.6 224.2 487 464H345L233.7 318.6 106.5 464H35.8L200.7 275.5 26.8 48H172.4L272.9 180.9 389.2 48zM364.4 421.8h39.1L151.1 88h-42L364.4 421.8z">
+                        </path>
+                    </svg>
+                </div>
+            </div>
+            </a>
+            <!--Insta-->
+            <div class="socialcontainer">
+                <a href="https://www.instagram.com/">
+                    <div class="icon social-icon-2-2">
+                        <svg fill="white" class="svgIcon" viewBox="0 0 448 512" height="1.5em"
+                            xmlns="http://www.w3.org/2000/svg">
+                            <path
+                                d="M224.1 141c-63.6 0-114.9 51.3-114.9 114.9s51.3 114.9 114.9 114.9S339 319.5 339 255.9 287.7 141 224.1 141zm0 189.6c-41.1 0-74.7-33.5-74.7-74.7s33.5-74.7 74.7-74.7 74.7 33.5 74.7 74.7-33.6 74.7-74.7 74.7zm146.4-194.3c0 14.9-12 26.8-26.8 26.8-14.9 0-26.8-12-26.8-26.8s12-26.8 26.8-26.8 26.8 12 26.8 26.8zm76.1 27.2c-1.7-35.9-9.9-67.7-36.2-93.9-26.2-26.2-58-34.4-93.9-36.2-37-2.1-147.9-2.1-184.9 0-35.8 1.7-67.6 9.9-93.9 36.1s-34.4 58-36.2 93.9c-2.1 37-2.1 147.9 0 184.9 1.7 35.9 9.9 67.7 36.2 93.9s58 34.4 93.9 36.2c37 2.1 147.9 2.1 184.9 0 35.9-1.7 67.7-9.9 93.9-36.2 26.2-26.2 34.4-58 36.2-93.9 2.1-37 2.1-147.8 0-184.8zM398.8 388c-7.8 19.6-22.9 34.7-42.6 42.6-29.5 11.7-99.5 9-132.1 9s-102.7 2.6-132.1-9c-19.6-7.8-34.7-22.9-42.6-42.6-11.7-29.5-9-99.5-9-132.1s-2.6-102.7 9-132.1c7.8-19.6 22.9-34.7 42.6-42.6 29.5-11.7 99.5-9 132.1-9s102.7-2.6 132.1 9c19.6 7.8 34.7 22.9 42.6 42.6 11.7 29.5 9 99.5 9 132.1s2.7 102.7-9 132.1z">
+                            </path>
+                        </svg>
+                    </div>
+                    <div class="social-icon-2">
+                        <svg fill="white" class="svgIcon" viewBox="0 0 448 512" height="1.5em"
+                            xmlns="http://www.w3.org/2000/svg">
+                            <path
+                                d="M224.1 141c-63.6 0-114.9 51.3-114.9 114.9s51.3 114.9 114.9 114.9S339 319.5 339 255.9 287.7 141 224.1 141zm0 189.6c-41.1 0-74.7-33.5-74.7-74.7s33.5-74.7 74.7-74.7 74.7 33.5 74.7 74.7-33.6 74.7-74.7 74.7zm146.4-194.3c0 14.9-12 26.8-26.8 26.8-14.9 0-26.8-12-26.8-26.8s12-26.8 26.8-26.8 26.8 12 26.8 26.8zm76.1 27.2c-1.7-35.9-9.9-67.7-36.2-93.9-26.2-26.2-58-34.4-93.9-36.2-37-2.1-147.9-2.1-184.9 0-35.8 1.7-67.6 9.9-93.9 36.1s-34.4 58-36.2 93.9c-2.1 37-2.1 147.9 0 184.9 1.7 35.9 9.9 67.7 36.2 93.9s58 34.4 93.9 36.2c37 2.1 147.9 2.1 184.9 0 35.9-1.7 67.7-9.9 93.9-36.2 26.2-26.2 34.4-58 36.2-93.9 2.1-37 2.1-147.8 0-184.8zM398.8 388c-7.8 19.6-22.9 34.7-42.6 42.6-29.5 11.7-99.5 9-132.1 9s-102.7 2.6-132.1-9c-19.6-7.8-34.7-22.9-42.6-42.6-11.7-29.5-9-99.5-9-132.1s-2.6-102.7 9-132.1c7.8-19.6 22.9-34.7 42.6-42.6 29.5-11.7 99.5-9 132.1-9s102.7-2.6 132.1 9c19.6 7.8 34.7 22.9 42.6 42.6 11.7 29.5 9 99.5 9 132.1s2.7 102.7-9 132.1z">
+                            </path>
+                        </svg>
+                    </div>
+            </div>
+            </a>
+            <!--Facebook-->
+            <div class="socialcontainer">
+                <a href="https://www.facebook.com/?locale=es_LA">
+                    <div class="icon social-icon-3-3">
+                        <svg viewBox="0 0 384 512" fill="white" height="1.6em" xmlns="http://www.w3.org/2000/svg">
+                            <path
+                                d="M80 299.3V512H196V299.3h86.5l18-97.8H196V166.9c0-51.7 20.3-71.5 72.7-71.5c16.3 0 29.4 .4 37 1.2V7.9C291.4 4 256.4 0 236.2 0C129.3 0 80 50.5 80 159.4v42.1H14v97.8H80z">
+                            </path>
+                        </svg>
+                    </div>
+                    <div class="social-icon-3">
+                        <svg viewBox="0 0 384 512" fill="white" height="1.6em" xmlns="http://www.w3.org/2000/svg">
+                            <path
+                                d="M80 299.3V512H196V299.3h86.5l18-97.8H196V166.9c0-51.7 20.3-71.5 72.7-71.5c16.3 0 29.4 .4 37 1.2V7.9C291.4 4 256.4 0 236.2 0C129.3 0 80 50.5 80 159.4v42.1H14v97.8H80z">
+                            </path>
+                        </svg>
+                    </div>
+            </div>
+            </a>
+            <!--Git Hub-->
+            <div class="socialcontainer">
+                <a href="https://github.com/LAN2634/PROYECTO_HTML">
+                    <div class="icon social-icon-4-4">
+                        <svg fill="white" viewBox="0 0 496 512" height="1.6em">
+                            <path
+                                d="M165.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6zm-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3zm44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9zM244.8 8C106.1 8 0 113.3 0 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C428.2 457.8 496 362.9 496 252 496 113.3 383.5 8 244.8 8zM97.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1zm-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7zm32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1zm-11.4-14.7c-1.6 1-1.6 3.6 0 5.9 1.6 2.3 4.3 3.3 5.6 2.3 1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2z">
+                            </path>
+                        </svg>
+                    </div>
+                    <div class="social-icon-4">
+                        <svg fill="white" viewBox="0 0 496 512" height="1.6em">
+                            <path
+                                d="M165.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6zm-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3zm44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9zM244.8 8C106.1 8 0 113.3 0 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C428.2 457.8 496 362.9 496 252 496 113.3 383.5 8 244.8 8zM97.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1zm-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7zm32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1zm-11.4-14.7c-1.6 1-1.6 3.6 0 5.9 1.6 2.3 4.3 3.3 5.6 2.3 1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2z">
+                            </path>
+                        </svg>
+                    </div>
+            </div>
+            </a>
+        </div>
+        </div>
+        <br>
+        <br>
+        <br>
+        <br>
+        <div class="footer-container">
+            <div class="footer-section">
+                <h3 id="acerca_de">Acerca de</h3>
+                <p>Somos una empresa</p>
+            </div>
+            <!--con eso de espacio o ke o mas diganme-->
+            <div class="footer-section">
+                <h3>Enlaces Rápidos</h3>
+                <a href="#">Inicio</a>
+                <a href="#">Servicios</a>
+                <a href="#">Portafolio</a>
+                <a href="#">Blog</a>
+                <a href="#">Contacto</a>
+            </div>
+
+            <div class="footer-section">
+                <h3>Contacto</h3>
+                <p><i class="fas fa-map-marker-alt"></i>#aki Datos</p>
+                <p><i class="fas fa-phone"></i> Teléfono: </p>
+                <p><i class="fas fa-envelope"></i> Email: </p>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2023-2050 Mi Sitio Web. Todos los derechos reservados.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Forzar scroll al inicio al cargar la página
+        window.onload = function () {
+            window.scrollTo(0, 0);
+        };
+
+        // También para navegación con caché (SPA)
+        window.addEventListener('pageshow', function (event) {
+            if (event.persisted) {
+                window.scrollTo(0, 0);
+            }
+        });
+        window.onload = function () {
+            document.querySelector(".loader-i").classList.add("hidden");
+        };
+        const hamburgerBtn = document.getElementById('hamburgerBtn');
+        const menuOverlay = document.getElementById('menuOverlay');
+        const menuContainer = document.getElementById('menuContainer');
+
+        hamburgerBtn.addEventListener('click', () => {
+            menuContainer.classList.toggle('active');
+            menuOverlay.classList.toggle('active');
+        });
+
+        menuOverlay.addEventListener('click', () => {
+            menuContainer.classList.remove('active');
+            menuOverlay.classList.remove('active');
+        });
+    </script>
+</body>
+
+</html>
