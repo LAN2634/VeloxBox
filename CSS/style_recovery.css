@@ -77,7 +77,7 @@ body::after {
 .recovery-container button {
     width: 100%;
     padding: 12px;
-    background-color: #ff7b58; /* Color de fondo */
+    background-color: #000000; /* Color de fondo */
     color: white; /* Color del texto */
     border: none;
     border-radius: 8px;
@@ -88,12 +88,12 @@ body::after {
 
 /* Efecto hover en el botón */
 .recovery-container button:hover {
-    background-color: #d1654b; /* Color de fondo al pasar el mouse */
+    background-color: #232323; /* Color de fondo al pasar el mouse */
 }
 
 /* Enlace para volver al login */
 .recovery-container a {
-    color: #ff7b58; /* Color del enlace */
+    color: #141414; /* Color del enlace */
     text-decoration: none; /* Sin subrayado */
     font-size: 14px;
     display: inline-block;

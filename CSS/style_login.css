@@ -50,12 +50,12 @@
         }
 
         input:focus {
-            border-color: #ff7b58;
+            border-color: #000000;
         }
 
         button {
             padding: 12px 20px;
-            background-color: #ff7b58;
+            background-color: #000000;
             color: white;
             border: none;
             border-radius: 5px;
@@ -65,11 +65,11 @@
         }
 
         button:hover {
-            background-color: #ff7b58;
+            background-color: #000000;
         }
 
         a {
-            color: #ff7b58;
+            color: #000000;
             text-decoration: none;
             font-size: 14px;
             margin-top: 10px;
@@ -114,7 +114,7 @@
     width: 60px;
     height: 60px;
     border: 6px solid #fff;
-    border-top-color: #ff5733;
+    border-top-color: #000000;
     border-radius: 50%;
     animation: spin 1s linear infinite;
 }
