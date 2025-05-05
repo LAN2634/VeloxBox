@@ -2,11 +2,17 @@ const cartToggle = document.getElementById('cart-toggle');
 const cart = document.getElementById('cart');
 const cartItems = document.getElementById('cart-items');
 const cartTotal = document.getElementById('cart-total');
+const closeCartBtn = document.querySelector('.close-cart'); // NUEVO
 
 let carrito = [];
 
 cartToggle.addEventListener('click', () => {
   cart.classList.toggle('hidden');
+});
+
+// NUEVO: cerrar carrito al hacer clic en botón "close"
+closeCartBtn.addEventListener('click', () => {
+  cart.classList.add('hidden');
 });
 
 document.querySelectorAll('.add-to-cart').forEach(btn => {
