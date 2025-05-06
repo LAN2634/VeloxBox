@@ -4,19 +4,479 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Tienda</title>
-  <link rel="stylesheet" href="./CSS/styles_carrito.css" />   
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+  <title>Carrito compras</title>
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: sans-serif;
+      background: #e5e5e5;
+      color: #111;
+    }
+
+    header {
+      background: #000;
+      color: white;
+      padding: 1rem 2rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      position: fixed;
+      top: 0;
+      width: 100%;
+      z-index: 100;
+    }
+
+    .container {
+      padding: 2rem;
+      margin-top: 70px;
+    }
+
+    .product-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 1.5rem;
+      padding-left: 2rem;
+      padding-right: 2rem;
+    }
+
+    .card {
+      background: white;
+      border-radius: 8px;
+      overflow: hidden;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+      display: flex;
+      flex-direction: column;
+      transition: transform 0.3s;
+    }
+
+    .card:hover {
+      transform: translateY(-5px);
+    }
+
+    .image {
+      height: 200px;
+      background-size: cover;
+      background-position: center;
+    }
+
+    .info {
+      padding: 1rem;
+      flex-grow: 1;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .info h2 {
+      font-size: 1rem;
+      margin-bottom: 0.25rem;
+    }
+
+    .info p {
+      margin-bottom: 1rem;
+    }
+
+    .add-to-cart {
+      background: black;
+      color: white;
+      border: none;
+      padding: 0.5rem;
+      width: 100%;
+      cursor: pointer;
+      transition: background 0.3s;
+      margin-top: auto;
+    }
+
+    .add-to-cart:hover {
+      background: #333;
+    }
+
+    .cart {
+      position: fixed;
+      top: 0;
+      right: 0;
+      width: 350px;
+      height: 100%;
+      background: white;
+      box-shadow: -4px 0 10px rgba(0, 0, 0, 0.2);
+      display: flex;
+      flex-direction: column;
+      z-index: 1000;
+      transform: translateX(100%);
+      transition: transform 0.3s ease;
+    }
+
+    .cart.open {
+      transform: translateX(0);
+    }
+
+    .cart-header {
+      padding: 1rem;
+      border-bottom: 1px solid #ccc;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .close-cart {
+      background: none;
+      border: none;
+      font-size: 1.5rem;
+      cursor: pointer;
+      padding: 0.5rem;
+    }
+
+    .cart-items {
+      flex: 1;
+      overflow-y: auto;
+      padding: 1rem;
+    }
+
+    #cart-items .item {
+      display: flex;
+      gap: 1rem;
+      margin-bottom: 1rem;
+      padding-bottom: 1rem;
+      border-bottom: 1px solid #eee;
+    }
+
+    #cart-items .item .item-image {
+      width: 80px;
+      height: 80px;
+      border-radius: 4px;
+      flex-shrink: 0;
+      background-size: cover;
+      background-position: center;
+    }
+
+    .item-info {
+      flex: 1;
+    }
+
+    .item-info h3 {
+      font-size: 1rem;
+      font-weight: bold;
+      margin-bottom: 0.25rem;
+    }
+
+    .item-info p {
+      margin-bottom: 0.5rem;
+      color: #666;
+    }
+
+    .quantity-controls {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      margin: 0.5rem 0;
+    }
+
+    .quantity-controls button {
+      width: 25px;
+      height: 25px;
+      border: 1px solid #ddd;
+      background: #f5f5f5;
+      border-radius: 4px;
+      font-size: 1rem;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .quantity-controls button:hover {
+      background: #eee;
+    }
+
+    .remove {
+      text-decoration: underline;
+      color: #d32f2f;
+      font-size: 0.9rem;
+      cursor: pointer;
+      display: inline-block;
+      margin-top: 0.5rem;
+    }
+
+    .remove:hover {
+      color: #b71c1c;
+    }
+
+    .cart-footer {
+      padding: 1rem;
+      border-top: 1px solid #ccc;
+      background: white;
+    }
+
+    .cart-total {
+      margin-bottom: 1rem;
+      font-size: 1.1rem;
+      text-align: right;
+    }
+
+    #checkout {
+      width: 100%;
+      padding: 1rem;
+      background: black;
+      color: white;
+      border: none;
+      cursor: pointer;
+      font-size: 1rem;
+      transition: background 0.3s;
+    }
+
+    #checkout:hover {
+      background: #333;
+    }
+
+    .empty-cart {
+      text-align: center;
+      padding: 2rem;
+      color: #666;
+    }
+
+    .added-notification {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      background: #4CAF50;
+      color: white;
+      padding: 15px;
+      border-radius: 4px;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+      z-index: 1000;
+      display: none;
+    }
+
+    /* Menú hamburguesa */
+    .hamburger-btn {
+      background: none;
+      border: none;
+      color: white;
+      font-size: 28px;
+      cursor: pointer;
+      padding: 10px 15px;
+      transition: transform 0.3s;
+    }
+    
+    .hamburger-btn:hover {
+      transform: scale(1.1);
+    }
+    
+    .menu-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0, 0, 0, 0.5);
+      z-index: 999;
+      opacity: 0;
+      visibility: hidden;
+      transition: opacity 0.3s, visibility 0.3s;
+    }
+    
+    .menu-overlay.active {
+      opacity: 1;
+      visibility: visible;
+    }
+    
+    .menu-container {
+      position: fixed;
+      top: 70px;
+      left: 0;
+      width: 300px;
+      height: calc(100vh - 70px);
+      background-color: #222;
+      transform: translateX(-100%);
+      transition: transform 0.3s ease;
+      z-index: 1000;
+      overflow-y: auto;
+      padding: 20px 0;
+    }
+    
+    .menu-container.active {
+      transform: translateX(0);
+    }
+    
+    .menu-section {
+      margin-bottom: 25px;
+      border-bottom: 1px solid #333;
+      padding-bottom: 15px;
+    }
+    
+    .menu-section:last-child {
+      border-bottom: none;
+    }
+    
+    .menu-title {
+      color: #aaa;
+      font-size: 14px;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      padding: 0 25px 10px;
+      margin-bottom: 10px;
+    }
+    
+    .menu-item {
+      display: flex;
+      align-items: center;
+      color: white;
+      text-decoration: none;
+      padding: 12px 25px;
+      transition: background-color 0.2s;
+    }
+    
+    .menu-item:hover {
+      background-color: #333;
+    }
+    
+    .menu-item i {
+      margin-right: 15px;
+      font-size: 20px;
+      width: 24px;
+      text-align: center;
+    }
+    
+    .menu-item-text {
+      font-size: 16px;
+    }
+
+    .cart-icon-container {
+      display: flex;
+      align-items: center;
+      gap: 5px;
+    }
+    /*input para buscar*/
+    .input {
+        max-width: 300px;
+        background-color: #f5f5f5;
+        color: #000000;
+        padding: .15rem .5rem;
+        min-height: 30px;
+        border-radius: 4px;
+        outline: none;
+        border: none;
+        line-height: 1.15;
+        box-shadow: 0px 10px 20px -18px;
+        
+      }
+        
+    input:focus {
+      border-bottom: 2px solid #000000;
+      border-radius: 4px 4px 2px 2px;
+    }
+    
+    input:hover {
+      outline: 1px solid lightgrey;
+    }
+
+    .menu-search {
+      padding: 0 25px 20px 25px; /* Espacio a los lados y abajo */
+      border-bottom: 1px solid #333;
+      margin-bottom: 20px;} /* Espacio debajo del input ESTO AYUDA A SU POSICION DENTRO DEL MENU*/ 
+
+    @media (max-width: 768px) {
+      .product-grid {
+        grid-template-columns: repeat(2, 1fr);
+        padding-left: 1rem;
+        padding-right: 1rem;
+      }
+      
+      .cart {
+        width: 100%;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .product-grid {
+        grid-template-columns: 1fr;
+      }
+      
+      header {
+        padding: 1rem;
+      }
+
+      
+    }
+  </style>
 </head>
 
 <body>
   <header>
-    <h1>Carrito de compras</h1>
-    <button class="cartBtn" id="cart-toggle" aria-label="Carrito de compras">
-      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" viewBox="0 0 16 16">
-        <path d="M0 2.5A.5.5 0 0 1 .5 2H2a.5.5 0 0 1 .485.379L2.89 4H14.5a.5.5 0 0 1 .485.621l-1.5 6A.5.5 0 0 1 13 11H4a.5.5 0 0 1-.485-.379L1.61 3H.5a.5.5 0 0 1-.5-.5zM3.14 5l1.25 5h8.22l1.25-5H3.14zM5 13a1 1 0 1 0 0 2 1 1 0 0 0 0-2zm-2 1a2 2 0 1 1 4 0 2 2 0 0 1-4 0zm9-1a1 1 0 1 0 0 2 1 1 0 0 0 0-2zm-2 1a2 2 0 1 1 4 0 2 2 0 0 1-4 0z"/>
-      </svg> 
+    <button class="hamburger-btn" id="hamburgerBtn">
+      <i class="fas fa-bars"></i>
     </button>
-      </header> 
+    
+    <h1>Tienda Online</h1>
+    
+    <div class="cart-icon-container">
+      <a href="#" id="cart-toggle" class="menu-item" style="color: white; text-decoration: none; font-size: 1.2rem;">
+        <i class="fas fa-shopping-cart"></i>
+        <span id="cart-count">0</span>
+      </a>
+    </div>
+  </header>
+  
+  <div class="menu-overlay" id="menuOverlay"></div>
+    
+  <div class="menu-container" id="menuContainer">
+       <!-- Input de búsqueda dentro del menú -->
+       <div class="menu-search">
+        <input class="input" id="searchInput" name="text" placeholder="Buscar..." type="search">
+      </div>
+    <div class="menu-section">
+      <div class="menu-title">Principal</div>
+      <a href="#" class="menu-item">
+        <i class="fas fa-home"></i>
+        <span class="menu-item-text">Inicio</span>
+      </a>
+      <a href="#" class="menu-item">
+        <i class="fas fa-chart-line"></i>
+        <span class="menu-item-text">Dashboard</span>
+      </a>
+      <a href="#" class="menu-item">
+        <i class="fas fa-calendar-alt"></i>
+        <span class="menu-item-text">Calendario</span>
+      </a>
+    </div>
+    
+    <div class="menu-section">
+      <div class="menu-title">Contenido</div>
+      <a href="#" class="menu-item">
+        <i class="fas fa-file-alt"></i>
+        <span class="menu-item-text">Documentos</span>
+      </a>
+      <a href="#" class="menu-item">
+        <i class="fas fa-image"></i>
+        <span class="menu-item-text">Galería</span>
+      </a>
+      <a href="#" class="menu-item">
+        <i class="fas fa-video"></i>
+        <span class="menu-item-text">Multimedia</span>
+      </a>
+    </div>
+    
+    <div class="menu-section">
+      <div class="menu-title">Configuración</div>
+      <a href="#" class="menu-item">
+        <i class="fas fa-cog"></i>
+        <span class="menu-item-text">Ajustes</span>
+      </a>
+      <a href="#" class="menu-item">
+        <i class="fas fa-user"></i>
+        <span class="menu-item-text">Perfil</span>
+      </a>
+      <a href="#" class="menu-item">
+        <i class="fas fa-sign-out-alt"></i>
+        <span class="menu-item-text">Cerrar sesión</span>
+      </a>
+    </div>
+  </div>
 
   <div class="added-notification" id="added-notification">Producto agregado al carrito</div>
 
@@ -70,7 +530,7 @@
       <button class="close-cart">&times;</button>
     </div>
     <div id="cart-items" class="cart-items">
-      <div class="empty-cart"><h4>Tu carrito está vacío</h4></div>
+      <div class="empty-cart">Tu carrito está vacío</div>
     </div>
     <div class="cart-footer">
       <div class="cart-total">
@@ -79,10 +539,132 @@
       <button id="checkout">Proceder al pago</button>
     </div>
   </aside>
-  <script src="https://cdn.jsdelivr.net/npm/quill@1.3.7/dist/quill.min.js"></script>
-  <script src="./JS/script_carrito.js"></script>
 
- 
+  <script>
+    //Funcion para agregar cosas al carrito 
+    const cartToggle = document.getElementById('cart-toggle');
+    const cart = document.getElementById('cart');
+    const cartItems = document.getElementById('cart-items');
+    const cartTotal = document.getElementById('cart-total');
+    const closeCartBtn = document.querySelector('.close-cart');
+    const cartCount = document.getElementById('cart-count');
+    const notification = document.getElementById('added-notification');
+
+    let carrito = [];
+
+    cartToggle.addEventListener('click', () => {
+      cart.classList.toggle('open');
+    });
+
+    closeCartBtn.addEventListener('click', () => {
+      cart.classList.remove('open');
+    });
+
+    function showNotification() {
+      notification.style.display = 'block';
+      setTimeout(() => {
+        notification.style.display = 'none';
+      }, 2000);
+    }
+
+    document.querySelectorAll('.add-to-cart').forEach(btn => {
+      btn.addEventListener('click', e => {
+        const card = e.target.closest('.card');
+        const id = card.dataset.id;
+        const title = card.dataset.title;
+        const price = parseFloat(card.dataset.price);
+        const color = card.dataset.color;
+        const size = card.dataset.size;
+        const image = card.dataset.image;
+
+        const itemIndex = carrito.findIndex(p => p.id === id);
+        if (itemIndex !== -1) {
+          carrito[itemIndex].quantity += 1;
+        } else {
+          carrito.push({ id, title, price, color, size, image, quantity: 1 });
+        }
+
+        renderCart();
+        updateCartCount();
+        showNotification();
+      });
+    });
+
+    function renderCart() {
+      if (carrito.length === 0) {
+        cartItems.innerHTML = '<div class="empty-cart">Tu carrito está vacío</div>';
+        cartTotal.textContent = '$0.00 MXN';
+        return;
+      }
+
+      cartItems.innerHTML = '';
+      let total = 0;
+
+      carrito.forEach(product => {
+        total += product.price * product.quantity;
+
+        const item = document.createElement('div');
+        item.classList.add('item');
+        item.innerHTML = `
+          <div class="item-image" style="background-image: url('${product.image}')"></div>
+          <div class="item-info">
+            <h3>${product.title}</h3>
+            <p>${product.color} / ${product.size}</p>
+            <p>$${(product.price * product.quantity).toFixed(2)} MXN</p>
+            <div class="quantity-controls">
+              <button onclick="updateQuantity('${product.id}', -1)">-</button>
+              <span>${product.quantity}</span>
+              <button onclick="updateQuantity('${product.id}', 1)">+</button>
+            </div>
+            <span class="remove" onclick="removeItem('${product.id}')">Eliminar</span>
+          </div>
+        `;
+        cartItems.appendChild(item);
+      });
+
+      cartTotal.textContent = `$${total.toFixed(2)} MXN`;
+    }
+
+    function updateCartCount() {
+      const count = carrito.reduce((total, item) => total + item.quantity, 0);
+      cartCount.textContent = count > 0 ? count : '';
+    }
+
+    function updateQuantity(id, delta) {
+      const index = carrito.findIndex(p => p.id === id);
+      if (index !== -1) {
+        carrito[index].quantity += delta;
+        if (carrito[index].quantity <= 0) {
+          carrito.splice(index, 1);
+        }
+        renderCart();
+        updateCartCount();
+      }
+    }
+
+    function removeItem(id) {
+      carrito = carrito.filter(p => p.id !== id);
+      renderCart();
+      updateCartCount();
+    }
+
+    updateCartCount();
+    //Funcion para desplegar menu de hamburguesa
+    const hamburgerBtn = document.getElementById('hamburgerBtn');
+    const menuOverlay = document.getElementById('menuOverlay');
+    const menuContainer = document.getElementById('menuContainer');
+    
+    hamburgerBtn.addEventListener('click', () => {
+        menuContainer.classList.toggle('active');
+        menuOverlay.classList.toggle('active');
+    });
+    
+    menuOverlay.addEventListener('click', () => {
+        menuContainer.classList.remove('active');
+        menuOverlay.classList.remove('active');
+    });
+  </script>
+  
+  
 </body>
-
 </html>

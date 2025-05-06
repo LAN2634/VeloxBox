@@ -20,6 +20,55 @@
             <button class="hamburger-btn" id="hamburgerBtn">
                 <i class="fas fa-bars"></i>
             </button>
+            <div class="menu-overlay" id="menuOverlay"></div>
+
+            <div class="menu-container" id="menuContainer">
+                <!-- Input de búsqueda dentro del menú -->
+                <div class="menu-search">
+                    <input class="input" id="searchInput" name="text" placeholder="Buscar..." type="search">
+                </div>
+
+                <div class="menu-section">
+                    <div class="menu-title">Principal</div>
+                    <a href="#" class="menu-item">
+                        <i class="fas fa-home"></i>
+                        <span class="menu-item-text">Inicio</span>
+                    </a>
+                    <a href="#" class="menu-item">
+                        <i class="fas fa-calendar-alt"></i>
+                        <span class="menu-item-text">Calendario</span>
+                    </a>
+                </div>
+        
+                <div class="menu-section">
+                    <div class="menu-title">Contenido</div>
+                    <a href="#" class="menu-item shirt-item">
+                        <i class="fas fa-tshirt"></i>
+                        <span class="menu-item-text">Playeras Deportivas</span>
+                    </a>
+                    <a href="#" class="menu-item pants-item">
+                        <i class="fas fa-running"></i>
+                        <span class="menu-item-text">Pants Deportivos</span>
+                    </a>
+                </div>
+        
+                <div class="menu-section">
+                    <div class="menu-title">Configuración</div>
+                    <a href="#" class="menu-item">
+                        <i class="fas fa-cog"></i>
+                        <span class="menu-item-text">Ajustes</span>
+                    </a>
+                    <a href="#" class="menu-item">
+                        <i class="fas fa-user"></i>
+                        <span class="menu-item-text">Perfil</span>
+                    </a>
+                    <a href="#" class="menu-item">
+                        <i class="fas fa-sign-out-alt"></i>
+                        <span class="menu-item-text">Cerrar sesión</span>
+                    </a>
+                </div>
+            </div>
+        
 
             <!-- Botón Velox Box - Versión corregida -->
             <button class="button" data-text="VELOX BOX">
@@ -27,8 +76,14 @@
                 <span class="hover-text">&nbsp;VELOX BOX&nbsp;</span>
             </button>
         </div>
-        <!--el input de busqueda-->
-        <div><input class="input" id="searchInput" name="text" placeholder="Buscar..." type="search"></div>
+
+        <button class="cartBtn" id="cart-toggle" aria-label="Carrito de compras">
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" viewBox="0 0 16 16">
+            <path d="M0 2.5A.5.5 0 0 1 .5 2H2a.5.5 0 0 1 .485.379L2.89 4H14.5a.5.5 0 0 1 .485.621l-1.5 6A.5.5 0 0 1 13 11H4a.5.5 0 0 1-.485-.379L1.61 3H.5a.5.5 0 0 1-.5-.5zM3.14 5l1.25 5h8.22l1.25-5H3.14zM5 13a1 1 0 1 0 0 2 1 1 0 0 0 0-2zm-2 1a2 2 0 1 1 4 0 2 2 0 0 1-4 0zm9-1a1 1 0 1 0 0 2 1 1 0 0 0 0-2zm-2 1a2 2 0 1 1 4 0 2 2 0 0 1-4 0z"/>
+          </svg> 
+        </button>
+        </div>
+   
     </header>
 
     <div class="menu-overlay" id="menuOverlay"></div>
