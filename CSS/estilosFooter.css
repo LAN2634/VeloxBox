@@ -1,0 +1,136 @@
+
+*{
+    margin: 0%;
+    padding: 0%;
+    box-sizing: border-box;
+    font-family: Arial, Helvetica, sans-serif
+}
+
+
+.footer_Row{
+    display: flex;
+    justify-content: space-between;
+    padding-top: 40px;
+    padding-left: 100px;
+    padding-right: 100px;
+    padding-bottom: 40px;
+}
+
+.footer_Col ul{
+    list-style: none;
+}
+
+.footer_Col h4{
+    color: #fff;
+    margin-bottom: 10px;
+    font-size: 20px;
+    font-weight: 700;
+}
+
+.footer_Col ul li{
+    padding: 5px 0;
+}
+
+.footer_Col ul li a{
+    color: #fff;
+    text-decoration: none;
+    font-size: 16px;
+    opacity: 0.7;
+    transition: 0.4s;
+}
+
+.footer_Col ul li a:hover{
+    opacity: 1;
+}
+
+.footer_Col input{
+    border: none;
+
+    width: 250px;
+    height: 35px;
+    display: block;
+    padding-left: 20px;
+    margin: 10px;
+}
+
+.footer_Col .inputSubmit {
+    background-color: #000000;
+    border: 1px solid;
+    color: #fff;
+    width: 250px;
+    height: 35px;
+    display: block;
+    margin: 10px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.footer_Col .inputSubmit:hover {
+    background-color: #ff0055;
+    transform: scale(1.05);
+}
+
+hr {
+    border: none;         /* Elimina el borde predeterminado */
+    height: 1px;        
+    background-color: #fff; /* Cambia el color de la línea a blanco */
+    opacity: 0.7;  
+}
+
+.footer_Bottom {
+    text-align:center;
+    font-size: 14px;
+    padding-top: 40px;
+    padding-bottom: 40px;
+    color: #fff;
+    background-color: #000; /* Asegura que siga el mismo fondo */
+}
+
+.footer_Col .social_Icons {
+    display: flex;
+    justify-content: center; /* Centra los íconos horizontalmente */
+    align-items: center; /* Asegura alineación vertical si es necesario */
+    margin-top: 20px; /* Ajusta el espaciado superior si es necesario */
+}
+
+.footer_Col .social_Icons a{
+    display: inline-block;
+    color: #fff;
+    margin: 0 25px;
+    scale: 1.5;
+    transition: all 0.3s ease;
+}
+
+.footer_Col .social_Icons a:hover {
+    color: #ff0055;
+    transform: scale(1.2);
+}
+
+/*Dejar el footer debajo*/
+html, body {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+main {
+    flex: 1; /* Ocupa el espacio disponible para empujar el footer hacia abajo */
+}
+
+footer {
+    background-color: #000000;
+    color: #fff;
+}
+
+@media (max-width: 767.98px) {
+    .contact-method, .brand-card {
+    margin-bottom: 15px;
+    }
+}
+  /* Para móviles */
+@media (max-width: 767.98px) {
+    .modal .col-4 {
+      flex: 0 0 50%; /* 2 columnas en móvil */
+    max-width: 50%;
+    }
+}
