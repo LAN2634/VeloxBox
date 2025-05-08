@@ -19,3 +19,24 @@ window.onload = function () {
  });
 
  //AQUI UA ACABO
+
+//y aqui empezamos con hacer la informacion despegable
+document.querySelectorAll('.btn-desplegar').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const content = btn.nextElementSibling;
+      content.style.display = content.style.display === 'block' ? 'none' : 'block';
+    });
+  });
+  
+  const botonesTalla = document.querySelectorAll('.talla');
+
+  botonesTalla.forEach(boton => {
+    boton.addEventListener('click', () => {
+      // Quitar clase activa de todos los botones
+      botonesTalla.forEach(btn => btn.classList.remove('activa'));
+      
+      // Agregar clase activa al botón clickeado
+      boton.classList.add('activa');
+    });
+  });
+  
