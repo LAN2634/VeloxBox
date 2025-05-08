@@ -1,0 +1,836 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
+    integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg=="
+    crossorigin="anonymous" referrerpolicy="no-referrer" />
+  <title>Tienda Online</title>
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: Arial, Helvetica, sans-serif;
+    }
+
+    body {
+      background: #e5e5e5;
+      color: #111;
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
+    }
+
+    /* HEADER STYLES */
+    header {
+        background: #000;
+        color: white;
+        padding: 1rem 2rem; /* más delgado */
+        height: 80px; /* altura fija más baja */
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        position: fixed;
+        top: 0;
+        width: 100%;
+        z-index: 100;
+      }
+      
+      
+
+    .header-left {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+    }
+
+    .container {
+      padding: 2rem;
+      margin-top: 70px;
+      flex: 1;
+    }
+
+    /* Estilos del carrito */
+    .cart-icon-container {
+      display: flex;
+      align-items: center;
+      gap: 5px;
+    }
+
+    /* Menú hamburguesa */
+    .hamburger-btn {
+      background: none;
+      border: none;
+      color: white;
+      font-size: 28px;
+      cursor: pointer;
+      padding: 10px 15px;
+      transition: transform 0.3s;
+    }
+
+    .hamburger-btn:hover {
+      transform: scale(1.1);
+    }
+
+    .menu-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 10%;
+      background-color: rgba(0, 0, 0, 0.5);
+      z-index: 999;
+      opacity: 0;
+      visibility: hidden;
+      transition: opacity 0.3s, visibility 0.3s;
+    }
+
+    .menu-overlay.active {
+      opacity: 1;
+      visibility: visible;
+    }
+
+    .menu-container {
+      position: fixed;
+      top: 70px;
+      left: 0;
+      width: 300px;
+      height: calc(100vh - 70px);
+      background-color: #222;
+      transform: translateX(-100%);
+      transition: transform 0.3s ease;
+      z-index: 1000;
+      overflow-y: auto;
+      padding: 20px 0;
+    }
+
+    .menu-container.active {
+      transform: translateX(0);
+    }
+
+    .menu-section {
+      margin-bottom: 25px;
+      border-bottom: 1px solid #333;
+      padding-bottom: 15px;
+    }
+
+    .menu-section:last-child {
+      border-bottom: none;
+    }
+
+    .menu-title {
+      color: #aaa;
+      font-size: 14px;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      padding: 0 25px 10px;
+      margin-bottom: 10px;
+    }
+
+    .menu-item {
+      display: flex;
+      align-items: center;
+      color: white;
+      text-decoration: none;
+      padding: 12px 25px;
+      transition: background-color 0.2s;
+    }
+
+    .menu-item:hover {
+      background-color: #333;
+    }
+
+    .menu-item i {
+      margin-right: 15px;
+      font-size: 20px;
+      width: 24px;
+      text-align: center;
+    }
+
+    .menu-item-text {
+      font-size: 16px;
+    }
+
+    /* Input de búsqueda */
+    .input {
+      max-width: 300px;
+      background-color: #f5f5f5;
+      color: #000000;
+      padding: .15rem .5rem;
+      min-height: 30px;
+      border-radius: 4px;
+      outline: none;
+      border: none;
+      line-height: 1.15;
+      box-shadow: 0px 10px 20px -18px;
+    }
+        
+    input:focus {
+      border-bottom: 2px solid #000000;
+      border-radius: 4px 4px 2px 2px;
+    }
+
+    input:hover {
+      outline: 1px solid lightgrey;
+    }
+
+    .menu-search {
+      padding: 0 25px 20px 25px;
+      border-bottom: 1px solid #333;
+      margin-bottom: 20px;
+    }
+
+    /* Botón VELOX BOX */
+    .button {
+      margin: 0;
+      height: auto;
+      background: transparent;
+      padding: 0;
+      border: none;
+      cursor: pointer;
+      min-width: 200px;
+      text-align: left;
+    }
+
+    .button {
+      --border-right: 6px;
+      --text-stroke-color: rgba(255, 255, 255, 0.6);
+      --animation-color: #ffffff;
+      --fs-size: 1.8em;
+      letter-spacing: 3px;
+      text-decoration: none;
+      font-size: var(--fs-size);
+      font-family: "Arial";
+      position: relative;
+      text-transform: uppercase;
+      color: transparent;
+      -webkit-text-stroke: 1px var(--text-stroke-color);
+      display: inline-block;
+      overflow: visible;
+    }
+
+    .actual-text,
+    .hover-text {
+      white-space: nowrap;
+    }
+
+    .hover-text {
+      position: absolute;
+      box-sizing: border-box;
+      color: var(--animation-color);
+      width: 0%;
+      left: 0;
+      top: 0;
+      border-right: var(--border-right) solid var(--animation-color);
+      overflow: hidden;
+      transition: 0.5s;
+      -webkit-text-stroke: 1px var(--animation-color);
+    }
+
+    .button:hover .hover-text {
+      width: 100%;
+      filter: drop-shadow(0 0 23px var(--animation-color));
+    }
+
+    /* FOOTER STYLES */
+    .footer_Row {
+      display: flex;
+      justify-content: space-between;
+      padding-top: 40px;
+      padding-left: 100px;
+      padding-right: 100px;
+      padding-bottom: 40px;
+    }
+
+    .footer_Col ul {
+      list-style: none;
+    }
+
+    .footer_Col h4 {
+      color: #fff;
+      margin-bottom: 10px;
+      font-size: 20px;
+      font-weight: 700;
+    }
+
+    .footer_Col ul li {
+      padding: 5px 0;
+    }
+
+    .footer_Col ul li a {
+      color: #fff;
+      text-decoration: none;
+      font-size: 16px;
+      opacity: 0.7;
+      transition: 0.4s;
+    }
+
+    .footer_Col ul li a:hover {
+      opacity: 1;
+    }
+
+    .footer_Col input {
+      border: none;
+      width: 250px;
+      height: 35px;
+      display: block;
+      padding-left: 20px;
+      margin: 10px;
+    }
+
+    .footer_Col .inputSubmit {
+      background-color: #000000;
+      border: 1px solid;
+      color: #fff;
+      width: 250px;
+      height: 35px;
+      display: block;
+      margin: 10px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    .footer_Col .inputSubmit:hover {
+      background-color: #ff0055;
+      transform: scale(1.05);
+    }
+
+    hr {
+      border: none;
+      height: 1px;
+      background-color: #fff;
+      opacity: 0.7;
+    }
+
+    .footer_Bottom {
+      text-align: center;
+      font-size: 14px;
+      padding-top: 40px;
+      padding-bottom: 40px;
+      color: #fff;
+      background-color: #000;
+    }
+
+    .footer_Col .social_Icons {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      margin-top: 20px;
+    }
+
+    .footer_Col .social_Icons a {
+      display: inline-block;
+      color: #fff;
+      margin: 0 25px;
+      scale: 1.5;
+      transition: all 0.3s ease;
+    }
+
+    .footer_Col .social_Icons a:hover {
+      color: #ff0055;
+      transform: scale(1.2);
+    }
+
+    footer {
+      background-color: #000000;
+      color: #fff;
+    }
+
+    /* Responsive */
+    @media (max-width: 768px) {
+      .button {
+        min-width: 150px;
+        font-size: 1.4em;
+      }
+      
+      .footer_Row {
+        flex-direction: column;
+        padding-left: 20px;
+        padding-right: 20px;
+      }
+      
+      .footer_Col {
+        margin-bottom: 30px;
+      }
+      
+      .footer_Col input,
+      .footer_Col .inputSubmit {
+        width: 100%;
+      }
+    }
+
+
+    /*Estos son los estilos de el cuerpo todo lo que esta dentro de el main */
+    /* Estilos para la pestaña de producto */
+.pestanaProducto {
+    margin-top: 70px; /* Compensar el header fixed */
+}
+
+.pagina-grid {
+    display: grid;
+    grid-template-columns: repeat(12, 1fr);
+    gap: 20px;
+    padding: 2rem;
+    background-color: #e5e5e5;
+}
+
+.infoProducto {
+    grid-column: 2 / 5;
+}
+
+.infoProducto h2 {
+    font-size: 26px;
+    font-weight: bold;
+    margin-bottom: 20px;
+}
+
+.infoProducto h3 {
+    font-size: 20px;
+    margin-bottom: 5px;
+    margin-left: 18px;
+}
+
+.infoProducto p {
+    font-size: 16px;
+    margin-top: 20px;
+    font-weight: normal;
+}
+
+.imgProducto {
+    grid-column: 5 / 8;
+    background-color: #d6d6d6;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 1rem;
+    border-radius: 2px;
+    height: 380px;
+    width: 380px;
+}
+
+.imgProducto img.img-producto {
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: contain;
+    border-radius: 8px;
+}
+
+.opcionesProducto {
+    grid-column: 9 / 13;
+}
+
+.tallas {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 20px;
+}
+
+.talla {
+    background: #e5e5e5;
+    color: black;
+    padding: 0.5rem 1rem;
+    transition: background 0.3s, color 0.3s;
+    cursor: pointer;
+    border: none;
+    margin-left: 10px;
+}
+
+.talla:hover {
+    background: #fcfcfc;
+}
+
+.talla.activa {
+    background: black;
+    color: white;
+}
+
+.comprar {
+    background: black;
+    color: white;
+    border: none;
+    padding: 0.5rem;
+    width: 65%;
+    cursor: pointer;
+    transition: background 0.3s;
+    margin-top: 30px;
+    margin-left: 10px;
+}
+
+/* Lista desplegable */
+.listaDesplegable {
+    list-style: none;
+    padding: 0;
+}
+
+.item-desplegable {
+    margin-bottom: 10px;
+}
+
+.btn-desplegar {
+    background: none;
+    border: none;
+    color: #000;
+    font-weight: bold;
+    font-size: 1rem;
+    cursor: pointer;
+    display: block;
+    text-align: left;
+    width: 100%;
+    padding: 0;
+    margin-top: 20px;
+}
+
+.contenido-desplegable {
+    display: none;
+    padding: 0.5rem 1rem;
+    background-color: #f2f2f2;
+    border-left: 3px solid #000;
+    margin-top: 5px;
+    border-radius: 4px;
+}
+
+/* Productos similares */
+.similares {
+    grid-column: 1 / -1;
+    padding: 2rem;
+}
+
+.productosSimilares {
+    grid-column: 2 / 11;
+}
+
+.product-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1.5rem;
+    padding-left: 2rem;
+    padding-right: 2rem;
+}
+
+.card {
+    width: 80%;
+    height: 80%;
+    background: white;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    display: flex;
+    flex-direction: column;
+    transition: transform 0.3s;
+}
+
+.card:hover {
+    transform: translateY(-5px);
+}
+
+.image {
+    height: 200px;
+    background-size: cover;
+    background-position: center;
+    border-radius: 8px;
+}
+
+.info {
+    padding: 1rem;
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+.info h2 {
+    font-size: 1rem;
+    margin-bottom: 0.25rem;
+}
+
+.info p {
+    margin-bottom: 1rem;
+}
+
+.add-to-cart {
+    background: black;
+    color: white;
+    border: none;
+    padding: 0.5rem;
+    width: 100%;
+    cursor: pointer;
+    transition: background 0.3s;
+    margin-top: auto;
+}
+
+.add-to-cart:hover {
+    background: #333;
+}
+
+/* Enlaces */
+a {
+    color: black;
+    padding: 25px;
+    margin-top: 50px;
+    margin-left: 40px;
+}
+
+/* Precio */
+h5 {
+    font-size: 18px;
+    margin-top: 20px;
+    margin-left: 60px;
+    font-weight: normal;
+}
+
+
+    @media (max-width: 480px) {
+      header {
+        padding: 1rem;
+      }
+      
+      .button {
+        min-width: 120px;
+        font-size: 1.2em;
+        letter-spacing: 1px;
+      }
+      
+      .footer_Row {
+        padding-left: 15px;
+        padding-right: 15px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <header>
+    <div class="header-left">
+      <button class="hamburger-btn" id="hamburgerBtn">
+        <i class="fas fa-bars"></i>
+      </button>
+
+      <button class="button" data-text="VELOX BOX">
+        <span class="actual-text">&nbsp;VELOX BOX&nbsp;</span>
+        <span class="hover-text">&nbsp;VELOX BOX&nbsp;</span>
+      </button>
+    </div>
+
+    <div class="cart-icon-container">
+      <a href="#" id="cart-toggle" class="menu-item" style="color: white; text-decoration: none; font-size: 1.2rem;">
+        <i class="fas fa-shopping-cart"></i>
+        <span id="cart-count">0</span>
+      </a>
+    </div>
+  </header>
+
+  <div class="menu-overlay" id="menuOverlay"></div>
+
+  <div class="menu-container" id="menuContainer">
+    <!-- Input de búsqueda dentro del menú -->
+    <div class="menu-search">
+      <input class="input" id="searchInput" name="text" placeholder="Buscar..." type="search">
+    </div>
+
+    <div class="menu-section">
+      <div class="menu-title">Principal</div>
+      <a href="#" class="menu-item">
+        <i class="fas fa-home"></i>
+        <span class="menu-item-text">Inicio</span>
+      </a>
+      
+    </div>
+
+    <div class="menu-section">
+        <div class="menu-title">Contenido</div>
+        <!--Icono de playera-->
+        <a href="#" class="menu-item">
+            <i class="fas fa-tshirt"></i>
+            <span class="menu-item-text">Playera</span>
+        </a>
+        <!--Icono de Pans-->
+        <a href="#" class="menu-item">
+            <i class="fas fa-running"></i>
+            <span class="menu-item-text">Pans</span>
+        </a>
+        <!--Icono de guantes de box-->
+        <a href="#" class="menu-item">
+            <i class="fas fa-hand-rock"></i>
+            <span class="menu-item-text">Guantes de Box</span>
+        </a>
+        <!--Icono de cascos a corregir-->
+        <a href="#" class="menu-item">
+            <i class="fas fa-hard-hat"></i>
+            <span class="menu-item-text">Cascos de Box</span>
+        </a>
+
+    </div>
+
+
+    <div class="menu-section">
+        <div class="menu-title">Configuración</div>
+        <a href="#" class="menu-item">
+            <i class="fas fa-cog"></i>
+            <span class="menu-item-text">Ajustes</span>
+        </a>
+        <a href="#" class="menu-item">
+            <i class="fas fa-user"></i>
+            <span class="menu-item-text">Perfil</span>
+        </a>
+        <a href="#" class="menu-item">
+            <i class="fas fa-sign-out-alt"></i>
+            <span class="menu-item-text">Cerrar sesión</span>
+      </a>
+    </div>
+  </div>
+
+  <main class="pestanaProducto">
+    <section class="pagina-grid">
+        <!--Parte de la informacion columna 2-->
+        <div class="infoProducto">
+            <h2>Ver más +</h2>
+            <h3>Playera "Disciplina"</h3>
+            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Ut numquam similique eaque! Ducimus iusto veritatis cum dolor, quis qui rem corrupti aspernatur autem magnam beatae.</p>
+            <ul class="listaDesplegable">
+                <li class="item-desplegable">
+                  <button class="btn-desplegar">+ Materiales</button>
+                  <div class="contenido-desplegable">
+                    <p>100% algodón orgánico, suave al tacto y resistente al uso.</p>
+                  </div>
+                </li>
+                <li class="item-desplegable">
+                  <button class="btn-desplegar">+ Guía de cuidados</button>
+                  <div class="contenido-desplegable">
+                    <p>Lavar con colores similares, no usar blanqueador, secado al aire.</p>
+                  </div>
+                </li>
+                <li class="item-desplegable">
+                  <button class="btn-desplegar">+ Entrega, pago y devolución</button>
+                  <div class="contenido-desplegable">
+                    <p>Entrega en 3-5 días hábiles. Pago con tarjeta o efectivo. 15 días para devoluciones.</p>
+                  </div>
+                </li>
+              </ul>
+              
+        </div>
+        
+        <!--Parte de la imagen columna 5-->
+        <div class="imgProducto">
+            <img src="./IMG/playera1.jpg"  class="img-producto">
+        </div>
+        
+        <div class="opcionesProducto">
+            <div class="tallas">
+                <button class="talla"><h3>S</h3></button>
+                <button class="talla"><h3>M</h3></button>
+                <button class="talla"><h3>L</h3></button>
+            </div>
+            <a href="#">Guía de tallas</a>
+            <p data-price="640"><h5>$640.00 MXN</h5></p>
+            <button class="comprar">Comprar</button>
+        </div>
+    </section>
+
+    <section class="similares">
+        <h3>Similares +</h3>
+        <div class="productosSimilares">
+            <div class="product-grid">
+                <!-- Producto 1 -->
+                <div class="card" data-id="1" data-title="Playera “Fe”" data-price="640" data-color="Blanca" data-size="M - L" data-image="https://cdn1.coppel.com/images/catalog/mkp/6283/14000/628313839-1.jpg">
+                  <div class="image" style="background-image: url('https://cdn1.coppel.com/images/catalog/mkp/6283/14000/628313839-1.jpg')"></div>
+                  <div class="info">
+                    <h2>Playera “Fe”</h2>
+                    <p>$640.00 MXN</p>
+                    <button class="add-to-cart">Comprar ahora</button>
+                  </div>
+                </div>
+
+                <!-- Producto 2 -->
+                <div class="card" data-id="2" data-title="Playera “Trabajo Duro”" data-price="640" data-color="Negra" data-size="M" data-image="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT1zIPPiCzJcYoJxiy_dZzwYcuNN3Mtj1P1Mw&s">
+                    <div class="image" style="background-image: url('https://i5.walmartimages.com/asr/b39fadc7-b2f2-4ee9-8455-6987e60f5f78.e77c7bee9834fb44203577a955932899.jpeg?odnHeight=612&odnWidth=612&odnBg=FFFFFF')"></div>
+                    <div class="info">
+                    <h2>Playera “Trabajo Duro”</h2>
+                    <p>$640.00 MXN</p>
+                    <button class="add-to-cart">Comprar ahora</button>
+                    </div>
+                </div>
+
+                <!-- Producto 3 -->
+                <div class="card" data-id="3" data-title="Playera Valentía" data-price="640" data-color="Rosa" data-size="S - M" data-image="https://cdn1.coppel.com/images/catalog/mkp/6283/14000/628313156-1.jpg">
+                    <div class="image" style="background-image: url('https://cdn1.coppel.com/images/catalog/mkp/6283/14000/628313156-1.jpg')"></div>
+                    <div class="info">
+                    <h2>Playera “Valentía”</h2>
+                    <p>$640.00 MXN</p>
+                    <button class="add-to-cart">Comprar ahora</button>
+                    </div>
+                </div>
+
+                <!-- Producto 4 -->
+                <div class="card" data-id="4" data-title="Playera “Agresividad”" data-price="640" data-color="Azul" data-size="L" data-image="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQbs8XCUEtjP7cl6v4ruVZot5Hhxj1-dmrCUQ&s">
+                    <div class="image" style="background-image: url('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQbs8XCUEtjP7cl6v4ruVZot5Hhxj1-dmrCUQ&s')"></div>
+                    <div class="info">
+                    <h2>Playera “Agresividad”</h2>
+                    <p>$640.00 MXN</p>
+                    <button class="add-to-cart">Comprar ahora</button>
+                    </div>
+                </div>
+        </div>
+
+    </section>
+
+
+</main>
+
+  <footer>
+    <div class="footerContainer">
+      <div class="footer_Row">
+        <!--Primera columna-->
+        <div class="footer_Col">
+          <h4>¿Necesitas ayuda?</h4>
+          <ul>
+            <li><a href="">Contáctanos</a></li>
+            <li><a href="">Más Vendidos</a></li>
+            <li><a href="">Novedades</a></li>
+          </ul>
+        </div>
+        <!--Segunda columna-->
+        <div class="footer_Col">
+          <h4>Atención al cliente</h4>
+          <ul>
+            <li><a href="">Preguntas Frecuentes</a></li>
+            <li><a href="">Entregas</a></li>
+            <li><a href="">Formas de pago</a></li>
+          </ul>
+        </div>
+        <!--Tercera columna-->
+        <div class="footer_Col">
+          <h4>Acerca de nosotros</h4>
+          <ul>
+            <li><a href="">Acerca de Velox</a></li>
+            <li><a href="">Aviso de Privacidad</a></li>
+            <li><a href="">Términos y condiciones</a></li>
+          </ul>
+        </div>
+        <!--Cuarta columna-->
+        <div class="footer_Col">
+          <h4>Newsletter</h4>
+          <input type="text" placeholder="Ingrese su nombre" class="inputNombre" />
+          <input type="text" placeholder="Ingrese su correo" class="inputCorreo" />
+          <input type="submit" value="Regístrame" class="inputSubmit" />
+          <div class="social_Icons">
+            <a href=""><i class="fa-brands fa-facebook"></i></a>
+            <a href=""><i class="fa-brands fa-instagram"></i></a>
+            <a href=""><i class="fa-brands fa-x-twitter"></i></a>
+            <a href=""><i class="fa-brands fa-youtube"></i></a>
+          </div>
+        </div>
+      </div>
+      <hr />
+      <div class="footer_Bottom">
+        <div class="footer_Col">
+          <p>&#169;2025, Velox Boxing. Todos los derechos reservados.</p>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <script src="JS/script_compartido.js"></script>
+</body>
+</html>

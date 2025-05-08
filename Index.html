@@ -336,6 +336,90 @@
             color: #fff;
         }
 
+
+        /* Estructura Grid */
+        .parent {
+            display: grid;
+            grid-template-columns: repeat(10, 1fr);
+            grid-template-rows: repeat(10, 1fr);
+            gap: 10px;
+            min-height: 100vh;
+        }
+        
+        .div1 { grid-column: 1 / -1; } /* Equivalente a span 10 */
+        .div5 { grid-column: 1 / -1; grid-row: 2 / span 3; }
+        .div6 { grid-column: 1 / -1; grid-row: 5; }
+        .div7 { grid-column: 1 / -1; grid-row: 6; } /* Ticker delgado */
+        .div8 { grid-column: 1 / -1; grid-row: 7 / span 3; }
+        .div9 { grid-column: 1 / -1; grid-row: 10; }
+
+        /* Estilos comunes para las secciones */
+        .div1, .div5, .div6, .div7, .div8, .div9 {
+            background: white;
+            padding: 1rem;
+            border-radius: 4px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+        }
+
+        /* Header especial */
+        .div1 {
+            background: #000;
+            color: white;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0.8rem 1.5rem;
+        }
+
+        /* Ticker ultra delgado (1cm) */
+        .div7 {
+            background: #000;
+            color: white;
+            padding: 0; /* Eliminamos padding vertical */
+            height: 1cm; /* Altura exacta de 1 centímetro */
+            display: flex;
+            align-items: center;
+            overflow: hidden;
+        }
+        /*Tiempo que tarda el el ticker en volver al inicio*/
+        .ticker-content {
+            display: flex;
+            animation: ticker-scroll 30s linear infinite;
+        }
+
+        .ticker-item {
+            display: flex;
+            align-items: center;
+            white-space: nowrap;
+            margin-right: 40px;
+            font-size: 0.8rem; /* Tamaño del texto más pequeño */
+            font-weight: 500;
+            height: 1cm; /* Altura para que el contenedor se vea delgado */
+            line-height: 1cm; /* Centrado vertical perfecto dentro del grid */
+            padding: 0 10px;
+        }
+        /*Cambio de color a los items del ticker infinite*/
+        .ticker-item i {
+            margin-right: 8px;
+            color: #ffffff;
+            font-size: 0.9rem;
+        }
+
+        @keyframes ticker-scroll {
+            0% { transform: translateX(0); }
+            100% { transform: translateX(-50%); }
+        }
+
+        /* Efecto hover para pausar */
+        .div7:hover .ticker-content {
+            animation-play-state: paused;
+        }
+
+
+
+
+
+
         /* Responsive */
         @media (max-width: 768px) {
             .button {
@@ -415,7 +499,7 @@
                 <i class="fas fa-home"></i>
                 <span class="menu-item-text">Inicio</span>
             </a>
-           
+
         </div>
 
         <div class="menu-section">
@@ -439,11 +523,10 @@
             <a href="#" class="menu-item">
                 <i class="fas fa-hard-hat"></i>
                 <span class="menu-item-text">Cascos de Box</span>
-              </a>
-              
-
+            </a>
 
         </div>
+
 
         <div class="menu-section">
             <div class="menu-title">Configuración</div>
@@ -463,9 +546,76 @@
     </div>
 
     <main class="container">
-        <!-- Contenido principal irá aquí -->
-        <h1>Bienvenido a Velox Box</h1>
-        <p>Este es el contenido principal de tu página web.</p>
+
+        <!-- Sección 1 -->
+        <div class="div5">
+            <h2>Productos</h2>
+            <p>aqui que vamos a poner</p>
+        </div>
+        
+        <!-- Sección 2 -->
+        <div class="div6">
+            <h2>este espacio es grande de 3</h2>
+            <p>Pensaba en poner el carrusel aqui</p>
+        </div>
+        
+        <!-- Ticker infinito delgado / Duplicar para agregar contenido -->
+        <div class="div7">
+            <div class="ticker-content">
+
+                <div class="ticker-item">
+                    <i class="fas fa-shipping-fast"></i>
+                    <span>Envíos express en 24h</span>
+                </div>
+
+                <div class="ticker-item">
+                    <i class="fas fa-percentage"></i>
+                    <span>30% OFF en segunda unidad</span>
+                </div>
+
+                <div class="ticker-item">
+                    <i class="fas fa-trophy"></i>
+                    <span>Equipamiento profesional</span>
+                </div>
+
+                <div class="ticker-item">
+                    <i class="fas fa-undo"></i>
+                    <span>Devoluciones gratuitas</span>
+                </div>
+                
+                <div class="ticker-item">
+                    <i class="fas fa-shipping-fast"></i>
+                    <span>Envíos express en 24h</span>
+                </div>
+
+                <div class="ticker-item">
+                    <i class="fas fa-shipping-fast"></i>
+                    <span>Envíos express en 24h</span>
+                </div>
+
+                <div class="ticker-item">
+                    <i class="fas fa-percentage"></i>
+                    <span>30% OFF en segunda unidad</span>
+                </div>
+
+                <div class="ticker-item">
+                    <i class="fas fa-trophy"></i>
+                    <span>Equipamiento profesional</span>
+                </div>
+
+                <div class="ticker-item">
+                    <i class="fas fa-undo"></i>
+                    <span>Devoluciones gratuitas</span>
+                </div>
+
+                <div class="ticker-item">
+                    <i class="fas fa-shipping-fast"></i>
+                    <span>Envíos express en 24h</span>
+                </div>
+
+            </div>
+        </div>
+
     </main>
 
     <footer>
