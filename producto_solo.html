@@ -11,90 +11,16 @@
 </head>
 <body>
     <!--ESTE ES EN SI TODO EL HEADER HASTA EL MENU DE HAMBURGUESA-->
-    <header>
-        <div class="header-left">
-          <button class="hamburger-btn" id="hamburgerBtn">
-            <i class="fas fa-bars"></i>
-          </button>
-          
-          <button class="button" data-text="VELOX BOX">
-            <span class="actual-text">&nbsp;VELOX BOX&nbsp;</span>
-            <span class="hover-text">&nbsp;VELOX BOX&nbsp;</span>
-          </button>
-        </div>
-        
-        <div class="cart-icon-container">
-          <a href="#" id="cart-toggle" class="menu-item" style="color: white; text-decoration: none; font-size: 1.2rem;">
-            <i class="fas fa-shopping-cart"></i>
-            <span id="cart-count">0</span>
-          </a>
-        </div>
-      </header>
-      
-      <div class="menu-overlay" id="menuOverlay"></div>
-        
-      <div class="menu-container" id="menuContainer">
-        <!-- Input de búsqueda dentro del menú -->
-        <div class="menu-search">
-          <input class="input" id="searchInput" name="text" placeholder="Buscar..." type="search">
-        </div>
-        
-        <div class="menu-section">
-          <div class="menu-title">Principal</div>
-          <a href="#" class="menu-item">
-            <i class="fas fa-home"></i>
-            <span class="menu-item-text">Inicio</span>
-          </a>
-          <a href="#" class="menu-item">
-            <i class="fas fa-chart-line"></i>
-            <span class="menu-item-text">Dashboard</span>
-          </a>
-          <a href="#" class="menu-item">
-            <i class="fas fa-calendar-alt"></i>
-            <span class="menu-item-text">Calendario</span>
-          </a>
-        </div>
-        
-        <div class="menu-section">
-          <div class="menu-title">Contenido</div>
-          <a href="#" class="menu-item">
-            <i class="fas fa-file-alt"></i>
-            <span class="menu-item-text">Documentos</span>
-          </a>
-          <a href="#" class="menu-item">
-            <i class="fas fa-image"></i>
-            <span class="menu-item-text">Galería</span>
-          </a>
-          <a href="#" class="menu-item">
-            <i class="fas fa-video"></i>
-            <span class="menu-item-text">Multimedia</span>
-          </a>
-        </div>
-        
-        <div class="menu-section">
-          <div class="menu-title">Configuración</div>
-          <a href="#" class="menu-item">
-            <i class="fas fa-cog"></i>
-            <span class="menu-item-text">Ajustes</span>
-          </a>
-          <a href="#" class="menu-item">
-            <i class="fas fa-user"></i>
-            <span class="menu-item-text">Perfil</span>
-          </a>
-          <a href="#" class="menu-item">
-            <i class="fas fa-sign-out-alt"></i>
-            <span class="menu-item-text">Cerrar sesión</span>
-          </a>
-        </div>
-      </div>
-    
+  <header>
+
+  </header>
 
     <main class="pestanaProducto">
         <section class="pagina-grid">
             <!--Parte de la informacion columna 2-->
             <div class="infoProducto">
                 <h2>Ver más +</h2>
-                <h3>Playera "Disciplina"</h3>
+                <h3>Playera Disciplina</h3>
                 <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Ut numquam similique eaque! Ducimus iusto veritatis cum dolor, quis qui rem corrupti aspernatur autem magnam beatae.</p>
                 <ul class="listaDesplegable">
                     <li class="item-desplegable">
@@ -121,7 +47,7 @@
             
             <!--Parte de la imagen columna 5-->
             <div class="imgProducto">
-                <img src="./IMG/playera1.jpg"  class="img-producto">
+                <img src="https://i5-mx.walmartimages.com/mg/gm/1p/images/product-images/img_large/00750052718936l.jpg?odnHeight=612&odnWidth=612&odnBg=FFFFFF"  class="img-producto">
             </div>
             
             <div class="opcionesProducto">
@@ -131,7 +57,7 @@
                     <button class="talla"><h3>L</h3></button>
                 </div>
                 <a href="#">Guía de tallas</a>
-                <p data-price="640"><h5>$640.00 MXN</h5></p>
+                <h5 data-price="640">$640.00 MXN</h5>
                 <button class="comprar">Comprar</button>
             </div>
         </section>
@@ -186,69 +112,7 @@
 
     </main>
 
-    <footer>
-        <div class="footerContainer">
-          <div class="footer_Row">
-            <!--Primera columna-->
-            <div class="footer_Col">
-              <h4>¿Necesitas ayuda?</h4>
-              <ul>
-                <li><a href="">Contáctanos</a></li>
-                <li><a href="">Más Vendidos</a></li>
-                <li><a href="">Novedades</a></li>
-  
-              </ul>
-            </div>
-            <!--Segunda columna-->
-            <div class="footer_Col">
-              <h4>Atención al cliente</h4>
-              <ul>
-           
-                <li><a href="">Preguntas Frecuentes</a></li>
-                <li><a href="">Entregas</a></li>
-                <li><a href="">Formas de pago</a></li>
-              </ul>
-            </div>
-            <!--Tercera columna-->
-            <div class="footer_Col">
-              <h4>Acerca de nosotros</h4>
-              <ul>
-                <li><a href="">Acerca de Velox</a></li>
-                <li><a href="">Aviso de Privacidad</a></li>
-                <li><a href="">Términos y condiciones</a></li>
-               
-            </div>
-            <!--Cuarta columna-->
-            <div class="footer_Col">
-              <h4>Newsletter</h4>
-              <input
-                type="text"
-                placeholder="Ingrese su nombre"
-                class="inputNombre"
-              />
-              <input
-                type="text"
-                placeholder="Ingrese su correo"
-                class="inputCorreo"
-              />
-              <input type="submit" value="Regístrame" class="inputSubmit" />
-              <div class="social_Icons">
-                <a href=""><i class="fa-brands fa-facebook"></i></a>
-                <a href=""><i class="fa-brands fa-instagram"></i></a>
-                <a href=""><i class="fa-brands fa-x-twitter"></i></a>
-                <a href=""><i class="fa-brands fa-youtube"></i></a>
-              </div>
-            </div>
-            <!--Redes sociales y copyright-->
-          </div>
-          <hr />
-          <div class="footer_Bottom">
-            <div class="footer_Col">
-              <p>&#169;2025, Velox Boxing. Todos los derechos reservados.</p>
-            </div>
-          </div>
-        </div>
-      </footer>
+   
 
     <script src="./JS/script_product.js"></script>
     
