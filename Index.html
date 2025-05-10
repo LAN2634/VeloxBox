@@ -345,20 +345,49 @@
             gap: 10px;
             min-height: 100vh;
         }
-        
-        .div1 { grid-column: 1 / -1; } /* Equivalente a span 10 */
-        .div5 { grid-column: 1 / -1; grid-row: 2 / span 3; }
-        .div6 { grid-column: 1 / -1; grid-row: 5; }
-        .div7 { grid-column: 1 / -1; grid-row: 6; } /* Ticker delgado */
-        .div8 { grid-column: 1 / -1; grid-row: 7 / span 3; }
-        .div9 { grid-column: 1 / -1; grid-row: 10; }
+
+        .div1 {
+            grid-column: 1 / -1;
+        }
+
+        /* Equivalente a span 10 */
+        .div5 {
+            grid-column: 1 / -1;
+            grid-row: 2 / span 3;
+        }
+
+        .div6 {
+            grid-column: 1 / -1;
+            grid-row: 5;
+        }
+
+        .div7 {
+            grid-column: 1 / -1;
+            grid-row: 6;
+        }
+
+        /* Ticker delgado */
+        .div8 {
+            grid-column: 1 / -1;
+            grid-row: 7 / span 3;
+        }
+
+        .div9 {
+            grid-column: 1 / -1;
+            grid-row: 10;
+        }
 
         /* Estilos comunes para las secciones */
-        .div1, .div5, .div6, .div7, .div8, .div9 {
+        .div1,
+        .div5,
+        .div6,
+        .div7,
+        .div8,
+        .div9 {
             background: white;
             padding: 1rem;
             border-radius: 4px;
-            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
         }
 
         /* Header especial */
@@ -375,12 +404,15 @@
         .div7 {
             background: #000;
             color: white;
-            padding: 0; /* Eliminamos padding vertical */
-            height: 1cm; /* Altura exacta de 1 centímetro */
+            padding: 0;
+            /* Eliminamos padding vertical */
+            height: 1cm;
+            /* Altura exacta de 1 centímetro */
             display: flex;
             align-items: center;
             overflow: hidden;
         }
+
         /*Tiempo que tarda el el ticker en volver al inicio*/
         .ticker-content {
             display: flex;
@@ -392,12 +424,16 @@
             align-items: center;
             white-space: nowrap;
             margin-right: 40px;
-            font-size: 0.8rem; /* Tamaño del texto más pequeño */
+            font-size: 0.8rem;
+            /* Tamaño del texto más pequeño */
             font-weight: 500;
-            height: 1cm; /* Altura para que el contenedor se vea delgado */
-            line-height: 1cm; /* Centrado vertical perfecto dentro del grid */
+            height: 1cm;
+            /* Altura para que el contenedor se vea delgado */
+            line-height: 1cm;
+            /* Centrado vertical perfecto dentro del grid */
             padding: 0 10px;
         }
+
         /*Cambio de color a los items del ticker infinite*/
         .ticker-item i {
             margin-right: 8px;
@@ -406,8 +442,13 @@
         }
 
         @keyframes ticker-scroll {
-            0% { transform: translateX(0); }
-            100% { transform: translateX(-50%); }
+            0% {
+                transform: translateX(0);
+            }
+
+            100% {
+                transform: translateX(-50%);
+            }
         }
 
         /* Efecto hover para pausar */
@@ -416,7 +457,52 @@
         }
 
 
+        /*=================================Estilo de carrusel ==================================*/
+        /* Carrusel */
+        .carousel-container {
+            width: 100%;
+            overflow: hidden;
+            white-space: nowrap;
+            position: relative;
+            margin-top: 120px;
+        }
 
+        .carousel-track {
+            /*Espacio de separacion de cada imagen*/
+            gap: 20px;
+            display: flex;
+            /*Tiempo de animacion*/
+            animation: ticker-scroll 25s linear infinite;
+        }
+
+        .carousel-track img {
+            width: auto;
+            /*Tamaño del cuadro de contenido*/
+            height: 300px;
+            flex-shrink: 0;
+            /*Que tanto borde tiene*/
+            border-radius: 1000px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+
+        }
+
+
+        /* Carrusel hacia la derecha */
+        .carousel-right {
+            animation: scroll-right 25s linear infinite;
+        }
+
+        @keyframes scroll-right {
+            from {
+                transform: translateX(-50%);
+            }
+
+            to {
+                transform: translateX(0);
+            }
+        }
+
+        /*=======================================================================================*/
 
 
 
@@ -470,8 +556,8 @@
             </button>
 
             <button class="button" data-text="VELOX BOX">
-                <span class="actual-text">&nbsp;VELOX BOX&nbsp;</span>
-                <span class="hover-text">&nbsp;VELOX BOX&nbsp;</span>
+                <span class="actual-text">&nbsp;VELOX BOXING&nbsp;</span>
+                <span class="hover-text">&nbsp;VELOX BOXING&nbsp;</span>
             </button>
         </div>
 
@@ -545,78 +631,35 @@
         </div>
     </div>
 
-    <main class="container">
+    <!-- Carrusel de imágenes -->
+    <div class="carousel-container">
+        <div class="carousel-track">
+            <div class="swiper-slide"><img
+                    src="https://media.canva.com/v2/mockup-template-rasterize/color0:ffffff/image0:s3%3A%2F%2Ftemplate.canva.com%2FEAGKAMbZr2Y%2F1%2F0%2F933w-h4kFfxGDPBg.png/mockuptemplateid:FqXFzEXX7/size:L?csig=AAAAAAAAAAAAAAAAAAAAAFnaCbjufbexl_Hgf2uLtF13eFVga7GknDKzxvTTldIM&exp=1746849468&osig=AAAAAAAAAAAAAAAAAAAAANOKStp7W3qBP5-EjmKkMipsW2ziUR3fS2RjbjqVeaV_&seoslug=camiseta-o-playera-boxeo-box-o-boxing-deportes-rojo&signer=marketplace-rpc"
+                    alt="Libro 2"></div>
+            <div class="swiper-slide"><img
+                    src="https://media.canva.com/v2/mockup-template-rasterize/color0:ffffff/image0:s3%3A%2F%2Ftemplate.canva.com%2FEAGKAMbZr2Y%2F1%2F0%2F933w-h4kFfxGDPBg.png/mockuptemplateid:FqXFzEXX7/size:L?csig=AAAAAAAAAAAAAAAAAAAAAFnaCbjufbexl_Hgf2uLtF13eFVga7GknDKzxvTTldIM&exp=1746849468&osig=AAAAAAAAAAAAAAAAAAAAANOKStp7W3qBP5-EjmKkMipsW2ziUR3fS2RjbjqVeaV_&seoslug=camiseta-o-playera-boxeo-box-o-boxing-deportes-rojo&signer=marketplace-rpc"
+                    alt="Libro 2"></div>
+            <div class="swiper-slide"><img
+                    src="https://media.canva.com/v2/mockup-template-rasterize/color0:ffffff/image0:s3%3A%2F%2Ftemplate.canva.com%2FEAGKAMbZr2Y%2F1%2F0%2F933w-h4kFfxGDPBg.png/mockuptemplateid:FqXFzEXX7/size:L?csig=AAAAAAAAAAAAAAAAAAAAAFnaCbjufbexl_Hgf2uLtF13eFVga7GknDKzxvTTldIM&exp=1746849468&osig=AAAAAAAAAAAAAAAAAAAAANOKStp7W3qBP5-EjmKkMipsW2ziUR3fS2RjbjqVeaV_&seoslug=camiseta-o-playera-boxeo-box-o-boxing-deportes-rojo&signer=marketplace-rpc"
+                    alt="Libro 2"></div>
+            <div class="swiper-slide"><img
+                    src="https://media.canva.com/v2/mockup-template-rasterize/color0:ffffff/image0:s3%3A%2F%2Ftemplate.canva.com%2FEAGKAMbZr2Y%2F1%2F0%2F933w-h4kFfxGDPBg.png/mockuptemplateid:FqXFzEXX7/size:L?csig=AAAAAAAAAAAAAAAAAAAAAFnaCbjufbexl_Hgf2uLtF13eFVga7GknDKzxvTTldIM&exp=1746849468&osig=AAAAAAAAAAAAAAAAAAAAANOKStp7W3qBP5-EjmKkMipsW2ziUR3fS2RjbjqVeaV_&seoslug=camiseta-o-playera-boxeo-box-o-boxing-deportes-rojo&signer=marketplace-rpc"
+                    alt="Libro 2"></div>
+            <div class="swiper-slide"><img
+                    src="https://media.canva.com/v2/mockup-template-rasterize/color0:ffffff/image0:s3%3A%2F%2Ftemplate.canva.com%2FEAGKAMbZr2Y%2F1%2F0%2F933w-h4kFfxGDPBg.png/mockuptemplateid:FqXFzEXX7/size:L?csig=AAAAAAAAAAAAAAAAAAAAAFnaCbjufbexl_Hgf2uLtF13eFVga7GknDKzxvTTldIM&exp=1746849468&osig=AAAAAAAAAAAAAAAAAAAAANOKStp7W3qBP5-EjmKkMipsW2ziUR3fS2RjbjqVeaV_&seoslug=camiseta-o-playera-boxeo-box-o-boxing-deportes-rojo&signer=marketplace-rpc"
+                    alt="Libro 2"></div>
+            <div class="swiper-slide"><img
+                    src="https://media.canva.com/v2/mockup-template-rasterize/color0:ffffff/image0:s3%3A%2F%2Ftemplate.canva.com%2FEAGKAMbZr2Y%2F1%2F0%2F933w-h4kFfxGDPBg.png/mockuptemplateid:FqXFzEXX7/size:L?csig=AAAAAAAAAAAAAAAAAAAAAFnaCbjufbexl_Hgf2uLtF13eFVga7GknDKzxvTTldIM&exp=1746849468&osig=AAAAAAAAAAAAAAAAAAAAANOKStp7W3qBP5-EjmKkMipsW2ziUR3fS2RjbjqVeaV_&seoslug=camiseta-o-playera-boxeo-box-o-boxing-deportes-rojo&signer=marketplace-rpc"
+                    alt="Libro 2"></div>
+            <div class="swiper-slide"><img
+                    src="https://media.canva.com/v2/mockup-template-rasterize/color0:ffffff/image0:s3%3A%2F%2Ftemplate.canva.com%2FEAGKAMbZr2Y%2F1%2F0%2F933w-h4kFfxGDPBg.png/mockuptemplateid:FqXFzEXX7/size:L?csig=AAAAAAAAAAAAAAAAAAAAAFnaCbjufbexl_Hgf2uLtF13eFVga7GknDKzxvTTldIM&exp=1746849468&osig=AAAAAAAAAAAAAAAAAAAAANOKStp7W3qBP5-EjmKkMipsW2ziUR3fS2RjbjqVeaV_&seoslug=camiseta-o-playera-boxeo-box-o-boxing-deportes-rojo&signer=marketplace-rpc"
+                    alt="Libro 2"></div>
 
-        <!-- Sección 1 -->
-        <div class="div5">
-            <h2>Productos</h2>
-            <p>aqui que vamos a poner</p>
         </div>
-        
-        <!-- Sección 2 -->
-        <div class="div6">
-            <h2>este espacio es grande de 3</h2>
-            <p>Pensaba en poner el carrusel aqui</p>
-        </div>
-        
-        <!-- Ticker infinito delgado / Duplicar para agregar contenido -->
-        <div class="div7">
-            <div class="ticker-content">
+    </div>
 
-                <div class="ticker-item">
-                    <i class="fas fa-shipping-fast"></i>
-                    <span>Envíos express en 24h</span>
-                </div>
-
-                <div class="ticker-item">
-                    <i class="fas fa-percentage"></i>
-                    <span>30% OFF en segunda unidad</span>
-                </div>
-
-                <div class="ticker-item">
-                    <i class="fas fa-trophy"></i>
-                    <span>Equipamiento profesional</span>
-                </div>
-
-                <div class="ticker-item">
-                    <i class="fas fa-undo"></i>
-                    <span>Devoluciones gratuitas</span>
-                </div>
-                
-                <div class="ticker-item">
-                    <i class="fas fa-shipping-fast"></i>
-                    <span>Envíos express en 24h</span>
-                </div>
-
-                <div class="ticker-item">
-                    <i class="fas fa-shipping-fast"></i>
-                    <span>Envíos express en 24h</span>
-                </div>
-
-                <div class="ticker-item">
-                    <i class="fas fa-percentage"></i>
-                    <span>30% OFF en segunda unidad</span>
-                </div>
-
-                <div class="ticker-item">
-                    <i class="fas fa-trophy"></i>
-                    <span>Equipamiento profesional</span>
-                </div>
-
-                <div class="ticker-item">
-                    <i class="fas fa-undo"></i>
-                    <span>Devoluciones gratuitas</span>
-                </div>
-
-                <div class="ticker-item">
-                    <i class="fas fa-shipping-fast"></i>
-                    <span>Envíos express en 24h</span>
-                </div>
-
-            </div>
-        </div>
-
-    </main>
+   
 
     <footer>
         <div class="footerContainer">
@@ -672,6 +715,10 @@
     </footer>
 
     <script>
+        // Forzar scroll al inicio al cargar la página
+        window.onload = function () {
+            window.scrollTo(0, 0);
+        };
         // Funciones para el menú hamburguesa
         const hamburgerBtn = document.getElementById('hamburgerBtn');
         const menuOverlay = document.getElementById('menuOverlay');
