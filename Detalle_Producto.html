@@ -585,6 +585,45 @@ h5 {
     font-weight: normal;
 }
 
+  /*Responsive*/
+
+  @media (max-width: 768px){
+    .pagina-grid {
+        grid-template-columns: 1fr;
+        padding: 1rem;
+    }
+
+    .infoProducto {
+        grid-column: 1 / -1;
+        text-align: center;
+    }
+
+    .imgProducto {
+        grid-column: 1 / -1;
+        text-align: center;
+    }
+
+    .opcionesProducto {
+        grid-column: 1 / -1;
+        text-align: center;
+    }
+
+    .productosSimilares {
+    grid-column: 1 / -1;
+    overflow-x: auto;
+    white-space: nowrap;
+    padding-bottom: 1rem;
+    text-align: center;
+    }
+
+    .card {
+        flex: 0 0 auto;
+        width: 250px;
+  }
+}
+  
+
+
 
 
     
