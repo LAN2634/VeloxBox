@@ -232,29 +232,153 @@
             filter: drop-shadow(0 0 23px var(--animation-color));
         }
 
-        /* FOOTER STYLES */
+        /* MAIN CONTENT STYLES */
+        .main-content {
+            max-width: 1200px;
+            margin: 70px auto 0;
+            padding: 30px 20px;
+            flex: 1;
+        }
+
+        .section-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid #ddd;
+        }
+
+        .section-header h2 {
+            margin: 0;
+            font-size: 28px;
+            color: #222;
+        }
+
+        .ver-mas {
+            color: #555;
+            text-decoration: none;
+            font-weight: 600;
+            transition: color 0.3s;
+        }
+
+        .ver-mas:hover {
+            color: #000;
+        }
+
+        /* GRID DE PRODUCTOS - 4 COLUMNAS */
+        .product-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 25px;
+        }
+
+        /* PRODUCT CARD STYLES */
+        .product-card {
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+            overflow: hidden;
+            transition: transform 0.3s, box-shadow 0.3s;
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+        }
+
+        .product-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 6px 16px rgba(0, 0, 0, 0.12);
+        }
+
+        .product-img {
+            width: 100%;
+            height: 250px;
+            background-color: #f8f8f8;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .product-img img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.3s ease;
+        }
+
+        .product-card:hover .product-img img {
+            transform: scale(1.03);
+        }
+
+        .product-info {
+            padding: 20px;
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .product-name {
+            font-weight: 600;
+            margin: 0 0 8px 0;
+            font-size: 16px;
+            color: #333;
+            line-height: 1.3;
+        }
+
+        .product-price {
+            color: #000000;
+            margin: 0 0 15px 0;
+            font-weight: 700;
+            font-size: 18px;
+        }
+
+        .buy-btn {
+            width: 100%;
+            padding: 12px;
+            background-color: #2a2a2a;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: background-color 0.3s;
+            margin-top: auto;
+        }
+
+        .buy-btn:hover {
+            background-color: #000;
+        }
+
+        /* FOOTER STYLES (EXACTAMENTE COMO EN TU DISEÑO ORIGINAL) */
+        .footerContainer {
+            width: 100%;
+            background-color: #000;
+        }
+
         .footer_Row {
             display: flex;
             justify-content: space-between;
-            padding-top: 40px;
-            padding-left: 100px;
-            padding-right: 100px;
-            padding-bottom: 40px;
+            padding: 40px 100px;
         }
 
-        .footer_Col ul {
-            list-style: none;
+        .footer_Col {
+            flex: 1;
+            padding: 0 15px;
         }
 
         .footer_Col h4 {
             color: #fff;
-            margin-bottom: 10px;
+            margin-bottom: 25px;
             font-size: 20px;
             font-weight: 700;
         }
 
+        .footer_Col ul {
+            list-style: none;
+            padding: 0;
+        }
+
         .footer_Col ul li {
-            padding: 5px 0;
+            margin-bottom: 15px;
         }
 
         .footer_Col ul li a {
@@ -262,274 +386,152 @@
             text-decoration: none;
             font-size: 16px;
             opacity: 0.7;
-            transition: 0.4s;
+            transition: all 0.3s ease;
         }
 
         .footer_Col ul li a:hover {
             opacity: 1;
+            padding-left: 5px;
         }
 
         .footer_Col input {
+            width: 100%;
+            height: 45px;
+            margin-bottom: 15px;
+            padding: 0 20px;
             border: none;
-            width: 250px;
-            height: 35px;
-            display: block;
-            padding-left: 20px;
-            margin: 10px;
+            border-radius: 4px;
+            font-size: 16px;
         }
 
         .footer_Col .inputSubmit {
-            background-color: #000000;
-            border: 1px solid;
+            width: 100%;
+            height: 45px;
+            background-color: #000;
             color: #fff;
-            width: 250px;
-            height: 35px;
-            display: block;
-            margin: 10px;
+            border: 1px solid #fff;
+            border-radius: 4px;
+            font-size: 16px;
             cursor: pointer;
             transition: all 0.3s ease;
         }
 
         .footer_Col .inputSubmit:hover {
             background-color: #ff0055;
-            transform: scale(1.05);
+            border-color: #ff0055;
+        }
+
+        .social_Icons {
+            display: flex;
+            justify-content: center;
+            margin-top: 30px;
+        }
+
+        .social_Icons a {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            margin: 0 10px;
+            color: #fff;
+            font-size: 20px;
+            transition: all 0.3s ease;
+        }
+
+        .social_Icons a:hover {
+            color: #ff0055;
+            transform: translateY(-5px);
         }
 
         hr {
             border: none;
             height: 1px;
-            background-color: #fff;
-            opacity: 0.7;
+            background-color: rgba(255, 255, 255, 0.2);
+            margin: 0 100px;
         }
 
         .footer_Bottom {
             text-align: center;
+            padding: 30px 0;
+            color: #fff;
+        }
+
+        .footer_Bottom p {
+            margin: 0;
             font-size: 14px;
-            padding-top: 40px;
-            padding-bottom: 40px;
-            color: #fff;
-            background-color: #000;
+            opacity: 0.7;
         }
 
-        .footer_Col .social_Icons {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            margin-top: 20px;
-        }
-
-        .footer_Col .social_Icons a {
-            display: inline-block;
-            color: #fff;
-            margin: 0 25px;
-            scale: 1.5;
-            transition: all 0.3s ease;
-        }
-
-        .footer_Col .social_Icons a:hover {
-            color: #ff0055;
-            transform: scale(1.2);
-        }
-
-        footer {
-            background-color: #000000;
-            color: #fff;
-        }
-
-
-        /* Estructura Grid */
-        .parent {
-            display: grid;
-            grid-template-columns: repeat(10, 1fr);
-            grid-template-rows: repeat(10, 1fr);
-            gap: 10px;
-            min-height: 100vh;
-        }
-
-        .div1 {
-            grid-column: 1 / -1;
-        }
-
-        /* Equivalente a span 10 */
-        .div5 {
-            grid-column: 1 / -1;
-            grid-row: 2 / span 3;
-        }
-
-        .div6 {
-            grid-column: 1 / -1;
-            grid-row: 5;
-        }
-
-        .div7 {
-            grid-column: 1 / -1;
-            grid-row: 6;
-        }
-
-        /* Ticker delgado */
-        .div8 {
-            grid-column: 1 / -1;
-            grid-row: 7 / span 3;
-        }
-
-        .div9 {
-            grid-column: 1 / -1;
-            grid-row: 10;
-        }
-
-        /* Estilos comunes para las secciones */
-        .div1,
-        .div5,
-        .div6,
-        .div7,
-        .div8,
-        .div9 {
-            background: white;
-            padding: 1rem;
-            border-radius: 4px;
-            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
-        }
-
-        /* Header especial */
-        .div1 {
-            background: #000;
-            color: white;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 0.8rem 1.5rem;
-        }
-
-        /* Ticker ultra delgado (1cm) */
-        .div7 {
-            background: #000;
-            color: white;
-            padding: 0;
-            /* Eliminamos padding vertical */
-            height: 1cm;
-            /* Altura exacta de 1 centímetro */
-            display: flex;
-            align-items: center;
-            overflow: hidden;
-        }
-
-        /*Tiempo que tarda el el ticker en volver al inicio*/
-        .ticker-content {
-            display: flex;
-            animation: ticker-scroll 30s linear infinite;
-        }
-
-        .ticker-item {
-            display: flex;
-            align-items: center;
-            white-space: nowrap;
-            margin-right: 40px;
-            font-size: 0.8rem;
-            /* Tamaño del texto más pequeño */
-            font-weight: 500;
-            height: 1cm;
-            /* Altura para que el contenedor se vea delgado */
-            line-height: 1cm;
-            /* Centrado vertical perfecto dentro del grid */
-            padding: 0 10px;
-        }
-
-        /*Cambio de color a los items del ticker infinite*/
-        .ticker-item i {
-            margin-right: 8px;
-            color: #ffffff;
-            font-size: 0.9rem;
-        }
-
-        @keyframes ticker-scroll {
-            0% {
-                transform: translateX(0);
+        /* RESPONSIVE DESIGN */
+        @media (max-width: 1200px) {
+            .product-grid {
+                grid-template-columns: repeat(3, 1fr);
             }
 
-            100% {
-                transform: translateX(-50%);
+            .footer_Row {
+                padding: 40px 50px;
+            }
+
+            hr {
+                margin: 0 50px;
             }
         }
 
-        /* Efecto hover para pausar */
-        .div7:hover .ticker-content {
-            animation-play-state: paused;
-        }
-
-
-        /*=================================Estilo de carrusel ==================================*/
-        /* Carrusel */
-        .carousel-container {
-            width: 100%;
-            overflow: hidden;
-            white-space: nowrap;
-            position: relative;
-            margin-top: 120px;
-        }
-
-        .carousel-track {
-            /*Espacio de separacion de cada imagen*/
-            gap: 20px;
-            display: flex;
-            /*Tiempo de animacion*/
-            animation: ticker-scroll 25s linear infinite;
-        }
-
-        .carousel-track img {
-            width: auto;
-            /*Tamaño del cuadro de contenido*/
-            height: 300px;
-            flex-shrink: 0;
-            /*Que tanto borde tiene*/
-            border-radius: 1000px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-
-        }
-
-
-        /* Carrusel hacia la derecha */
-        .carousel-right {
-            animation: scroll-right 25s linear infinite;
-        }
-
-        @keyframes scroll-right {
-            from {
-                transform: translateX(-50%);
+        @media (max-width: 992px) {
+            .footer_Row {
+                flex-wrap: wrap;
             }
 
-            to {
-                transform: translateX(0);
+            .footer_Col {
+                flex: 0 0 50%;
+                margin-bottom: 30px;
             }
         }
 
-        /*=======================================================================================*/
-
-
-
-        /* Responsive */
         @media (max-width: 768px) {
+            .product-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .footer_Row {
+                padding: 30px;
+            }
+
+            hr {
+                margin: 0 30px;
+            }
+
             .button {
                 min-width: 150px;
                 font-size: 1.4em;
             }
+        }
+
+        @media (max-width: 576px) {
+            .product-grid {
+                grid-template-columns: 1fr;
+            }
 
             .footer_Row {
+                padding: 20px;
                 flex-direction: column;
-                padding-left: 20px;
-                padding-right: 20px;
             }
 
             .footer_Col {
+                flex: 0 0 100%;
                 margin-bottom: 30px;
+                text-align: center;
             }
 
-            .footer_Col input,
-            .footer_Col .inputSubmit {
-                width: 100%;
+            .social_Icons {
+                justify-content: center;
             }
-        }
 
-        @media (max-width: 480px) {
+            hr {
+                margin: 0 20px;
+            }
+
             header {
                 padding: 1rem;
             }
@@ -538,11 +540,6 @@
                 min-width: 120px;
                 font-size: 1.2em;
                 letter-spacing: 1px;
-            }
-
-            .footer_Row {
-                padding-left: 15px;
-                padding-right: 15px;
             }
         }
     </style>
@@ -562,7 +559,7 @@
         </div>
 
         <div class="cart-icon-container">
-            <a href="#" id="cart-toggle" class="menu-item"
+            <a href="Index.html" id="cart-toggle" class="menu-item"
                 style="color: white; text-decoration: none; font-size: 1.2rem;">
                 <i class="fas fa-shopping-cart"></i>
                 <span id="cart-count">0</span>
@@ -573,7 +570,7 @@
     <div class="menu-overlay" id="menuOverlay"></div>
 
     <div class="menu-container" id="menuContainer">
-          <!-- Input de búsqueda dentro del menú -->
+        <!-- Input de búsqueda dentro del menú -->
         <div class="menu-search">
             <input class="input" id="searchInput" name="text" placeholder="Buscar..." type="search">
         </div>
@@ -614,6 +611,7 @@
         </div>
 
 
+
         <div class="menu-section">
             <div class="menu-title">Configuración</div>
             <a href="#" class="menu-item">
@@ -631,35 +629,106 @@
         </div>
     </div>
 
-    <!-- Carrusel de imágenes -->
-    <div class="carousel-container">
-        <div class="carousel-track">
-            <div class="swiper-slide"><img
-                    src="https://media.canva.com/v2/mockup-template-rasterize/color0:ffffff/image0:s3%3A%2F%2Ftemplate.canva.com%2FEAGKAMbZr2Y%2F1%2F0%2F933w-h4kFfxGDPBg.png/mockuptemplateid:FqXFzEXX7/size:L?csig=AAAAAAAAAAAAAAAAAAAAAFnaCbjufbexl_Hgf2uLtF13eFVga7GknDKzxvTTldIM&exp=1746849468&osig=AAAAAAAAAAAAAAAAAAAAANOKStp7W3qBP5-EjmKkMipsW2ziUR3fS2RjbjqVeaV_&seoslug=camiseta-o-playera-boxeo-box-o-boxing-deportes-rojo&signer=marketplace-rpc"
-                    alt="Libro 2"></div>
-            <div class="swiper-slide"><img
-                    src="https://media.canva.com/v2/mockup-template-rasterize/color0:ffffff/image0:s3%3A%2F%2Ftemplate.canva.com%2FEAGKAMbZr2Y%2F1%2F0%2F933w-h4kFfxGDPBg.png/mockuptemplateid:FqXFzEXX7/size:L?csig=AAAAAAAAAAAAAAAAAAAAAFnaCbjufbexl_Hgf2uLtF13eFVga7GknDKzxvTTldIM&exp=1746849468&osig=AAAAAAAAAAAAAAAAAAAAANOKStp7W3qBP5-EjmKkMipsW2ziUR3fS2RjbjqVeaV_&seoslug=camiseta-o-playera-boxeo-box-o-boxing-deportes-rojo&signer=marketplace-rpc"
-                    alt="Libro 2"></div>
-            <div class="swiper-slide"><img
-                    src="https://media.canva.com/v2/mockup-template-rasterize/color0:ffffff/image0:s3%3A%2F%2Ftemplate.canva.com%2FEAGKAMbZr2Y%2F1%2F0%2F933w-h4kFfxGDPBg.png/mockuptemplateid:FqXFzEXX7/size:L?csig=AAAAAAAAAAAAAAAAAAAAAFnaCbjufbexl_Hgf2uLtF13eFVga7GknDKzxvTTldIM&exp=1746849468&osig=AAAAAAAAAAAAAAAAAAAAANOKStp7W3qBP5-EjmKkMipsW2ziUR3fS2RjbjqVeaV_&seoslug=camiseta-o-playera-boxeo-box-o-boxing-deportes-rojo&signer=marketplace-rpc"
-                    alt="Libro 2"></div>
-            <div class="swiper-slide"><img
-                    src="https://media.canva.com/v2/mockup-template-rasterize/color0:ffffff/image0:s3%3A%2F%2Ftemplate.canva.com%2FEAGKAMbZr2Y%2F1%2F0%2F933w-h4kFfxGDPBg.png/mockuptemplateid:FqXFzEXX7/size:L?csig=AAAAAAAAAAAAAAAAAAAAAFnaCbjufbexl_Hgf2uLtF13eFVga7GknDKzxvTTldIM&exp=1746849468&osig=AAAAAAAAAAAAAAAAAAAAANOKStp7W3qBP5-EjmKkMipsW2ziUR3fS2RjbjqVeaV_&seoslug=camiseta-o-playera-boxeo-box-o-boxing-deportes-rojo&signer=marketplace-rpc"
-                    alt="Libro 2"></div>
-            <div class="swiper-slide"><img
-                    src="https://media.canva.com/v2/mockup-template-rasterize/color0:ffffff/image0:s3%3A%2F%2Ftemplate.canva.com%2FEAGKAMbZr2Y%2F1%2F0%2F933w-h4kFfxGDPBg.png/mockuptemplateid:FqXFzEXX7/size:L?csig=AAAAAAAAAAAAAAAAAAAAAFnaCbjufbexl_Hgf2uLtF13eFVga7GknDKzxvTTldIM&exp=1746849468&osig=AAAAAAAAAAAAAAAAAAAAANOKStp7W3qBP5-EjmKkMipsW2ziUR3fS2RjbjqVeaV_&seoslug=camiseta-o-playera-boxeo-box-o-boxing-deportes-rojo&signer=marketplace-rpc"
-                    alt="Libro 2"></div>
-            <div class="swiper-slide"><img
-                    src="https://media.canva.com/v2/mockup-template-rasterize/color0:ffffff/image0:s3%3A%2F%2Ftemplate.canva.com%2FEAGKAMbZr2Y%2F1%2F0%2F933w-h4kFfxGDPBg.png/mockuptemplateid:FqXFzEXX7/size:L?csig=AAAAAAAAAAAAAAAAAAAAAFnaCbjufbexl_Hgf2uLtF13eFVga7GknDKzxvTTldIM&exp=1746849468&osig=AAAAAAAAAAAAAAAAAAAAANOKStp7W3qBP5-EjmKkMipsW2ziUR3fS2RjbjqVeaV_&seoslug=camiseta-o-playera-boxeo-box-o-boxing-deportes-rojo&signer=marketplace-rpc"
-                    alt="Libro 2"></div>
-            <div class="swiper-slide"><img
-                    src="https://media.canva.com/v2/mockup-template-rasterize/color0:ffffff/image0:s3%3A%2F%2Ftemplate.canva.com%2FEAGKAMbZr2Y%2F1%2F0%2F933w-h4kFfxGDPBg.png/mockuptemplateid:FqXFzEXX7/size:L?csig=AAAAAAAAAAAAAAAAAAAAAFnaCbjufbexl_Hgf2uLtF13eFVga7GknDKzxvTTldIM&exp=1746849468&osig=AAAAAAAAAAAAAAAAAAAAANOKStp7W3qBP5-EjmKkMipsW2ziUR3fS2RjbjqVeaV_&seoslug=camiseta-o-playera-boxeo-box-o-boxing-deportes-rojo&signer=marketplace-rpc"
-                    alt="Libro 2"></div>
-
+    <!-- Main Content -->
+    <main class="main-content">
+        <div class="section-header">
+            <h2>CASCOS</h2>
+            <a href="#" class="ver-mas">Ver más +</a>
         </div>
-    </div>
 
-   
+        <section class="product-grid">
+            <!-- Producto 1 -->
+            <div class="product-card">
+                <a href="">
+                    <div class="product-img">
+                        <img src="https://defensadorada.com/wp-content/uploads/2023/12/Casco-abierto-jpg.webp"
+                            alt="Playera F6">
+                    </div>
+                </a>
+                <div class="product-info">
+                    <p class="product-name">Playera "F6"</p>
+                    <p class="product-price">$640.00 MXN</p>
+                    <button class="buy-btn" onclick="addToCart()">Comprar ahora</button>
+                </div>
+            </div>
+
+
+            <!-- Producto 2 -->
+            <div class="product-card">
+                <a href="">
+                    <div class="product-img">
+                        <img src="https://defensadorada.com/wp-content/uploads/2023/12/Casco-abierto-jpg.webp"
+                            alt="Playera F6">
+                    </div>
+                </a>
+                <div class="product-info">
+                    <p class="product-name">Playera "F6"</p>
+                    <p class="product-price">$640.00 MXN</p>
+                    <button class="buy-btn" onclick="addToCart()">Comprar ahora</button>
+                </div>
+            </div>
+
+            <!-- Producto 3 -->
+            <div class="product-card">
+                <a href="">
+                    <div class="product-img">
+                        <img src="https://defensadorada.com/wp-content/uploads/2023/12/Casco-abierto-jpg.webp"
+                            alt="Playera F6">
+                    </div>
+                </a>
+                <div class="product-info">
+                    <p class="product-name">Playera "F6"</p>
+                    <p class="product-price">$640.00 MXN</p>
+                    <button class="buy-btn" onclick="addToCart()">Comprar ahora</button>
+                </div>
+            </div>
+
+            <!-- Producto 4 -->
+            <div class="product-card">
+                <a href="">
+                    <div class="product-img">
+                        <img src="https://defensadorada.com/wp-content/uploads/2023/12/Casco-abierto-jpg.webp"
+                            alt="Playera F6">
+                    </div>
+                </a>
+                <div class="product-info">
+                    <p class="product-name">Playera "F6"</p>
+                    <p class="product-price">$640.00 MXN</p>
+                    <button class="buy-btn" onclick="addToCart()">Comprar ahora</button>
+                </div>
+            </div>
+
+            <!-- Producto 5 -->
+            <div class="product-card">
+                <a href="">
+                    <div class="product-img">
+                        <img src="https://defensadorada.com/wp-content/uploads/2023/12/Casco-abierto-jpg.webp"
+                            alt="Playera F6">
+                    </div>
+                </a>
+                <div class="product-info">
+                    <p class="product-name">Playera "F6"</p>
+                    <p class="product-price">$640.00 MXN</p>
+                    <button class="buy-btn" onclick="addToCart()">Comprar ahora</button>
+                </div>
+            </div>
+
+            <!-- Producto 6 -->
+            <div class="product-card">
+                <a href="">
+                    <div class="product-img">
+                        <img src="https://defensadorada.com/wp-content/uploads/2023/12/Casco-abierto-jpg.webp"
+                            alt="Playera F6">
+                    </div>
+                </a>
+                <div class="product-info">
+                    <p class="product-name">Playera "F6"</p>
+                    <p class="product-price">$640.00 MXN</p>
+                    <button class="buy-btn" onclick="addToCart()">Comprar ahora</button>
+                </div>
+            </div>
+        </section>
+    </main>
 
     <footer>
         <div class="footerContainer">
@@ -745,11 +814,14 @@
             cartCount.textContent = count > 0 ? count : '0';
         }
 
-        // Ejemplo de cómo agregar al carrito
+        // Función para agregar al carrito
         function addToCart() {
             // Lógica para agregar productos al carrito
             const currentCount = parseInt(cartCount.textContent || '0');
             updateCartCount(currentCount + 1);
+
+            // Mostrar notificación (opcional)
+            alert('Producto agregado al carrito');
         }
     </script>
 </body>
