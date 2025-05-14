@@ -12,6 +12,16 @@
    menuContainer.classList.remove('active');
    menuOverlay.classList.remove('active');
  });
+ // Función para cerrar el menú al hacer clic fuera
+document.addEventListener('click', (event) => {
+  const isClickInsideMenu = menuContainer.contains(event.target) || 
+                          hamburgerBtn.contains(event.target);
+  
+  if (!isClickInsideMenu && menuContainer.classList.contains('active')) {
+    menuContainer.classList.remove('active');
+    menuOverlay.classList.remove('active');
+  }
+});
 
  // Funciones para el carrito (básicas)
  const cartToggle = document.getElementById('cart-toggle');
