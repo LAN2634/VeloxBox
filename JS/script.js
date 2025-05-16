@@ -67,7 +67,7 @@ if (document.querySelector('.productos-container')) {
 
         // Botón añadir producto
         document.getElementById('addProductBtn').addEventListener('click', () => {
-            window.location.href = 'agregarProductos.html';
+            window.location.href = 'Formulario_Agregar_Productos.html';
 
         });
 
@@ -145,7 +145,7 @@ if (document.getElementById('productForm')) {
 // Funcionalidad para agregarProductos.html
 if (document.getElementById('cancelBtn')) {
     document.getElementById('cancelBtn').addEventListener('click', () => {
-        window.location.href = 'productos.html';  // Regresa a productos.html
+        window.location.href = 'Tabla_productos_agregados.html';  // Regresa a productos.html
     });
   }
   
@@ -275,14 +275,33 @@ if (document.getElementById('cancelBtn')) {
         const size = document.getElementById('size');
         const color = document.getElementById('color');
         const files = document.getElementById('fileInput').files;
-      
         const description = quill.getText().trim();
+        const materiales = document.getElementById('materiales');
+        const cuidados = document.getElementById('cuidados');
+        const entrega = document.getElementById('entrega');
+        
         
         if (!title.value.trim()) {
           document.getElementById('error-title').textContent = 'El título es requerido';
           isValid = false;
         }
       
+        if (!materiales.value.trim()) {
+          document.getElementById('error-materiales').textContent = 'Los materiales son requeridos';
+          isValid = false;
+        }
+
+
+        if (!cuidados.value.trim()) {
+          document.getElementById('error-cuidados').textContent = 'La guía de cuidados es requerida';
+          isValid = false;
+        }
+
+         if (!entrega.value.trim()) {
+          document.getElementById('error-entrega').textContent = 'La información de entrega, pago y devolución es requerida';
+          isValid = false;
+        }       
+
         if (description.length < 10) {
           document.getElementById('error-description').textContent = 'La descripción debe tener al menos 10 caracteres';
           isValid = false;
@@ -353,7 +372,7 @@ if (document.getElementById('cancelBtn')) {
           title: 'Producto guardado!',
           showConfirmButton: false,
           timer: 1500
-        }).then(() => window.location.href = 'productos.html');
+        }).then(() => window.location.href = 'Tabla_productos_agregados.html');
       });
       
 
