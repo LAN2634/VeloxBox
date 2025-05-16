@@ -45,6 +45,7 @@
             border-radius: 5px;
             margin-left: 2rem;
             margin-right: 3rem;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.505);
         }
 
         .Text-container-index {
@@ -580,16 +581,9 @@
             overflow: hidden;
             white-space: nowrap;
             position: relative;
-            margin-top: 120px;
+            margin-top: 90px;
         }
 
-        .carousel-track {
-            /*Espacio de separacion de cada imagen*/
-            gap: 20px;
-            display: flex;
-            /*Tiempo de animacion*/
-            animation: ticker-scroll 15s linear infinite;
-        }
 
         .carousel-track img {
             width: auto;
