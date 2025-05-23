@@ -1,1415 +1,769 @@
 <!DOCTYPE html>
 <html lang="es">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <link
-      rel="stylesheet"
-      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css"
-    />
-    <title>Carrito compras</title>
-    <style>
-      * {
-        box-sizing: border-box;
-        margin: 0;
-        padding: 0;
-      }
 
-      body {
-        font-family: sans-serif;
-        background: #e5e5e5;
-        color: #111;
-      }
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" />
+  <title>Carrito compras</title>
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
 
-      header {
-        background: #000;
-        color: white;
-        padding: 1rem 2rem;
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        position: fixed;
-        top: 0;
-        width: 100%;
-        z-index: 100;
-      }
+    body {
+      font-family: sans-serif;
+      background: #e5e5e5;
+      color: #111;
+    }
 
-      .container {
-        padding: 2rem;
-        margin-top: 70px;
-      }
+    header {
+      background: #000;
+      color: white;
+      padding: 1rem 2rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      position: fixed;
+      top: 0;
+      width: 100%;
+      z-index: 100;
+    }
 
+    .container {
+      padding: 2rem;
+      margin-top: 70px;
+    }
+
+    .product-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 1.5rem;
+      padding-left: 2rem;
+      padding-right: 2rem;
+    }
+
+    .card {
+      background: white;
+      border-radius: 8px;
+      overflow: hidden;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+      display: flex;
+      flex-direction: column;
+      transition: transform 0.3s;
+    }
+
+    .card:hover {
+      transform: translateY(-5px);
+    }
+
+    .image {
+      height: 200px;
+      background-size: cover;
+      background-position: center;
+    }
+
+    .info {
+      padding: 1rem;
+      flex-grow: 1;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .info h2 {
+      font-size: 1rem;
+      margin-bottom: 0.25rem;
+    }
+
+    .info p {
+      margin-bottom: 1rem;
+    }
+
+    .add-to-cart {
+      background: black;
+      color: white;
+      border: none;
+      padding: 0.5rem;
+      width: 100%;
+      cursor: pointer;
+      transition: background 0.3s;
+      margin-top: auto;
+    }
+
+    .add-to-cart:hover {
+      background: #333;
+    }
+
+    .cart {
+      position: fixed;
+      top: 0;
+      right: 0;
+      width: 350px;
+      height: 100%;
+      background: white;
+      box-shadow: -4px 0 10px rgba(0, 0, 0, 0.2);
+      display: flex;
+      flex-direction: column;
+      z-index: 1000;
+      transform: translateX(100%);
+      transition: transform 0.3s ease;
+    }
+
+    .cart.open {
+      transform: translateX(0);
+    }
+
+    .cart-header {
+      padding: 1rem;
+      border-bottom: 1px solid #ccc;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .close-cart {
+      background: none;
+      border: none;
+      font-size: 1.5rem;
+      cursor: pointer;
+      padding: 0.5rem;
+    }
+
+    .cart-items {
+      flex: 1;
+      overflow-y: auto;
+      padding: 1rem;
+    }
+
+    #cart-items .item {
+      display: flex;
+      gap: 1rem;
+      margin-bottom: 1rem;
+      padding-bottom: 1rem;
+      border-bottom: 1px solid #eee;
+    }
+
+    #cart-items .item .item-image {
+      width: 80px;
+      height: 80px;
+      border-radius: 4px;
+      flex-shrink: 0;
+      background-size: cover;
+      background-position: center;
+    }
+
+    .item-info {
+      flex: 1;
+    }
+
+    .item-info h3 {
+      font-size: 1rem;
+      font-weight: bold;
+      margin-bottom: 0.25rem;
+    }
+
+    .item-info p {
+      margin-bottom: 0.5rem;
+      color: #666;
+    }
+
+    .quantity-controls {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      margin: 0.5rem 0;
+    }
+
+    .quantity-controls button {
+      width: 25px;
+      height: 25px;
+      border: 1px solid #ddd;
+      background: #f5f5f5;
+      border-radius: 4px;
+      font-size: 1rem;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .quantity-controls button:hover {
+      background: #eee;
+    }
+
+    .remove {
+      text-decoration: underline;
+      color: #d32f2f;
+      font-size: 0.9rem;
+      cursor: pointer;
+      display: inline-block;
+      margin-top: 0.5rem;
+    }
+
+    .remove:hover {
+      color: #b71c1c;
+    }
+
+    .cart-footer {
+      padding: 1rem;
+      border-top: 1px solid #ccc;
+      background: white;
+    }
+
+    .cart-total {
+      margin-bottom: 1rem;
+      font-size: 1.1rem;
+      text-align: right;
+    }
+
+    #checkout {
+      width: 100%;
+      padding: 1rem;
+      background: black;
+      color: white;
+      border: none;
+      cursor: pointer;
+      font-size: 1rem;
+      transition: background 0.3s;
+    }
+
+    #checkout:hover {
+      background: #333;
+    }
+
+    .empty-cart {
+      text-align: center;
+      padding: 2rem;
+      color: #666;
+    }
+
+    .added-notification {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      background: #4caf50;
+      color: white;
+      padding: 15px;
+      border-radius: 4px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+      z-index: 1000;
+      display: none;
+    }
+
+    /* Menú hamburguesa */
+    .hamburger-btn {
+      background: none;
+      border: none;
+      color: white;
+      font-size: 28px;
+      cursor: pointer;
+      padding: 10px 15px;
+      transition: transform 0.3s;
+    }
+
+    .hamburger-btn:hover {
+      transform: scale(1.1);
+    }
+
+    .menu-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0, 0, 0, 0.5);
+      z-index: 999;
+      opacity: 0;
+      visibility: hidden;
+      transition: opacity 0.3s, visibility 0.3s;
+    }
+
+    .menu-overlay.active {
+      opacity: 1;
+      visibility: visible;
+    }
+
+    .menu-container {
+      position: fixed;
+      top: 70px;
+      left: 0;
+      width: 300px;
+      height: calc(100vh - 70px);
+      background-color: #222;
+      transform: translateX(-100%);
+      transition: transform 0.3s ease;
+      z-index: 1000;
+      overflow-y: auto;
+      padding: 20px 0;
+    }
+
+    .menu-container.active {
+      transform: translateX(0);
+    }
+
+    .menu-section {
+      margin-bottom: 25px;
+      border-bottom: 1px solid #333;
+      padding-bottom: 15px;
+    }
+
+    .menu-section:last-child {
+      border-bottom: none;
+    }
+
+    .menu-title {
+      color: #aaa;
+      font-size: 14px;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      padding: 0 25px 10px;
+      margin-bottom: 10px;
+    }
+
+    .menu-item {
+      display: flex;
+      align-items: center;
+      color: white;
+      text-decoration: none;
+      padding: 12px 25px;
+      transition: background-color 0.2s;
+    }
+
+    .menu-item:hover {
+      background-color: #333;
+    }
+
+    .menu-item i {
+      margin-right: 15px;
+      font-size: 20px;
+      width: 24px;
+      text-align: center;
+    }
+
+    .menu-item-text {
+      font-size: 16px;
+    }
+
+    .cart-icon-container {
+      display: flex;
+      align-items: center;
+      gap: 5px;
+    }
+
+    /*input para buscar*/
+    .input {
+      max-width: 300px;
+      background-color: #f5f5f5;
+      color: #000000;
+      padding: 0.15rem 0.5rem;
+      min-height: 30px;
+      border-radius: 4px;
+      outline: none;
+      border: none;
+      line-height: 1.15;
+      box-shadow: 0px 10px 20px -18px;
+    }
+
+    input:focus {
+      border-bottom: 2px solid #000000;
+      border-radius: 4px 4px 2px 2px;
+    }
+
+    input:hover {
+      outline: 1px solid lightgrey;
+    }
+
+    .menu-search {
+      padding: 0 25px 20px 25px;
+      /* Espacio a los lados y abajo */
+      border-bottom: 1px solid #333;
+      margin-bottom: 20px;
+    }
+
+    /* Espacio debajo del input ESTO AYUDA A SU POSICION DENTRO DEL MENU*/
+
+    @media (max-width: 768px) {
       .product-grid {
-        display: grid;
-        grid-template-columns: repeat(4, 1fr);
-        gap: 1.5rem;
-        padding-left: 2rem;
-        padding-right: 2rem;
-      }
-
-      .card {
-        background: white;
-        border-radius: 8px;
-        overflow: hidden;
-        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-        display: flex;
-        flex-direction: column;
-        transition: transform 0.3s;
-      }
-
-      .card:hover {
-        transform: translateY(-5px);
-      }
-
-      .image {
-        height: 200px;
-        background-size: cover;
-        background-position: center;
-      }
-
-      .info {
-        padding: 1rem;
-        flex-grow: 1;
-        display: flex;
-        flex-direction: column;
-      }
-
-      .info h2 {
-        font-size: 1rem;
-        margin-bottom: 0.25rem;
-      }
-
-      .info p {
-        margin-bottom: 1rem;
-      }
-
-      .add-to-cart {
-        background: black;
-        color: white;
-        border: none;
-        padding: 0.5rem;
-        width: 100%;
-        cursor: pointer;
-        transition: background 0.3s;
-        margin-top: auto;
-      }
-
-      .add-to-cart:hover {
-        background: #333;
+        grid-template-columns: repeat(2, 1fr);
+        padding-left: 1rem;
+        padding-right: 1rem;
       }
 
       .cart {
-        position: fixed;
-        top: 0;
-        right: 0;
-        width: 350px;
-        height: 100%;
-        background: white;
-        box-shadow: -4px 0 10px rgba(0, 0, 0, 0.2);
-        display: flex;
-        flex-direction: column;
-        z-index: 1000;
-        transform: translateX(100%);
-        transition: transform 0.3s ease;
-      }
-
-      .cart.open {
-        transform: translateX(0);
-      }
-
-      .cart-header {
-        padding: 1rem;
-        border-bottom: 1px solid #ccc;
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-      }
-
-      .close-cart {
-        background: none;
-        border: none;
-        font-size: 1.5rem;
-        cursor: pointer;
-        padding: 0.5rem;
-      }
-
-      .cart-items {
-        flex: 1;
-        overflow-y: auto;
-        padding: 1rem;
-      }
-
-      #cart-items .item {
-        display: flex;
-        gap: 1rem;
-        margin-bottom: 1rem;
-        padding-bottom: 1rem;
-        border-bottom: 1px solid #eee;
-      }
-
-      #cart-items .item .item-image {
-        width: 80px;
-        height: 80px;
-        border-radius: 4px;
-        flex-shrink: 0;
-        background-size: cover;
-        background-position: center;
-      }
-
-      .item-info {
-        flex: 1;
-      }
-
-      .item-info h3 {
-        font-size: 1rem;
-        font-weight: bold;
-        margin-bottom: 0.25rem;
-      }
-
-      .item-info p {
-        margin-bottom: 0.5rem;
-        color: #666;
-      }
-
-      .quantity-controls {
-        display: flex;
-        align-items: center;
-        gap: 0.5rem;
-        margin: 0.5rem 0;
-      }
-
-      .quantity-controls button {
-        width: 25px;
-        height: 25px;
-        border: 1px solid #ddd;
-        background: #f5f5f5;
-        border-radius: 4px;
-        font-size: 1rem;
-        cursor: pointer;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-      }
-
-      .quantity-controls button:hover {
-        background: #eee;
-      }
-
-      .remove {
-        text-decoration: underline;
-        color: #d32f2f;
-        font-size: 0.9rem;
-        cursor: pointer;
-        display: inline-block;
-        margin-top: 0.5rem;
-      }
-
-      .remove:hover {
-        color: #b71c1c;
-      }
-
-      .cart-footer {
-        padding: 1rem;
-        border-top: 1px solid #ccc;
-        background: white;
-      }
-
-      .cart-total {
-        margin-bottom: 1rem;
-        font-size: 1.1rem;
-        text-align: right;
-      }
-
-      #checkout {
         width: 100%;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .product-grid {
+        grid-template-columns: 1fr;
+      }
+
+      header {
         padding: 1rem;
-        background: black;
-        color: white;
-        border: none;
-        cursor: pointer;
-        font-size: 1rem;
-        transition: background 0.3s;
       }
-
-      #checkout:hover {
-        background: #333;
-      }
-
-      .empty-cart {
-        text-align: center;
-        padding: 2rem;
-        color: #666;
-      }
-
-      .added-notification {
-        position: fixed;
-        bottom: 20px;
-        right: 20px;
-        background: #4caf50;
-        color: white;
-        padding: 15px;
-        border-radius: 4px;
-        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-        z-index: 1000;
-        display: none;
-      }
-
-      /* Menú hamburguesa */
-      .hamburger-btn {
-        background: none;
-        border: none;
-        color: white;
-        font-size: 28px;
-        cursor: pointer;
-        padding: 10px 15px;
-        transition: transform 0.3s;
-      }
-
-      .hamburger-btn:hover {
-        transform: scale(1.1);
-      }
-
-      .menu-overlay {
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        background-color: rgba(0, 0, 0, 0.5);
-        z-index: 999;
-        opacity: 0;
-        visibility: hidden;
-        transition: opacity 0.3s, visibility 0.3s;
-      }
-
-      .menu-overlay.active {
-        opacity: 1;
-        visibility: visible;
-      }
-
-      .menu-container {
-        position: fixed;
-        top: 70px;
-        left: 0;
-        width: 300px;
-        height: calc(100vh - 70px);
-        background-color: #222;
-        transform: translateX(-100%);
-        transition: transform 0.3s ease;
-        z-index: 1000;
-        overflow-y: auto;
-        padding: 20px 0;
-      }
-
-      .menu-container.active {
-        transform: translateX(0);
-      }
-
-      .menu-section {
-        margin-bottom: 25px;
-        border-bottom: 1px solid #333;
-        padding-bottom: 15px;
-      }
-
-      .menu-section:last-child {
-        border-bottom: none;
-      }
-
-      .menu-title {
-        color: #aaa;
-        font-size: 14px;
-        text-transform: uppercase;
-        letter-spacing: 1px;
-        padding: 0 25px 10px;
-        margin-bottom: 10px;
-      }
-
-      .menu-item {
-        display: flex;
-        align-items: center;
-        color: white;
-        text-decoration: none;
-        padding: 12px 25px;
-        transition: background-color 0.2s;
-      }
-
-      .menu-item:hover {
-        background-color: #333;
-      }
-
-      .menu-item i {
-        margin-right: 15px;
-        font-size: 20px;
-        width: 24px;
-        text-align: center;
-      }
-
-      .menu-item-text {
-        font-size: 16px;
-      }
-
-      .cart-icon-container {
-        display: flex;
-        align-items: center;
-        gap: 5px;
-      }
-      /*input para buscar*/
-      .input {
-        max-width: 300px;
-        background-color: #f5f5f5;
-        color: #000000;
-        padding: 0.15rem 0.5rem;
-        min-height: 30px;
-        border-radius: 4px;
-        outline: none;
-        border: none;
-        line-height: 1.15;
-        box-shadow: 0px 10px 20px -18px;
-      }
-
-      input:focus {
-        border-bottom: 2px solid #000000;
-        border-radius: 4px 4px 2px 2px;
-      }
-
-      input:hover {
-        outline: 1px solid lightgrey;
-      }
-
-      .menu-search {
-        padding: 0 25px 20px 25px; /* Espacio a los lados y abajo */
-        border-bottom: 1px solid #333;
-        margin-bottom: 20px;
-      } /* Espacio debajo del input ESTO AYUDA A SU POSICION DENTRO DEL MENU*/
-
-      /* ----Footer-----*/
-        *{
-        margin: 0%;
-padding: 0%;
-box-sizing: border-box;
-font-family: Arial, Helvetica, sans-serif
-}
-
-
-.footer_Row{
-    display: flex;
-    justify-content: space-between;
-    padding-top: 40px;
-    padding-left: 100px;
-    padding-right: 100px;
-    padding-bottom: 40px;
-}
-
-.footer_Col ul{
-    list-style: none;
-}
-
-.footer_Col h4{
-    color: #fff;
-    margin-bottom: 10px;
-    font-size: 20px;
-    font-weight: 700;
-}
-
-.footer_Col ul li{
-    padding: 5px 0;
-}
-
-.footer_Col ul li a{
-    color: #fff;
-    text-decoration: none;
-    font-size: 16px;
-    opacity: 0.7;
-    transition: 0.4s;
-}
-
-.footer_Col ul li a:hover{
-    opacity: 1;
-}
-
-.footer_Col input{
-    border: none;
-
-    width: 250px;
-    height: 35px;
-    display: block;
-    padding-left: 20px;
-    margin: 10px;
-}
-
-.footer_Col .inputSubmit {
-    background-color: #000000;
-    border: 1px solid;
-    color: #fff;
-    width: 250px;
-    height: 35px;
-    display: block;
-    margin: 10px;
-    cursor: pointer;
-    transition: all 0.3s ease;
-}
-
-.footer_Col .inputSubmit:hover {
-    background-color: #ff0055;
-    transform: scale(1.05);
-}
-
-hr {
-    border: none;         /* Elimina el borde predeterminado */
-    height: 1px;        
-    background-color: #fff; /* Cambia el color de la línea a blanco */
-    opacity: 0.7;  
-}
-
-.footer_Bottom {
-    text-align:center;
-    font-size: 14px;
-    padding-top: 40px;
-    padding-bottom: 40px;
-    color: #fff;
-    background-color: #000; /* Asegura que siga el mismo fondo */
-}
-
-.footer_Col .social_Icons {
-    display: flex;
-    justify-content: center; /* Centra los íconos horizontalmente */
-    align-items: center; /* Asegura alineación vertical si es necesario */
-    margin-top: 20px; /* Ajusta el espaciado superior si es necesario */
-}
-
-.footer_Col .social_Icons a{
-    display: inline-block;
-    color: #fff;
-    margin: 0 25px;
-    scale: 1.5;
-    transition: all 0.3s ease;
-}
-
-.footer_Col .social_Icons a:hover {
-    color: #ff0055;
-    transform: scale(1.2);
-}
-
-/*Dejar el footer debajo*/
-html, body {
-    height: 100%;
-    display: flex;
-    flex-direction: column;
-}
-
-main {
-    flex: 1; /* Ocupa el espacio disponible para empujar el footer hacia abajo */
-}
-
-footer {
-    background-color: #000000;
-    color: #fff;
-}
-
-.ventana {
-  display: none;
-  position: fixed;
-  z-index: 1000;
-  left: 0;
-  top: 0;
-  width: 100%;
-  height: 100%;
-  overflow: auto;
-  background-color: rgba(0, 0, 0, 0.6);
-}
-
-/* Contenedor del contenido dentro de la ventana */
-.ventana-content {
-  background-color: #fff;
-  margin: 5% auto;
-  padding: 30px;
-  border: 1px solid #888;
-  width: 90%;
-  max-width: 800px;
-  border-radius: 10px;
-  position: relative;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
-}
-
-/* Estilo para el botón de cerrar */
-.ventana .close {
-  color: #aaa;
-  float: right;
-  font-size: 28px;
-  font-weight: bold;
-  position: absolute;
-  top: 10px;
-  right: 20px;
-  cursor: pointer;
-}
-
-.ventana .close:hover,
-.ventana .close:focus {
-  color: #000;
-  text-decoration: none;
-  cursor: pointer;
-}
-
-/* Scroll vertical para todo el contenido de las ventanas */
-.ventana-content > div {
-  max-height: 70vh;
-  overflow-y: auto;
-  padding-right: 10px;
-  font-family: 'Segoe UI', sans-serif;
-  font-size: 15px;
-  line-height: 1.7;
-  color: #333;
-}
-
-/* Encabezados estilizados */
-.ventana-content h2,
-.ventana-content h3,
-.ventana-content h4 {
-  color: #111;
-  margin-top: 20px;
-}
-
-/* Listas */
-.ventana-content ul {
-  padding-left: 20px;
-  margin: 10px 0;
-}
-
-.ventana-content li {
-  margin-bottom: 10px;
-}
-
-/* Enlaces */
-.ventana-content a {
-  color: #000;
-  text-decoration: underline;
-}
-
-.ventana-content a:hover {
-  color: #555;
-}
-
-/* Párrafos */
-.ventana-content p {
-  margin-bottom: 15px;
-}
-
-.close {
-    position: absolute;
-    right: 15px;
-    top: 10px;
-    font-size: 28px;
-    font-weight: bold;
-    cursor: pointer;
-    color: #000;
-}
-
-/*Bloque para mejorar el estilo de las letras de las ventanas*/
-.texto-legal {
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  font-size: 19px;
-  line-height: 1.9;
-  color: #222;
-  padding: 20px;
-  max-width: 900px;
-  margin: auto;
-}
-
-.texto-legal h1,
-.texto-legal h3,
-.texto-legal h4 {
-  font-weight: 700;
-  color: #000;
-  margin-top: 30px;
-  margin-bottom: 15px;
-  line-height: 1.4;
-}
-
-.texto-legal h1 {
-  font-size: 30px;
-}
-
-.texto-legal h3 {
-  font-size: 26px;
-}
-
-.texto-legal h4 {
-  font-size: 22px;
-}
-
-.texto-legal p,
-.texto-legal li {
-  font-weight: 500;
-  font-size: 19px;
-  margin-bottom: 16px;
-  text-align: justify;
-}
-
-.texto-legal a {
-  color: #000;
-  text-decoration: underline;
-  font-weight: 600;
-  transition: color 0.3s ease;
-}
-
-.texto-legal a:hover {
-  color: #ff0055;
-}
-
-.texto-legal ul {
-  padding-left: 25px;
-  list-style-type: disc;
-}
-
-
-  /*Bloque para acerca de velox*/
-
-  /*
-@media (max-width: 767.98px) {
-    .contact-method, .brand-card {
-    margin-bottom: 15px;
     }
-}
-  /* Para móviles */
-  /*
-@media (max-width: 767.98px) {
-    .ventana .col-4 {
-      flex: 0 0 50%; /* 2 columnas en móvil */
-   /* max-width: 50%;
-    }
-}*/
-/* FOOTER RESPONSIVO PARA MÓVILES */
-@media (max-width: 767.98px) {
-  .footer {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    padding: 20px;
-  }
+  </style>
+</head>
 
-  .footer_Col {
-    width: 100%;
-    margin-bottom: 30px;
-    text-align: center;
-  }
+<body>
+  <header>
+    <button class="hamburger-btn" id="hamburgerBtn">
+      <i class="fas fa-bars"></i>
+    </button>
 
-  .footer_Col input,
-  .footer_Col .inputSubmit {
-    width: 90%; /* Hace los inputs más fluidos en móviles */
-    margin: 10px auto;
-  }
+    <h1>Tienda Online</h1>
 
-  .footer_Col .social_Icons {
-    flex-wrap: wrap;
-    gap: 15px;
-  }
+    <div class="cart-icon-container">
+      <a href="#" id="cart-toggle" class="menu-item" style="color: white; text-decoration: none; font-size: 1.2rem">
+        <i class="fas fa-shopping-cart"></i>
+        <span id="cart-count">0</span>
+      </a>
+    </div>
+  </header>
 
-  .footer_Col .social_Icons a {
-    margin: 0 10px;
-    font-size: 20px;
-    scale: 1.3;
-  }
+  <div class="menu-overlay" id="menuOverlay"></div>
 
-  .footer_Bottom {
-    font-size: 12px;
-    padding: 20px;
-  }
-}
-
-
-
-
-      @media (max-width: 768px) {
-        .product-grid {
-          grid-template-columns: repeat(2, 1fr);
-          padding-left: 1rem;
-          padding-right: 1rem;
-        }
-
-        .cart {
-          width: 100%;
-        }
-      }
-
-      @media (max-width: 480px) {
-        .product-grid {
-          grid-template-columns: 1fr;
-        }
-
-        header {
-          padding: 1rem;
-        }
-      }
-    </style>
-  </head>
-
-  <body>
-    <header>
-      <button class="hamburger-btn" id="hamburgerBtn">
-        <i class="fas fa-bars"></i>
-      </button>
-
-      <h1>Tienda Online</h1>
-
-      <div class="cart-icon-container">
-        <a
-          href="#"
-          id="cart-toggle"
-          class="menu-item"
-          style="color: white; text-decoration: none; font-size: 1.2rem"
-        >
-          <i class="fas fa-shopping-cart"></i>
-          <span id="cart-count">0</span>
-        </a>
-      </div>
-    </header>
-
-    <div class="menu-overlay" id="menuOverlay"></div>
-
-    <div class="menu-container" id="menuContainer">
-      <!-- Input de búsqueda dentro del menú -->
-      <div class="menu-search">
-        <input
-          class="input"
-          id="searchInput"
-          name="text"
-          placeholder="Buscar..."
-          type="search"
-        />
-      </div>
-
-      <div class="menu-section">
-        <div class="menu-title">Principal</div>
-        <!--Icono de menú-->
-        <a href="Index.html" class="menu-item">
-          <i class="fas fa-home"></i>
-          <span class="menu-item-text">Inicio</span>
-        </a>
-        <!-- Nuevo ítem de Mis Productos -->
-        <a href="Compras_Carrito.html" class="menu-item">
-          <i class="fas fa-shopping-cart"></i>
-          <span class="menu-item-text">Mis Productos</span>
-        </a>
-      </div>
-
-      <div class="menu-section">
-        <div class="menu-title">Contenido</div>
-        <!--Icono de playera-->
-        <a href="Productos_playeras.html" class="menu-item">
-          <i class="fas fa-tshirt"></i>
-          <span class="menu-item-text">Playera</span>
-        </a>
-        <!--Icono de Pans-->
-        <a href="Productos_Pans.html" class="menu-item">
-          <i class="fas fa-running"></i>
-          <span class="menu-item-text">Pans</span>
-        </a>
-        <!--Icono de guantes de box-->
-        <a href="Productos_Guantes.html" class="menu-item">
-          <i class="fas fa-hand-rock"></i>
-          <span class="menu-item-text">Guantes de Box</span>
-        </a>
-        <!--Icono de cascos a corregir-->
-        <a href="Productos_Cascos.html" class="menu-item">
-          <i class="fas fa-hard-hat"></i>
-          <span class="menu-item-text">Cascos de Box</span>
-        </a>
-      </div>
-
-      <div class="menu-section">
-        <div class="menu-title">Configuración</div>
-        <a href="#" class="menu-item">
-          <i class="fas fa-cog"></i>
-          <span class="menu-item-text">Ajustes</span>
-        </a>
-        <a href="#" class="menu-item">
-          <i class="fas fa-user"></i>
-          <span class="menu-item-text">Perfil</span>
-        </a>
-        <a href="#" class="menu-item">
-          <i class="fas fa-sign-out-alt"></i>
-          <span class="menu-item-text">Cerrar sesión</span>
-        </a>
-      </div>
+  <div class="menu-container" id="menuContainer">
+    <!-- Input de búsqueda dentro del menú -->
+    <div class="menu-search">
+      <input class="input" id="searchInput" name="text" placeholder="Buscar..." type="search" />
     </div>
 
-    <div class="added-notification" id="added-notification">
-      Producto agregado al carrito
+    <div class="menu-section">
+      <div class="menu-title">Principal</div>
+      <!--Icono de menú-->
+      <a href="Index.html" class="menu-item">
+        <i class="fas fa-home"></i>
+        <span class="menu-item-text">Inicio</span>
+      </a>
+      <!-- Nuevo ítem de Mis Productos -->
+      <a href="Compras_Carrito.html" class="menu-item">
+        <i class="fas fa-shopping-cart"></i>
+        <span class="menu-item-text">Mis Productos</span>
+      </a>
     </div>
 
-    <main class="container">
-      <div class="product-grid">
-        <!-- Producto 1 -->
-        <div
-          class="card"
-          data-id="1"
-          data-title="Playera “Fe”"
-          data-price="640"
-          data-color="Blanca"
-          data-size="M - L"
-          data-image="https://cdn1.coppel.com/images/catalog/mkp/6283/14000/628313839-1.jpg"
-        >
-          <div
-            class="image"
-            style="
-              background-image: url('https://cdn1.coppel.com/images/catalog/mkp/6283/14000/628313839-1.jpg');
-            "
-          ></div>
-          <div class="info">
-            <h2>Playera “Fe”</h2>
-            <p>$640.00 MXN</p>
-            <button class="add-to-cart">Comprar ahora</button>
-          </div>
-        </div>
+    <div class="menu-section">
+      <div class="menu-title">Contenido</div>
+      <!--Icono de playera-->
+      <a href="Productos_playeras.html" class="menu-item">
+        <i class="fas fa-tshirt"></i>
+        <span class="menu-item-text">Playera</span>
+      </a>
+      <!--Icono de Pans-->
+      <a href="Productos_Pans.html" class="menu-item">
+        <i class="fas fa-running"></i>
+        <span class="menu-item-text">Pans</span>
+      </a>
+      <!--Icono de guantes de box-->
+      <a href="Productos_Guantes.html" class="menu-item">
+        <i class="fas fa-hand-rock"></i>
+        <span class="menu-item-text">Guantes de Box</span>
+      </a>
+      <!--Icono de cascos a corregir-->
+      <a href="Productos_Cascos.html" class="menu-item">
+        <i class="fas fa-hard-hat"></i>
+        <span class="menu-item-text">Cascos de Box</span>
+      </a>
+    </div>
 
-        <!-- Producto 2 -->
-        <div
-          class="card"
-          data-id="2"
-          data-title="Playera “Trabajo Duro”"
-          data-price="640"
-          data-color="Negra"
-          data-size="M"
-          data-image="https://i5.walmartimages.com/asr/b39fadc7-b2f2-4ee9-8455-6987e60f5f78.e77c7bee9834fb44203577a955932899.jpeg?odnHeight=612&odnWidth=612&odnBg=FFFFFF"
-        >
-          <div
-            class="image"
-            style="
-              background-image: url('https://i5.walmartimages.com/asr/b39fadc7-b2f2-4ee9-8455-6987e60f5f78.e77c7bee9834fb44203577a955932899.jpeg?odnHeight=612&odnWidth=612&odnBg=FFFFFF');
-            "
-          ></div>
-          <div class="info">
-            <h2>Playera “Trabajo Duro”</h2>
-            <p>$640.00 MXN</p>
-            <button class="add-to-cart">Comprar ahora</button>
-          </div>
-        </div>
-
-        <!-- Producto 3 -->
-        <div
-          class="card"
-          data-id="3"
-          data-title="Playera Valentía"
-          data-price="640"
-          data-color="Rosa"
-          data-size="S - M"
-          data-image="https://cdn1.coppel.com/images/catalog/mkp/6283/14000/628313156-1.jpg"
-        >
-          <div
-            class="image"
-            style="
-              background-image: url('https://cdn1.coppel.com/images/catalog/mkp/6283/14000/628313156-1.jpg');
-            "
-          ></div>
-          <div class="info">
-            <h2>Playera “Valentía”</h2>
-            <p>$640.00 MXN</p>
-            <button class="add-to-cart">Comprar ahora</button>
-          </div>
-        </div>
-
-        <!-- Producto 4 -->
-        <div
-          class="card"
-          data-id="4"
-          data-title="Playera “Agresividad”"
-          data-price="640"
-          data-color="Azul"
-          data-size="L"
-          data-image="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQbs8XCUEtjP7cl6v4ruVZot5Hhxj1-dmrCUQ&s"
-        >
-          <div
-            class="image"
-            style="
-              background-image: url('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQbs8XCUEtjP7cl6v4ruVZot5Hhxj1-dmrCUQ&s');
-            "
-          ></div>
-          <div class="info">
-            <h2>Playera “Agresividad”</h2>
-            <p>$640.00 MXN</p>
-            <button class="add-to-cart">Comprar ahora</button>
-          </div>
-        </div>
-      </div>
-    </main>
-
-    <aside class="cart" id="cart">
-      <div class="cart-header">
-        <h2>Tu pedido</h2>
-        <button class="close-cart">&times;</button>
-      </div>
-      <div id="cart-items" class="cart-items">
-        <div class="empty-cart">Tu carrito está vacío</div>
-      </div>
-      <div class="cart-footer">
-        <div class="cart-total">
-          <strong>Total: </strong><span id="cart-total">$0.00 MXN</span>
-        </div>
-        <button id="checkout">Proceder al pago</button>
-      </div>
-    </aside>
-    <footer>
-      <div class="footerContainer">
-        <div class="footer_Row">
-          <!-- Primera columna -->
-          <div class="footer_Col">
-            <h4>¿Necesitas ayuda?</h4>
-            <ul>
-              <li><a href="#"onclick="openVentana('ventanaContacto')">Contáctanos</a></li>
-              <li><a href="#"onclick="openVentana('ventanaMasVendidos')">Más Vendidos</a></li>
-              <li><a href="#"onclick="openVentana('ventanaNovedad')">Novedades</a></li>
-            </ul>
-          </div>
-  
-          <!-- Segunda columna -->
-          <div class="footer_Col">
-            <h4>Atención al cliente</h4>
-            <ul>
-              <li><a href="#"onclick="openVentana('ventanaPreguntas')">Preguntas Frecuentes</a></li>
-              <li><a href="#"onclick="openVentana('ventanaEntregas')">Entregas</a></li>
-              <li><a href="#"onclick="openVentana('ventanaFpago')">Formas de pago</a></li>
-            </ul>
-          </div>
-  
-          <!-- Tercera columna -->
-          <div class="footer_Col">
-            <h4>Acerca de nosotros</h4>
-            <ul>
-              
-              <li><a href="#" onclick="openVentana('ventanaVelox')">Acerca de Velox</a></li>
-              <li><a href="#" onclick="openVentana('ventanaPrivacidad')">Aviso de Privacidad</a></li>
-              <li><a href="#" onclick="openVentana('ventanaTerminos')">Términos y condiciones</a></li>
-            </ul>
-          </div>
-  
-          <!-- Cuarta columna -->
-          <div class="footer_Col">
-            <h4>Newsletter</h4>
-            <input type="text" placeholder="Ingrese su nombre" class="inputNombre" />
-            <input type="text" placeholder="Ingrese su correo" class="inputCorreo" />
-            <input type="submit" value="Regístrame" class="inputSubmit" />
-            <div class="social_Icons">
-              <a href="" target="_blank" aria-label="Facebook"><i class="fa-brands fa-facebook"></i></a>
-              <a href="https://www.instagram.com/velox_boxing/" target="_blank" aria-label="Instagram"><i class="fa-brands fa-instagram"></i></a>
-              <a href="" target="_blank" aria-label="Twitter"><i class="fa-brands fa-x-twitter"></i></a>
-              <a href="" target="_blank" aria-label="YouTube"><i class="fa-brands fa-youtube"></i></a>
-            </div>
-          </div>
-        </div>
-        <hr />
-        <div class="footer_Bottom">
-          <div class="footer_Col">
-            <p>&#169;2025, Velox Boxing. Todos los derechos reservados.</p>
-          </div>
-        </div>
-      </div>
-    
-    
-    <div id="ventanaContacto" class="ventana">
-      <div class="ventana-content">
-        <span class="close" onclick="closeVentana('ventanaContacto')">&times;</span>
-        <div class="texto-legal">
-        <h1>Contacto</h1>
-        <h2>¡Estamos aquí para ayudarte!</h2>
-  <p>Si tienes dudas, comentarios o necesitas más información sobre nuestros servicios, no dudes en escribirnos. Nuestro equipo responderá lo más pronto posible.</p>
-  
-  <ul>
-    <li><strong> Correo:</strong> w5794759@gmail.com</li>
-    
-    <li><strong> Dirección:</strong> Tlalnepantla , MEX, 54020, México</li>
-  </ul>
-
-  <p>También puedes encontrarnos en nuestras redes sociales:</p>
-  <div class="social_Icons">
-    <a href="https://www.facebook.com/" target="_blank"><i class="fa-brands fa-facebook"></i></a>
-    <a href="https://www.instagram.com/velox_boxing/" target="_blank"><i class="fa-brands fa-instagram"></i></a>
-    <a href="#" target="_blank"><i class="fa-brands fa-x-twitter"></i></a>
-    <a href="#" target="_blank"><i class="fa-brands fa-youtube"></i></a>
-</div>
+    <div class="menu-section">
+      <div class="menu-title">Configuración</div>
+      <a href="#" class="menu-item">
+        <i class="fas fa-cog"></i>
+        <span class="menu-item-text">Ajustes</span>
+      </a>
+      <a href="#" class="menu-item">
+        <i class="fas fa-user"></i>
+        <span class="menu-item-text">Perfil</span>
+      </a>
+      <a href="#" class="menu-item">
+        <i class="fas fa-sign-out-alt"></i>
+        <span class="menu-item-text">Cerrar sesión</span>
+      </a>
+    </div>
   </div>
+
+  <div class="added-notification" id="added-notification">
+    Producto eliminado del carrito
+  </div>
+
+  <main class="container">
+    <div class="product-grid">
+
+    </div>
+  </main>
+
+  <aside class="cart" id="cart">
+    <div class="cart-header">
+      <h2>Tu pedido</h2>
+      <button class="close-cart">&times;</button>
+    </div>
+    <div id="cart-items" class="cart-items">
+      <div class="empty-cart">Tu carrito está vacío</div>
+    </div>
+    <div class="cart-footer">
+      <div class="cart-total">
+        <strong>Total: </strong><span id="cart-total">$0.00 MXN</span>
       </div>
+      <button id="checkout">Proceder al pago</button>
     </div>
+  </aside>
 
+  <script>
 
-    <div id="ventanaMasVendidos" class="ventana">
-      <div class="ventana-content">
-        <span class="close" onclick="closeVentana('ventanaMasVendidos')">&times;</span>
-        <div class="texto-legal">
-        <h1>Productos mas vendidos</h1>
-        <p>aqui van productos mas vendidos</p>
-      </div>
-    </div>
-    </div>
+    // ===== CONSTANTES Y CONFIGURACIÓN =====
+    const API_URL = 'http://localhost:8080/api/productos';
+    const CART_KEY = 'velox_boxing_cart';
 
+    // ===== ELEMENTOS DEL DOM =====
+    const cartToggle = document.getElementById("cart-toggle");
+    const cart = document.getElementById("cart");
+    const cartItemsContainer = document.getElementById("cart-items");
+    const cartTotal = document.getElementById("cart-total");
+    const closeCartBtn = document.querySelector(".close-cart");
+    const cartCount = document.getElementById("cart-count");
+    const notification = document.getElementById("added-notification");
+    const productGrid = document.querySelector(".product-grid");
 
-    <div id="ventanaNovedad" class="ventana">
-      <div class="ventana-content">
-        <span class="close" onclick="closeVentana('ventanaNovedad')">&times;</span>
-        <div class="texto-legal">
-        <h1>Novedades</h1>
-        <h2>¡Entérate de nuestras últimas novedades!</h2>
-            <p>Te mantenemos al día con todo lo nuevo en Velox Boxing: nuevos horarios, eventos especiales, promociones y más.</p>
-            <p>¡No te pierdas ninguna actualización y forma parte de nuestra comunidad activa y en constante movimiento!</p>
-            
-    </div>
-      </div>
-    </div>
+    // ===== ESTADO GLOBAL =====
+    let carrito = JSON.parse(localStorage.getItem(CART_KEY))?.data || [];
+    let productos = [];
 
+    // ===== FUNCIONES PRINCIPALES =====
 
-    <div id="ventanaPreguntas" class="ventana">
-      <div class="ventana-content">
-        <span class="close" onclick="closeVentana('ventanaPreguntas')">&times;</span>
-        <div class="texto-legal">
-        <h1>Preguntas Frecuentes</h1>
-        
+    // Cargar productos desde el backend
+    async function loadProducts() {
+      try {
+        const response = await fetch(API_URL);
+        if (!response.ok) throw new Error('Error al cargar productos');
 
-    
-      <h4>¿Qué productos ofrece Velox Boxing?</h4>
-      <p>Ofrecemos ropa deportiva, accesorios para entrenamiento y artículos inspirados en el mundo del boxeo y fitness.</p>
-
-      <h4>¿Hacen envíos a todo México?</h4>
-      <p>Sí, realizamos envíos a toda la República Mexicana con tiempos de entrega estimados de 3 a 7 días hábiles.</p>
-
-      <h4>¿Cómo puedo rastrear mi pedido?</h4>
-      <p>Una vez enviado tu pedido, recibirás un correo con el número de rastreo y el enlace para monitorear tu paquete.</p>
-
-      <h4>¿Puedo hacer cambios o devoluciones?</h4>
-      <p>Sí, puedes solicitar cambios o devoluciones dentro de los primeros 7 días naturales tras recibir tu pedido. El producto debe estar en perfectas condiciones y sin uso.</p>
-
-      <h4>¿Qué métodos de pago aceptan?</h4>
-      <p>Aceptamos tarjetas de crédito, débito, transferencias, PayPal, MercadoPago y otros métodos disponibles según tu ubicación.</p>
-
-      <h4>¿Es seguro comprar en su sitio web?</h4>
-      <p>Sí, contamos con certificados de seguridad y trabajamos con plataformas de pago confiables. No almacenamos datos de tarjetas.</p>
-
-      <h4>¿Puedo modificar mi pedido después de haberlo realizado?</h4>
-      <p>Si tu pedido aún no ha sido enviado, podemos ayudarte a modificarlo. Escríbenos lo antes posible a <a href="mailto:w5794759@gmail.com">w5794759@gmail.com</a>.</p>
-
-      <h4>¿Venden productos al por mayor?</h4>
-      <p>Sí, contáctanos para cotizaciones personalizadas en compras al mayoreo.</p>
-
-      <h4>¿Cómo puedo contactar a Velox Boxing?</h4>
-      <p>Escríbenos a <a href="mailto:w5794759@gmail.com">w5794759@gmail.com</a> o utiliza el formulario de contacto en nuestro sitio web.</p>
-    </div>
-      </div>
-    </div>
-
-
-    <div id="ventanaEntregas" class="ventana">
-      <div class="ventana-content">
-        <span class="close" onclick="closeVentana('ventanaEntregas')">&times;</span>
-        <div class="texto-legal">
-        <h1>Entregas</h1>
-        
-    <p>Realizamos entregas rápidas y seguras en toda la ciudad. Nuestro tiempo estimado de entrega es de 1 a 3 días hábiles, dependiendo de tu ubicación.</p>
-    <p>Ofrecemos servicio a domicilio con seguimiento en tiempo real y confirmación vía WhatsApp o correo electrónico.</p>
-    <p>¿Tienes una duda sobre tu pedido? ¡Contáctanos y con gusto te ayudamos!</p>
-    </div>
-      </div>
-    </div>
-
-
-    <div id="ventanaFpago" class="ventana">
-      <div class="ventana-content">
-        <span class="close" onclick="closeVentana('ventanaFpago')">&times;</span>
-        <div class="texto-legal">
-        <h1>Formas de Pago</h1>
-        <p>En <strong>Velox Boxing</strong> ofrecemos varias opciones seguras y confiables para que puedas realizar tus compras con tranquilidad:</p>
-
-  <h4>1. Tarjetas de crédito y débito</h4>
-  <p>Aceptamos pagos con tarjetas Visa, MasterCard y American Express. Todas las transacciones están protegidas mediante cifrado SSL.</p>
-
-  <h4>2. PayPal</h4>
-  <p>Realiza tus pagos de manera rápida y segura a través de tu cuenta de PayPal, sin compartir tus datos financieros.</p>
-
-  <h4>3. Transferencia bancaria</h4>
-  <p>También puedes hacer tu pago mediante transferencia o depósito bancario. Una vez realizado, envíanos el comprobante por correo a <a href="mailto:w5794759@gmail.com">w5794759@gmail.com</a> para procesar tu pedido.</p>
-
-  <h4>4. Pagos en efectivo (OXXO)</h4>
-  <p>Con Shopify Payments, puedes generar una orden para pagar en tiendas OXXO. El pedido se procesará una vez confirmado el pago.</p>
-
-  <p>Si tienes dudas o necesitas ayuda con el proceso de pago, contáctanos y con gusto te ayudaremos.</p>
-</div>
-      </div>
-    </div>
-
-    <div id="ventanaVelox" class="ventana">
-      <div class="ventana-content">
-        <span class="close" onclick="closeVentana('ventanaVelox')">&times;</span>
-        <div class="texto-legal">
-        <h1>Nosotros - Velox Boxing</h1>
-  
-  <h4>En Velox Boxing, no solo vendemos ropa. Forjamos una Mentalidad.</h4>
-  
-  <p>El boxeo y las artes marciales no son solo un deporte; son una prueba constante de carácter, sacrificio y determinación. Cada golpe, cada caída y cada levantada forjan no solo al peleador, sino al guerrero que vive dentro de él.</p>
-  
-  <p>Sabemos lo que es entregarlo todo en el ring, sentir el dolor y seguir adelante. Porque es sangre, sudor y lágrimas.</p>
-  
-  <p>Cada prenda de Velox Boxing está diseñada para reflejar la esencia del peleador. No es solo lo que llevas, es lo que representas. Queremos que, al vestir nuestra marca, sientas la misma energía que sientes cuando entras al ring: firmeza, seguridad, poder.</p>
-  
-   <h2>Porque en el ring y en la vida, solo hay un camino: avanzar, resistir y conquistar.</h4>
-  
-  <h4>Velox Boxing es para aquellos que no retroceden, que entienden que la verdadera lucha comienza en la mente y termina con la victoria.</h4>
-      </div>
-    </div>
-</div>
-  
-    <div id="ventanaPrivacidad" class="ventana">
-      <div class="ventana-content">
-        <span class="close" onclick="closeVentana('ventanaPrivacidad')">&times;</span>
-        <div class="texto-legal">
-        <h1>Aviso de Privacidad</h1>
-        <p>Esta Política de privacidad describe cómo se recopila, utiliza y comparte su información personal cuando visita o hace una compra en <a href="https://www.veloxboxing.shop/" target="_blank">https://www.veloxboxing.shop/</a> (denominado en lo sucesivo el “Sitio”).</p>
-
-        <h3>INFORMACIÓN PERSONAL QUE RECOPILAMOS</h3>
-        <p>Cuando visita el Sitio, recopilamos automáticamente cierta información sobre su dispositivo, como el navegador web, dirección IP, zona horaria y cookies instaladas. También recopilamos información sobre las páginas vistas, productos consultados, y términos de búsqueda.</p>
-        
-        <h4>Cookies que usamos:</h4>
-        <ul>
-          <li><strong>_session_id:</strong> Almacena información de sesión.</li>
-          <li><strong>_shopify_visit:</strong> Persistente por 30 minutos. Registra número de visitas.</li>
-          <li><strong>_shopify_uniq:</strong> Expira a la medianoche. Cuenta visitas únicas.</li>
-          <li><strong>cart:</strong> Persistente por 2 semanas. Guarda contenido del carrito.</li>
-          <li><strong>storefront_digest:</strong> Determina acceso si hay contraseña.</li>
-        </ul>
-      
-        <p>También usamos archivos de registro, balizas web, etiquetas y píxeles para rastrear navegación.</p>
-      
-        <h3>Información del pedido</h3>
-        <p>Cuando realiza una compra, recopilamos nombre, dirección de envío, información de pago, correo electrónico y teléfono.</p>
-      
-        <h3>¿Cómo usamos su información?</h3>
-        <ul>
-          <li>Procesar pedidos y pagos.</li>
-          <li>Enviar confirmaciones y facturas.</li>
-          <li>Detectar fraudes.</li>
-          <li>Ofrecer publicidad o promociones según sus preferencias.</li>
-        </ul>
-      
-        <h3>Compartir su información</h3>
-        <p>Compartimos su información con terceros como Shopify y Google Analytics. Más información:</p>
-        <ul>
-          <li><a href="https://www.shopify.com/legal/privacy" target="_blank">Política de Shopify</a></li>
-          <li><a href="https://www.google.com/intl/es/policies/privacy/" target="_blank">Política de Google</a></li>
-        </ul>
-      
-        <h3>Publicidad dirigida</h3>
-        <p>Utilizamos su información para ofrecer anuncios personalizados.</p>
-        <p>Puede darse de baja en:</p>
-        <ul>
-          <li><a href="https://www.facebook.com/settings/?tab=ads" target="_blank">Facebook</a></li>
-          <li><a href="https://adssettings.google.com/authenticated?hl=es" target="_blank">Google</a></li>
-          <li><a href="https://about.ads.microsoft.com/es-es/recursos/directivas/anuncios-personalizados" target="_blank">Bing</a></li>
-          <li><a href="http://optout.aboutads.info/" target="_blank">DAA Opt-Out</a></li>
-        </ul>
-      
-        <h3>No rastrear</h3>
-        <p>No modificamos nuestras prácticas cuando vemos señales de “No rastrear” desde su navegador.</p>
-      
-        <h3>Sus derechos</h3>
-        <p>Si es residente europeo, puede solicitar acceso, corrección o eliminación de su información personal.</p>
-      
-        <h3>Retención de datos</h3>
-        <p>Conservamos su información mientras no solicite su eliminación.</p>
-      
-        <h3>Menores</h3>
-        <p>El sitio no está destinado a menores de 18 años.</p>
-      
-        <h3>Cambios</h3>
-        <p>Podemos actualizar esta política por motivos legales u operativos.</p>
-       </p>
-      </div>
-    </div>
-    </div>
-  
-    <div id="ventanaTerminos" class="ventana">
-      <div class="ventana-content">
-        <span class="close" onclick="closeVentana('ventanaTerminos')">&times;</span>
-        <div class="texto-legal">
-        <h1>Términos y Condiciones</h1>
-        
-        <p>Bienvenido a <strong>Velox Boxing</strong>. Al acceder y utilizar nuestro sitio web <a href="https://www.veloxboxing.shop" target="_blank">https://www.veloxboxing.shop</a>, aceptas cumplir con los siguientes Términos y Condiciones. Si no estás de acuerdo con alguno de estos términos, te recomendamos no utilizar nuestro sitio.</p>
-
-        <h3>1. Información general</h3>
-        <p>Este sitio es operado por Velox Boxing. En todo el sitio, los términos “nosotros”, “nos” y “nuestro” se refieren a Velox Boxing. Al visitar nuestro sitio y/o comprar algún producto, participas en nuestro “Servicio” y aceptas los términos descritos a continuación.</p>
-      
-        <h3>2. Condiciones de la tienda online</h3>
-        <ul>
-          <li>Debes tener al menos 18 años o contar con el permiso de un adulto para realizar compras.</li>
-          <li>No puedes utilizar nuestros productos con fines ilegales o no autorizados.</li>
-          <li>No debes transmitir virus o cualquier código de naturaleza destructiva.</li>
-        </ul>
-      
-        <h3>3. Productos y precios</h3>
-        <p>Nos reservamos el derecho de modificar los precios de nuestros productos sin previo aviso. Todos los productos están sujetos a disponibilidad y pueden ser retirados del sitio en cualquier momento.</p>
-      
-        <h3>4. Pagos</h3>
-        <p>Los pagos se realizan de forma segura a través de nuestros proveedores autorizados (como Shopify y pasarelas de pago asociadas). No almacenamos información confidencial de tarjetas de crédito.</p>
-      
-        <h3>5. Envíos y devoluciones</h3>
-        <p>Consulta nuestras políticas de <a href="#politica-envios">envíos</a> y <a href="#politica-devoluciones">devoluciones</a> para más detalles. Velox Boxing no se hace responsable por retrasos atribuibles a servicios de mensajería externa.</p>
-      
-        <h3>6. Propiedad intelectual</h3>
-        <p>Todo el contenido del sitio (diseños, logotipos, textos, imágenes) es propiedad de Velox Boxing y está protegido por derechos de autor. No está permitido el uso sin autorización previa por escrito.</p>
-      
-        <h3>7. Cambios en los términos</h3>
-        <p>Nos reservamos el derecho de modificar estos Términos y Condiciones en cualquier momento. Es responsabilidad del usuario revisar periódicamente esta sección.</p>
-      
-        <h3>8. Contacto</h3>
-        <p>Para cualquier duda o aclaración, puedes contactarnos al correo <a href="mailto:w5794759@gmail.com">w5794759@gmail.com</a> o por escrito a: Tlalnepantla, MEX, 54020, México.</p>
-      </div>
-    </div>
-    </div>
-    </footer>
-
-    <script>
-      //Funcion para agregar cosas al carrito
-      const cartToggle = document.getElementById("cart-toggle");
-      const cart = document.getElementById("cart");
-      const cartItems = document.getElementById("cart-items");
-      const cartTotal = document.getElementById("cart-total");
-      const closeCartBtn = document.querySelector(".close-cart");
-      const cartCount = document.getElementById("cart-count");
-      const notification = document.getElementById("added-notification");
-
-      let carrito = [];
-
-      cartToggle.addEventListener("click", () => {
-        cart.classList.toggle("open");
-      });
-
-      closeCartBtn.addEventListener("click", () => {
-        cart.classList.remove("open");
-      });
-
-      function showNotification() {
-        notification.style.display = "block";
-        setTimeout(() => {
-          notification.style.display = "none";
-        }, 2000);
+        productos = await response.json();
+        renderProducts();
+      } catch (error) {
+        console.error('Error:', error);
+        productGrid.innerHTML = '<p class="error">Error al cargar los productos. Intente nuevamente.</p>';
       }
+    }
+    function renderProducts() {
+      productGrid.innerHTML = productos.map(product => `
+    <div class="card" 
+         data-id="${product.id}"
+         data-title="${product.nombre}"
+         data-price="${product.precio}"
+         data-image="${product.imagen ? product.imagen : 'img/default.jpg'}">
+      <div class="image" style="background-image: url('${product.imagen ? product.imagen : 'img/default.jpg'}')"></div>
+      <div class="info">
+        <h2>${product.nombre}</h2>
+        <p>$${product.precio.toFixed(2)} MXN</p>
+        <button class="add-to-cart">
+  ${carrito.find(item => item.id == product.id) ? 'Cancelar compra' : 'Comprar ahora'}
+</button>
 
-      document.querySelectorAll(".add-to-cart").forEach((btn) => {
-        btn.addEventListener("click", (e) => {
-          const card = e.target.closest(".card");
-          const id = card.dataset.id;
-          const title = card.dataset.title;
-          const price = parseFloat(card.dataset.price);
-          const color = card.dataset.color;
-          const size = card.dataset.size;
-          const image = card.dataset.image;
+      </div>
+    </div>
+  `).join('');
 
-          const itemIndex = carrito.findIndex((p) => p.id === id);
-          if (itemIndex !== -1) {
-            carrito[itemIndex].quantity += 1;
-          } else {
-            carrito.push({ id, title, price, color, size, image, quantity: 1 });
-          }
-
-          renderCart();
-          updateCartCount();
-          showNotification();
-        });
+      document.querySelectorAll('.add-to-cart').forEach(btn => {
+        btn.addEventListener('click', addToCartHandler);
       });
+    }
 
-      function renderCart() {
-        if (carrito.length === 0) {
-          cartItems.innerHTML =
-            '<div class="empty-cart">Tu carrito está vacío</div>';
-          cartTotal.textContent = "$0.00 MXN";
-          return;
-        }
 
-        cartItems.innerHTML = "";
-        let total = 0;
+    // Manejador para añadir al carrito
+    function addToCartHandler(e) {
+      const card = e.target.closest('.card');
+      const product = {
+        id: card.dataset.id,
+        title: card.dataset.title,
+        price: parseFloat(card.dataset.price),
+        image: card.dataset.image
+      };
+      addToCart(product);
+    }
 
-        carrito.forEach((product) => {
-          total += product.price * product.quantity;
+    // Añadir producto al carrito
+    function addToCart(product) {
+      const existingItem = carrito.find(item => item.id === product.id);
 
-          const item = document.createElement("div");
-          item.classList.add("item");
-          item.innerHTML = `
-          <div class="item-image" style="background-image: url('${
-            product.image
-          }')"></div>
-          <div class="item-info">
-            <h3>${product.title}</h3>
-            <p>${product.color} / ${product.size}</p>
-            <p>$${(product.price * product.quantity).toFixed(2)} MXN</p>
-            <div class="quantity-controls">
-              <button onclick="updateQuantity('${product.id}', -1)">-</button>
-              <span>${product.quantity}</span>
-              <button onclick="updateQuantity('${product.id}', 1)">+</button>
-            </div>
-            <span class="remove" onclick="removeItem('${
-              product.id
-            }')">Eliminar</span>
-          </div>
-        `;
-          cartItems.appendChild(item);
-        });
-
-        cartTotal.textContent = `$${total.toFixed(2)} MXN`;
+      if (existingItem) {
+        existingItem.quantity += 1;
+        showNotification(`${product.title} - Cantidad actualizada`);
+      } else {
+        carrito.push({ ...product, quantity: 1 });
+        showNotification(`${product.title} eliminado del carrito`);
+        // ← Guardar en base de datos
       }
+      saveCart();
+    }
 
-      function updateCartCount() {
-        const count = carrito.reduce((total, item) => total + item.quantity, 0);
-        cartCount.textContent = count > 0 ? count : "";
-      }
+    // Eliminar producto del carrito
+    function removeItem(id) {
+      const product = carrito.find(item => item.id === id);
+      if (product && confirm(`¿Eliminar ${product.title} del carrito?`)) {
+        carrito = carrito.filter(item => item.id !== id);
+        saveCart();
+        showNotification('Producto eliminado');
 
-      function updateQuantity(id, delta) {
-        const index = carrito.findIndex((p) => p.id === id);
-        if (index !== -1) {
-          carrito[index].quantity += delta;
-          if (carrito[index].quantity <= 0) {
-            carrito.splice(index, 1);
-          }
-          renderCart();
-          updateCartCount();
+        if (carrito.length === 0 && cart.classList.contains('open')) {
+          setTimeout(() => cart.classList.remove("open"), 1000);
         }
       }
+    }
 
-      function removeItem(id) {
-        carrito = carrito.filter((p) => p.id !== id);
-        renderCart();
-        updateCartCount();
+    // Actualizar cantidad de un producto
+    function updateQuantity(id, change) {
+      const item = carrito.find(item => item.id === id);
+      if (!item) return;
+
+      item.quantity += change;
+
+      if (item.quantity <= 0) {
+        removeItem(id);
+      } else {
+        saveCart();
+        showNotification(`Cantidad actualizada: ${item.title} x${item.quantity}`);
+      }
+    }
+
+    // Guardar carrito en localStorage
+    function saveCart() {
+      const cartData = {
+        data: carrito,
+        timestamp: Date.now()
+      };
+      localStorage.setItem(CART_KEY, JSON.stringify(cartData));
+      updateCartUI();
+      window.dispatchEvent(new Event('cartUpdated'));
+    }
+
+    // Actualizar la interfaz del carrito
+    function updateCartUI() {
+      renderCartItems();
+      updateCartCounter();
+    }
+
+    // Renderizar items del carrito
+    function renderCartItems() {
+      cartItemsContainer.innerHTML = '';
+
+      if (carrito.length === 0) {
+        cartItemsContainer.innerHTML = '<div class="empty-cart">Tu carrito está vacío</div>';
+        cartTotal.textContent = "$0.00 MXN";
+        return;
       }
 
-      updateCartCount();
-      //Funcion para desplegar menu de hamburguesa
-      const hamburgerBtn = document.getElementById("hamburgerBtn");
-      const menuOverlay = document.getElementById("menuOverlay");
-      const menuContainer = document.getElementById("menuContainer");
+      let total = 0;
+      carrito.forEach((product) => {
+        total += product.price * product.quantity;
 
-      hamburgerBtn.addEventListener("click", () => {
-        menuContainer.classList.toggle("active");
-        menuOverlay.classList.toggle("active");
+        const itemElement = document.createElement('div');
+        itemElement.classList.add('item');
+        itemElement.innerHTML = `
+      <div class="item-image" style="background-image: url('${product.image}')"></div>
+      <div class="item-info">
+        <h3>${product.title}</h3>
+        <p>$${(product.price * product.quantity).toFixed(2)} MXN</p>
+        <div class="quantity-controls">
+          <button data-action="decrease" data-id="${product.id}">-</button>
+          <span>${product.quantity}</span>
+          <button data-action="increase" data-id="${product.id}">+</button>
+        </div>
+        <span class="remove" data-action="remove" data-id="${product.id}">Eliminar</span>
+      </div>
+    `;
+        cartItemsContainer.appendChild(itemElement);
       });
 
-      menuOverlay.addEventListener("click", () => {
-        menuContainer.classList.remove("active");
-        menuOverlay.classList.remove("active");
-      });
+      cartTotal.textContent = `$${total.toFixed(2)} MXN`;
+    }
 
-      /*  footer-------*/
+    // Actualizar contador del carrito
+    function updateCartCounter() {
+      const totalItems = carrito.reduce((total, item) => total + item.quantity, 0);
+      cartCount.textContent = totalItems > 0 ? totalItems : "0";
 
-      function openVentana(id) {
-        document.getElementById(id).style.display = 'block';
+      if (totalItems > 0) {
+        cartCount.classList.add('animate-bounce');
+        setTimeout(() => cartCount.classList.remove('animate-bounce'), 1000);
       }
-  
-      function closeVentana(id) {
-        document.getElementById(id).style.display = 'none';
+    }
+
+    // Mostrar notificación
+    function showNotification(message) {
+      notification.textContent = message;
+      notification.style.display = "block";
+      setTimeout(() => {
+        notification.style.display = "none";
+      }, 2000);
+    }
+
+    // ===== EVENT LISTENERS =====
+    cartItemsContainer.addEventListener('click', function (e) {
+      const action = e.target.getAttribute('data-action');
+      const id = e.target.getAttribute('data-id');
+
+      if (!action || !id) return;
+
+      switch (action) {
+        case 'increase':
+          updateQuantity(id, 1);
+          break;
+        case 'decrease':
+          updateQuantity(id, -1);
+          break;
+        case 'remove':
+          removeItem(id);
+          break;
       }
-  
-      // Cierra la ventana si se hace clic en otro lado
-      window.onclick = function(event) {
-        const ventanas = document.querySelectorAll('.ventana');
-        ventanas.forEach(ventana => {
-          if (event.target === ventana) {
-            ventana.style.display = 'none';
-          }
-        });
+    });
+
+    cartToggle.addEventListener('click', () => cart.classList.toggle('open'));
+    closeCartBtn.addEventListener('click', () => cart.classList.remove('open'));
+
+    window.addEventListener('storage', function (event) {
+      if (event.key === CART_KEY) {
+        carrito = JSON.parse(event.newValue).data || [];
+        updateCartUI();
       }
-    </script>
-  </body>
+    });
+
+    window.addEventListener('cartUpdated', function () {
+      updateCartUI();
+    });
+
+    // ===== INICIALIZACIÓN =====
+    document.addEventListener('DOMContentLoaded', function () {
+      loadProducts();
+
+      const savedCart = JSON.parse(localStorage.getItem(CART_KEY));
+      if (savedCart && savedCart.data) {
+        carrito = savedCart.data;
+        updateCartUI();
+      }
+    });
+
+    // ===== MENÚ HAMBURGUESA =====
+    const hamburgerBtn = document.getElementById('hamburgerBtn');
+    const menuOverlay = document.getElementById('menuOverlay');
+    const menuContainer = document.getElementById('menuContainer');
+
+    hamburgerBtn.addEventListener('click', () => {
+      menuContainer.classList.toggle('active');
+      menuOverlay.classList.toggle('active');
+    });
+
+    menuOverlay.addEventListener('click', () => {
+      menuContainer.classList.remove('active');
+      menuOverlay.classList.remove('active');
+    });
+
+
+  </script>
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+</body>
+
 </html>
