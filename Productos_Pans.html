@@ -680,73 +680,7 @@
         </div>
 
         <section class="product-grid">
-            <!-- Producto 1 -->
-             <div class="product-card">
-                <a href="Detalle_Playeras.html">
-                    <div class="product-img">
-                        <img src="IMG/WhatsApp.jpeg" alt="Playera F6">
-                    </div>
-                </a>
-                <div class="product-info">
-                    <p class="product-name">Playera chida</p>
-                    <p class="product-price">$640.00 MXN</p>
-                    <button class="buy-btn">Agregar al carrito</button>
-                </div>
-            </div>
-
-
-
-
-            <!-- Producto 2 -->
-             <div class="product-card">
-                <a href="Detalle_Playeras.html">
-                    <div class="product-img">
-                        <img src="IMG/WhatsApp.jpeg" alt="Playera F6">
-                    </div>
-                </a>
-                <div class="product-info">
-                    <p class="product-name">Playera chida</p>
-                    <p class="product-price">$640.00 MXN</p>
-                    <button class="buy-btn">Agregar al carrito</button>
-                </div>
-            </div>
-
-
-
-
-            <!-- Producto 3 -->
-            <div class="product-card">
-                <a href="Detalle_Playeras.html">
-                    <div class="product-img">
-                        <img src="IMG/WhatsApp.jpeg" alt="Playera F6">
-                    </div>
-                </a>
-                <div class="product-info">
-                    <p class="product-name">Playera chida</p>
-                    <p class="product-price">$640.00 MXN</p>
-                    <button class="buy-btn">Agregar al carrito</button>
-                </div>
-            </div>
-
-
-
-
-
-            <!-- Producto 4 -->
-             <div class="product-card">
-                <a href="Detalle_Playeras.html">
-                    <div class="product-img">
-                        <img src="IMG/WhatsApp.jpeg" alt="Playera F6">
-                    </div>
-                </a>
-                <div class="product-info">
-                    <p class="product-name">Playera chida</p>
-                    <p class="product-price">$640.00 MXN</p>
-                    <button class="buy-btn">Agregar al carrito</button>
-                </div>
-            </div>
-
-
+           
 
         </section>
     </main>
@@ -803,172 +737,173 @@
             </div>
         </div>
     </footer>
-
-    <script>
+<script>
         //Esta funcion hace que la pagina inicie hasta arriva
         window.onload = function () {
             window.scrollTo(0, 0);
             updateCartCount();
-        };
+        }; document.addEventListener('DOMContentLoaded', () => {
 
-        // Menú hamburguesa
-        const hamburgerBtn = document.getElementById('hamburgerBtn');
-        const menuOverlay = document.getElementById('menuOverlay');
-        const menuContainer = document.getElementById('menuContainer');
 
-        hamburgerBtn.addEventListener('click', () => {
-            menuContainer.classList.toggle('active');
-            menuOverlay.classList.toggle('active');
-        });
+            loadPans();
 
-        menuOverlay.addEventListener('click', () => {
-            menuContainer.classList.remove('active');
-            menuOverlay.classList.remove('active');
-        });
+            // Menú hamburguesa (opcional, si lo necesitas)
+            const hamburgerBtn = document.getElementById('hamburgerBtn');
+            const menuOverlay = document.getElementById('menuOverlay');
+            const menuContainer = document.getElementById('menuContainer');
 
-        document.querySelectorAll('.buy-btn').forEach(button => {
-            button.addEventListener('click', function () {
-                const productCard = this.closest('.product-card');
-                const nombre = productCard.querySelector('.product-name').textContent;
-                const precioTexto = productCard.querySelector('.product-price').textContent;
-                const precio = precioTexto.replace(/[^0-9.]/g, ''); // Elimina "$" y "MXN"
-                const imagenSrc = productCard.querySelector('img').getAttribute('src');
-
-                addToCart(nombre, precio, imagenSrc);
-            });
-        });
-        function addToCart(nombre, precio, imagen) {
-            const producto = {
-                nombre: nombre,
-                descripcion: "Sin descripción", // Opcional
-                precio: parseFloat(precio),
-                imagen: [imagen]
-            };
-
-            fetch('http://localhost:8080/api/productos', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify(producto)
-            })
-                .then(response => {
-                    if (!response.ok) throw new Error('Error al guardar producto');
-                    return response.json();
-                })
-                .then(data => {
-                    // Aquí se muestra SweetAlert en vez de alert()
-                    Swal.fire({
-                        toast: true,
-                        position: 'top-end',
-                        icon: 'success',
-                        title: `${nombre} se añadió al carrito`,
-                        showConfirmButton: false,
-                        timer: 2000,
-                        timerProgressBar: true,
-                    });
-                    updateCartCount();  // Opcional: actualizar contador si quieres
-                })
-                .catch(error => {
-                    console.error('Error al guardar el producto:', error);
-                    Swal.fire({
-                        icon: 'error',
-                        title: 'Oops...',
-                        text: 'No se pudo añadir el producto al carrito.',
-                    });
+            if (hamburgerBtn) {
+                hamburgerBtn.addEventListener('click', () => {
+                    menuContainer.classList.toggle('active');
+                    menuOverlay.classList.toggle('active');
                 });
-        }
 
-
-      function updateCartCount() {
-    fetch('http://localhost:8080/api/productos')
-        .then(response => response.json())
-        .then(productos => {
-            const cartCount = document.getElementById('cart-count');
-            if (cartCount) {
-                // Aquí productos es un array, así que mostramos su tamaño:
-                const totalItems = productos.length; 
-                cartCount.textContent = totalItems;
-
-                if (totalItems > 0) {
-                    cartCount.classList.add('animate-bounce');
-                    setTimeout(() => cartCount.classList.remove('animate-bounce'), 1000);
-                }
+                menuOverlay.addEventListener('click', () => {
+                    menuContainer.classList.remove('active');
+                    menuOverlay.classList.remove('active');
+                });
             }
-        })
-        .catch(error => {
-            console.error('Error al obtener la cantidad del carrito:', error);
         });
+       // productos_pans.js
+document.addEventListener('DOMContentLoaded', () => {
+    loadPans(); // Carga inicial de pans
+    setupSearch(); // Configurar buscador
+});
+
+// ================ CARGAR PANS ================
+async function loadPans() {
+    try {
+        const response = await fetch('http://localhost:8080/api/Productos/filtrar?categoria=Pans');
+        if (!response.ok) throw new Error("Error al cargar pants");
+        
+        const pans = await response.json();
+        renderProducts(pans);
+        updateCartCount();
+    } catch (error) {
+        console.error("Error:", error);
+        Swal.fire({
+            icon: 'error',
+            title: 'Error',
+            text: 'No se pudieron cargar los pants. Intenta recargar la página.'
+        });
+    }
 }
 
+// ================ RENDERIZAR PRODUCTOS ================
+function renderProducts(pans) {
+    const grid = document.querySelector('.product-grid');
+    if (!grid) return;
 
-        // Animación icono carrito
-        function animarIconoCarrito() {
-            const cartIcon = document.querySelector('.cart-icon-container');
-            if (cartIcon) {
-                cartIcon.classList.add('animate-pulse');
-                setTimeout(() => cartIcon.classList.remove('animate-pulse'), 1000);
+    grid.innerHTML = pans.map(pan => `
+        <div class="product-card">
+            <a href="Detalle_Pans.html?id=${pan.id}">
+                <div class="product-img">
+                    <img src="${pan.imagen?.[0] || 'img/placeholder.jpg'}" 
+                         alt="${pan.nombre}" 
+                         onerror="this.src='img/placeholder.jpg'">
+                </div>
+            </a>
+            <div class="product-info">
+                <p class="product-name">${pan.nombre}</p>
+                <p class="product-price">$${pan.precio.toFixed(2)} MXN</p>
+                <button class="buy-btn" 
+                        data-id="${pan.id}"
+                        data-name="${pan.nombre}"
+                        data-price="${pan.precio}"
+                        data-img="${pan.imagen?.[0] || ''}">
+                    Agregar al carrito
+                </button>
+            </div>
+        </div>
+    `).join('');
+
+    // Eventos para botones
+    document.querySelectorAll('.buy-btn').forEach(btn => {
+        btn.addEventListener('click', addToCart);
+    });
+}
+
+// ================ AÑADIR AL CARRITO ================
+async function addToCart(e) {
+    const button = e.currentTarget;
+    const producto = {
+        id: button.getAttribute('data-id'),
+        nombre: button.getAttribute('data-name'),
+        precio: parseFloat(button.getAttribute('data-price')),
+        imagen: [button.getAttribute('data-img')]
+    };
+
+    try {
+        const response = await fetch('http://localhost:8080/api/carrito/agregar', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(producto)
+        });
+
+        if (!response.ok) throw new Error("Error al agregar al carrito");
+
+        Swal.fire({
+            toast: true,
+            position: 'top-end',
+            icon: 'success',
+            title: `${producto.nombre} añadido al carrito`,
+            showConfirmButton: false,
+            timer: 2000
+        });
+
+        updateCartCount();
+        animarIconoCarrito();
+    } catch (error) {
+        console.error("Error:", error);
+        Swal.fire({
+            icon: 'error',
+            title: 'Error',
+            text: 'No se pudo agregar al carrito'
+        });
+    }
+}
+
+// ================ BUSCADOR ================
+function setupSearch() {
+    const searchInput = document.getElementById('searchInput');
+    if (!searchInput) return;
+
+    searchInput.addEventListener('input', (e) => {
+        const searchTerm = e.target.value.toLowerCase();
+        document.querySelectorAll('.product-card').forEach(card => {
+            const name = card.querySelector('.product-name').textContent.toLowerCase();
+            card.style.display = name.includes(searchTerm) ? 'block' : 'none';
+        });
+    });
+}
+
+// ================ ACTUALIZAR CARRITO ================
+async function updateCartCount() {
+    try {
+        const response = await fetch('http://localhost:8080/api/carrito/cantidad');
+        const count = await response.json();
+        const cartCount = document.getElementById('cart-count');
+        
+        if (cartCount) {
+            cartCount.textContent = count;
+            if (count > 0) {
+                cartCount.classList.add('animate-bounce');
+                setTimeout(() => cartCount.classList.remove('animate-bounce'), 1000);
             }
         }
+    } catch (error) {
+        console.error("Error actualizando carrito:", error);
+    }
+}
 
-
-        // Mostrar/ocultar carrito
-        const cartToggle = document.getElementById('cart-toggle');
-        const cartPanel = document.getElementById('cartPanel');
-
-        cartToggle.addEventListener('click', function (e) {
-            e.preventDefault();
-            cartPanel.classList.toggle('hidden');
-            renderCartItems();
-        });
-
-        // Renderizar carrito desde BD
-        function renderCartItems() {
-            const cartItemsContainer = document.getElementById('cartItems');
-
-            fetch('http://localhost:8080/api/productos')
-                .then(response => response.json())
-                .then(carrito => {
-                    cartItemsContainer.innerHTML = '';
-
-                    if (carrito.length === 0) {
-                        cartItemsContainer.innerHTML = '<p>Tu carrito está vacío.</p>';
-                        return;
-                    }
-
-                    carrito.forEach(producto => {
-                        const item = document.createElement('div');
-                        item.innerHTML = `
-                    <div style="display:flex; align-items:center; margin-bottom:10px;">
-                        <img src="${producto.imagen}" alt="${producto.nombre}" style="width:40px; height:40px; object-fit:cover; margin-right:10px;">
-                        <div>
-                            <strong>${producto.nombre}</strong><br>
-                            ${producto.cantidad} x $${producto.precio}
-                        </div>
-                    </div>
-                `;
-                        cartItemsContainer.appendChild(item);
-                    });
-                })
-                .catch(error => {
-                    console.error('Error al obtener productos del carrito:', error);
-                    cartItemsContainer.innerHTML = '<p>Error al cargar el carrito.</p>';
-                });
-        }
-
-        // Buscador
-        const searchInput = document.getElementById('searchInput');
-        const productCards = document.querySelectorAll('.product-card');
-
-        searchInput.addEventListener('input', function () {
-            const searchValue = this.value.toLowerCase();
-
-            productCards.forEach(card => {
-                const productName = card.querySelector('.product-name').textContent.toLowerCase();
-                card.style.display = productName.includes(searchValue) ? 'block' : 'none';
-            });
-        });
-
+// ================ ANIMACIÓN CARRITO ================
+function animarIconoCarrito() {
+    const cartIcon = document.querySelector('.cart-icon-container');
+    if (cartIcon) {
+        cartIcon.classList.add('animate-pulse');
+        setTimeout(() => cartIcon.classList.remove('animate-pulse'), 1000);
+    }
+}
     </script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
