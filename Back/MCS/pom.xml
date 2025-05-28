@@ -8,11 +8,11 @@
 		<version>3.4.5</version>
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
-	<groupId>com.veloxbox</groupId>
-	<artifactId>back</artifactId>
+	<groupId>com.Horizon</groupId>
+	<artifactId>MCS</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>conex_db</name>
-	<description>Demo project for Spring Boot</description>
+	<name>TableFomrA.P</name>
+	<description>Project for Spring Boot</description>
 	<url/>
 	<licenses>
 		<license/>
