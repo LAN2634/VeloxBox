@@ -15,7 +15,7 @@ public class Producto {
     private String nombre;
 
     @Column(name = "precio")
-    private Double precio;
+    private double precio;
 
     @Lob
     @Column(name = "imagen")
@@ -37,11 +37,11 @@ public class Producto {
         this.nombre = nombre;
     }
 
-    public Double getPrecio() {
+    public double getPrecio() {
         return precio;
     }
 
-    public void setPrecio(Double precio) {
+    public void setPrecio(double precio) {
         this.precio = precio;
     }
 

@@ -2,489 +2,427 @@
 <html lang="es">
 
 <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
-        integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg=="
-        crossorigin="anonymous" referrerpolicy="no-referrer" />
-    <title>Tienda Online</title>
-    <link rel="stylesheet" href="./CSS/estilosFooter.css">
-    <link rel="stylesheet" href="./CSS/style_index.css" />
-    <link rel="stylesheet" href="CSS/styleSlider.css" />
-    <!--Bootstrap-->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
-<!--estos son esenciales para el carrusel de sephora-->
-<!-- Swiper CSS -->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
-
-
-
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
+    integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg=="
+    crossorigin="anonymous" referrerpolicy="no-referrer" />
+  <title>Tienda Online</title>
+  <link rel="stylesheet" href="./CSS/estilosFooter.css">
+  <link rel="stylesheet" href="./CSS/style_index.css" />
+  <link rel="stylesheet" href="CSS/styleSlider.css" />
+  <!--Bootstrap-->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+  <!--estos son esenciales para el carrusel de sephora-->
+  <!-- Swiper CSS -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
 
 </head>
 
 <body>
-    <header>
-        <div class="header-left">
-            <button class="hamburger-btn" id="hamburgerBtn">
-                <i class="fas fa-bars"></i>
-            </button>
+  <header>
+    <div class="header-left">
+      <button class="hamburger-btn" id="hamburgerBtn">
+        <i class="fas fa-bars"></i>
+      </button>
 
-            <button class="button" data-text="VELOX BOX">
-                <span class="actual-text">&nbsp;VELOX BOXING&nbsp;</span>
-                <span class="hover-text">&nbsp;VELOX BOXING&nbsp;</span>
-            </button>
-        </div>
-
-        <div class="cart-icon-container">
-            <a href="#" id="cart-toggle" class="menu-item"
-                style="color: white; text-decoration: none; font-size: 1.2rem;">
-                <i class="fas fa-shopping-cart"></i>
-                <span id="cart-count">0</span>
-            </a>
-        </div>
-    </header>
-
-    <div class="menu-overlay" id="menuOverlay"></div>
-
-    <div class="menu-container" id="menuContainer">
-        <!-- Input de búsqueda dentro del menú -->
-        <div class="menu-search">
-            <input class="input" id="searchInput" name="text" placeholder="Buscar..." type="search">
-        </div>
-
-        <div class="menu-section">
-            <div class="menu-title">Principal</div>
-            <!--Icono de menú-->
-            <a href="Index.html" class="menu-item">
-                <i class="fas fa-home"></i>
-                <span class="menu-item-text">Inicio</span>
-            </a>
-            <!-- Nuevo ítem de Mis Productos -->
-            <a href="Compras_Carrito.html" class="menu-item">
-                <i class="fas fa-shopping-cart"></i>
-                <span class="menu-item-text">Mis Productos</span>
-            </a>
-
-        </div>
-
-        <div class="menu-section">
-            <div class="menu-title">Contenido</div>
-            <!--Icono de playera-->
-            <a href="Productos_playeras.html" class="menu-item">
-                <i class="fas fa-tshirt"></i>
-                <span class="menu-item-text">Playera</span>
-            </a>
-            <!--Icono de Pans-->
-            <a href="Productos_Pans.html" class="menu-item">
-                <i class="fas fa-running"></i>
-                <span class="menu-item-text">Pans</span>
-            </a>
-            <!--Icono de guantes de box-->
-            <a href="Productos_Guantes.html" class="menu-item">
-                <i class="fas fa-hand-rock"></i>
-                <span class="menu-item-text">Guantes de Box</span>
-            </a>
-            <!--Icono de cascos a corregir-->
-            <a href="Productos_Cascos.html" class="menu-item">
-                <i class="fas fa-hard-hat"></i>
-                <span class="menu-item-text">Cascos de Box</span>
-            </a>
-
-        </div>
-
-
-        <div class="menu-section">
-            <div class="menu-title">Configuración</div>
-            <a href="#" class="menu-item">
-                <i class="fas fa-cog"></i>
-                <span class="menu-item-text">Ajustes</span>
-            </a>
-            <a href="#" class="menu-item">
-                <i class="fas fa-user"></i>
-                <span class="menu-item-text">Perfil</span>
-            </a>
-            <a href="#" class="menu-item">
-                <i class="fas fa-sign-out-alt"></i>
-                <span class="menu-item-text">Cerrar sesión</span>
-            </a>
-        </div>
+      <button class="button" data-text="VELOX BOX">
+        <span class="actual-text">&nbsp;VELOX BOXING&nbsp;</span>
+        <span class="hover-text">&nbsp;VELOX BOXING&nbsp;</span>
+      </button>
     </div>
 
-    <!-- Carrusel de imágenes -->
-    <div class="carousel-container">
-<div id="carouselExample" class="carousel slide" data-bs-ride="carousel" data-bs-interval="3000">
-  <div class="carousel-inner">
-    <div class="carousel-item active">
-      <img src="SVGs/banner02.png" class="d-block w-100" alt="...">
+    <div class="cart-icon-container">
+      <a href="#" id="cart-toggle" class="menu-item" style="color: white; text-decoration: none; font-size: 1.2rem;">
+        <i class="fas fa-shopping-cart"></i>
+        <span id="cart-count">0</span>
+      </a>
     </div>
-    <div class="carousel-item">
-      <img src="SVGs/banner02.png" class="d-block w-100" alt="...">
+  </header>
+
+  <div class="menu-overlay" id="menuOverlay"></div>
+
+  <div class="menu-container" id="menuContainer">
+    <!-- Input de búsqueda dentro del menú -->
+    <div class="menu-search">
+      <input class="input" id="searchInput" name="text" placeholder="Buscar..." type="search">
     </div>
-    <div class="carousel-item">
-      <img src="SVGs/banner02.png" class="d-block w-100" alt="...">
+
+    <div class="menu-section">
+      <div class="menu-title">Principal</div>
+      <!--Icono de menú-->
+      <a href="Index.html" class="menu-item">
+        <i class="fas fa-home"></i>
+        <span class="menu-item-text">Inicio</span>
+      </a>
+      <!-- Nuevo ítem de Mis Productos -->
+      <a href="Compras_Carrito.html" class="menu-item">
+        <i class="fas fa-shopping-cart"></i>
+        <span class="menu-item-text">Mis Productos</span>
+      </a>
+
+    </div>
+
+    <div class="menu-section">
+      <div class="menu-title">Contenido</div>
+      <!--Icono de playera-->
+      <a href="Productos_playeras.html" class="menu-item">
+        <i class="fas fa-tshirt"></i>
+        <span class="menu-item-text">Playera</span>
+      </a>
+      <!--Icono de Pans-->
+      <a href="Productos_Pans.html" class="menu-item">
+        <i class="fas fa-running"></i>
+        <span class="menu-item-text">Pans</span>
+      </a>
+      <!--Icono de guantes de box-->
+      <a href="Productos_Guantes.html" class="menu-item">
+        <i class="fas fa-hand-rock"></i>
+        <span class="menu-item-text">Guantes de Box</span>
+      </a>
+      <!--Icono de cascos a corregir-->
+      <a href="Productos_Cascos.html" class="menu-item">
+        <i class="fas fa-hard-hat"></i>
+        <span class="menu-item-text">Cascos de Box</span>
+      </a>
+
+    </div>
+
+
+    <div class="menu-section">
+      <div class="menu-title">Configuración</div>
+      <a href="#" class="menu-item">
+        <i class="fas fa-cog"></i>
+        <span class="menu-item-text">Ajustes</span>
+      </a>
+      <a href="#" class="menu-item">
+        <i class="fas fa-user"></i>
+        <span class="menu-item-text">Perfil</span>
+      </a>
+      <a href="#" class="menu-item">
+        <i class="fas fa-sign-out-alt"></i>
+        <span class="menu-item-text">Cerrar sesión</span>
+      </a>
     </div>
   </div>
-  <button class="carousel-control-prev" type="button" data-bs-target="#carouselExample" data-bs-slide="prev">
-    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-    <span class="visually-hidden">Previous</span>
-  </button>
-  <button class="carousel-control-next" type="button" data-bs-target="#carouselExample" data-bs-slide="next">
-    <span class="carousel-control-next-icon" aria-hidden="true"></span>
-    <span class="visually-hidden">Next</span>
-  </button>
-</div>
 
-
+  <!-- Carrusel de imágenes -->
+  <div class="carousel-container">
+    <div id="carouselExample" class="carousel slide" data-bs-ride="carousel" data-bs-interval="3000">
+      <div class="carousel-inner">
+        <div class="carousel-item active">
+          <img src="SVGs/banner02.png" class="d-block w-100" alt="...">
         </div>
-    </div>
-
-
-    <div class="infinite-slider">
-        <h4>
-            <div class="sliderLogos">
-            <div class="logos_Slide">
-              <img src="SVGs/Sephora.svg" />
-              <img src="SVGs/NewSeason.svg" />
-              <img src="SVGs/Sephora.svg" />
-              <img src="SVGs/NewSeason.svg" />
-              <img src="SVGs/Sephora.svg" />
-              <img src="SVGs/NewSeason.svg" />
-              <img src="SVGs/Sephora.svg" />
-              <img src="SVGs/NewSeason.svg" />
-              <img src="SVGs/Sephora.svg" />
-              <img src="SVGs/NewSeason.svg" />
-              <img src="SVGs/Sephora.svg" />
-              <img src="SVGs/NewSeason.svg" />
-              <img src="SVGs/Sephora.svg" />
-              <img src="SVGs/NewSeason.svg" />
-              <img src="SVGs/Sephora.svg" />
-              <img src="SVGs/NewSeason.svg" />
-            </div>
-
-            <div class="logos_Slide">
-              <img src="SVGs/Sephora.svg" />
-              <img src="SVGs/NewSeason.svg" />
-              <img src="SVGs/Sephora.svg" />
-              <img src="SVGs/NewSeason.svg" />
-              <img src="SVGs/Sephora.svg" />
-              <img src="SVGs/NewSeason.svg" />
-              <img src="SVGs/Sephora.svg" />
-              <img src="SVGs/NewSeason.svg" />
-              <img src="SVGs/Sephora.svg" />
-              <img src="SVGs/NewSeason.svg" />
-              <img src="SVGs/Sephora.svg" />
-              <img src="SVGs/NewSeason.svg" />
-              <img src="SVGs/Sephora.svg" />
-              <img src="SVGs/NewSeason.svg" />
-              <img src="SVGs/Sephora.svg" />
-              <img src="SVGs/NewSeason.svg" />
-            </div>
-          </div>
-
-        </h4>
-
-
-
-    </div>
-
-    <section class="sectionIDK">
-        <div class="Img-container-index">
-            <img src="https://www.veloxboxing.shop/cdn/shop/files/IMG_9854.jpg?v=1746425140&width=535">
+        <div class="carousel-item">
+          <img src="SVGs/banner02.png" class="d-block w-100" alt="...">
         </div>
-        <div class="Text-container-index">
-            <p>
-En Velox Boxing, no solo vendemos ropa. Forjamos una Mentalidad.
-Cada prenda de Velox Boxing está diseñada para reflejar la esencia del peleador. No es solo lo que llevas, es lo que representas. Queremos que, al vestir nuestra marca, sientas la misma energía que sientes cuando entras al ring: firmeza, seguridad, poder.
-            </p>
-
+        <div class="carousel-item">
+          <img src="SVGs/banner02.png" class="d-block w-100" alt="...">
         </div>
-    </section>
-
-    <section class="card-sephora">
-            <div class="div10">
- 
-
-        <div class="div11"></div>
-        <div class="div12"></div>
-        <div class="div13">
-          <h3 class="estiloTitulos">NUESTROS FAVORITOS</h3>
-          <div class="swiper mySwiper">
-            <div class="swiper-wrapper">
-              <!-- Tarjeta 1 -->
-              <div class="swiper-slide">
-                <div class="card">
-                  <div class="image-content">
-                    <span class="overlay"></span>
-                    <div class="card-image">
-                      <img src="https://www.veloxboxing.shop/cdn/shop/files/HARDWORK_92719e3f-7158-4fcf-9c22-a00590f7d772.jpg?v=1742877634&width=990" alt="" class="card-img" />
-                    </div>
-                  </div>
-                  <div class="card-content">
-                    <h3 class="name">Playera "Trabajo Duro"</h3>
-                    <p class="description">
-                        $640 </p>
-                    <button class="cardButton">VER MÁS</button>
-                  </div>
-                </div>
-              </div>
-
-              <!-- Tarjeta 2 -->
-              <div class="swiper-slide">
-                <div class="card">
-                  <div class="image-content">
-                    <span class="overlay"></span>
-                    <div class="card-image">
-                      <img src="https://www.veloxboxing.shop/cdn/shop/files/Playera_Agressive_Tras_V002.png?v=1747027684&width=990" alt="" class="card-img" />
-                    </div>
-                  </div>
-                  <div class="card-content">
-                    <h3 class="name">Playera "Agresividad"</h3>
-                    <p class="description">
-                        $640                 
-                       </p>
-                    <button class="cardButton">VER MÁS</button>
-                  </div>
-                </div>
-              </div>
-
-              <!-- Tarjeta 3 -->
-              <div class="swiper-slide">
-                <div class="card">
-                  <div class="image-content">
-                    <span class="overlay"></span>
-                    <div class="card-image">
-                      <img src="https://www.veloxboxing.shop/cdn/shop/files/faith_5a3f754a-d223-456c-8b38-f020009cdfb9.jpg?v=1742877664&width=990" alt="" class="card-img" />
-                    </div>
-                  </div>
-                  <div class="card-content">
-                    <h3 class="name">Playera "Agresividad"</h3>
-                    <p class="description">
-                      $640
-                    </p>
-                    <button class="cardButton">VER MÁS</button>
-                  </div>
-                </div>
-              </div>
-
-              <!-- Tarjeta 4 -->
-              <div class="swiper-slide">
-                <div class="card">
-                  <div class="image-content">
-                    <span class="overlay"></span>
-                    <div class="card-image">
-                      <img src="https://www.veloxboxing.shop/cdn/shop/files/Playera_Bravery_Tras.png?v=1747027573&width=990" alt="" class="card-img" />
-                    </div>
-                  </div>
-                  <div class="card-content">
-                    <h3 class="name">Playera "Fe"</h3>
-                    <p class="description">
-                     $640
-                    </p>
-                    <button class="cardButton">VER MÁS</button>
-                  </div>
-                </div>
-              </div>
-
-              <!-- Tarjeta 5 -->
-              <div class="swiper-slide">
-                <div class="card">
-                  <div class="image-content">
-                    <span class="overlay"></span>
-                    <div class="card-image">
-                      <img src="https://www.veloxboxing.shop/cdn/shop/files/HARDWORK_92719e3f-7158-4fcf-9c22-a00590f7d772.jpg?v=1742877634&width=990" alt="" class="card-img" />
-                    </div>
-                  </div>
-                  <div class="card-content">
-                    <h3 class="name">Playera "Valentía"</h3>
-                    <p class="description">$640</p>
-                    <button class="cardButton">VER MÁS</button>
-                  </div>
-                </div>
-              </div>
-
-              <!-- Tarjeta 6-->
-              <div class="swiper-slide">
-                <div class="card">
-                  <div class="image-content">
-                    <span class="overlay"></span>
-                    <div class="card-image">
-                      <img src="https://www.veloxboxing.shop/cdn/shop/files/Playera_Agressive_Tras_V002.png?v=1747027684&width=990" alt="" class="card-img" />
-                    </div>
-                  </div>
-                  <div class="card-content">
-                    <h3 class="name">URBAN DECAY</h3>
-                    <p class="description">
-                     $640
-                    </p>
-                    <button class="cardButton">VER MÁS</button>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            <!-- Botones de navegación -->
-            <div class="swiper-button-next"></div>
-            <div class="swiper-button-prev"></div>
-
-            <!-- Paginación -->
-            <div class="swiper-pagination"></div>
-          </div>
-        </div>
-        <div class="div14"></div>
       </div>
-    </section>
-
-  <!--  <section class="destacados">
-        <h2>Destacados</h2>
-        <div class="productosSimilares">
-            <div class="product-grid">
-                <!-- Producto 1 
-                <div class="card" data-id="1" data-title="Playera “Trabajo Duro”" data-price="640" data-color="Blanca"
-                    data-size="M - L"
-                    data-image="https://www.veloxboxing.shop/cdn/shop/files/HARDWORK_92719e3f-7158-4fcf-9c22-a00590f7d772.jpg?v=1742877634&width=990">
-                    <div class="image"
-                        style="background-image: url('https://www.veloxboxing.shop/cdn/shop/files/HARDWORK_92719e3f-7158-4fcf-9c22-a00590f7d772.jpg?v=1742877634&width=990')">
-                    </div>
-                    <div class="info">
-                        <h2>Playera “Trabajo Duro”</h2>
-                        <p>$640.00 MXN</p>
-                        <button class="add-to-cart">Comprar ahora</button>
-                    </div>
-                </div>
-
-                <!-- Producto 2 
-                <div class="card" data-id="2" data-title="Playera “Agresividad”" data-price="640" data-color="Negra"
-                    data-size="M"
-                    data-image="https://www.veloxboxing.shop/cdn/shop/files/Playera_Agressive_Tras_V002.png?v=1747027684&width=990">
-                    <div class="image"
-                        style="background-image: url('https://www.veloxboxing.shop/cdn/shop/files/Playera_Agressive_Tras_V002.png?v=1747027684&width=990')">
-                    </div>
-                    <div class="info">
-                        <h2>Playera “Agresividad”</h2>
-                        <p>$640.00 MXN</p>
-                        <button class="add-to-cart">Comprar ahora</button>
-                    </div>
-                </div>
-
-                <!-- Producto 3 
-                <div class="card" data-id="3" data-title="Playera Valentía" data-price="640" data-color="Rosa"
-                    data-size="S - M"
-                    data-image="https://www.veloxboxing.shop/cdn/shop/files/Playera_Bravery_Tras.png?v=1747027573&width=990">
-                    <div class="image"
-                        style="background-image: url('https://www.veloxboxing.shop/cdn/shop/files/Playera_Bravery_Tras.png?v=1747027573&width=990')">
-                    </div>
-                    <div class="info">
-                        <h2>Playera “Valentía”</h2>
-                        <p>$640.00 MXN</p>
-                        <button class="add-to-cart">Comprar ahora</button>
-                    </div>
-                </div>
-
-                <!-- Producto 4 
-                <div class="card" data-id="4" data-title="Playera “Fe”" data-price="640" data-color="Azul"
-                    data-size="L"
-                    data-image="https://www.veloxboxing.shop/cdn/shop/files/faith_5a3f754a-d223-456c-8b38-f020009cdfb9.jpg?v=1742877664&width=990">
-                    <div class="image"
-                        style="background-image: url('https://www.veloxboxing.shop/cdn/shop/files/faith_5a3f754a-d223-456c-8b38-f020009cdfb9.jpg?v=1742877664&width=990')">
-                    </div>
-                    <div class="info">
-                        <h2>Playera “Fe”</h2>
-                        <p>$640.00 MXN</p>
-                        <button class="add-to-cart">Comprar ahora</button>
-                    </div>
-                </div>
-            </div>
-
-            <button class="verMasBtn">Ver más + </button>
-
-    </section> -->
+      <button class="carousel-control-prev" type="button" data-bs-target="#carouselExample" data-bs-slide="prev">
+        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+        <span class="visually-hidden">Previous</span>
+      </button>
+      <button class="carousel-control-next" type="button" data-bs-target="#carouselExample" data-bs-slide="next">
+        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+        <span class="visually-hidden">Next</span>
+      </button>
+    </div>
+  </div>
 
 
 
 
-
-
-
-
-    <footer>
-        <div class="footerContainer">
-        <div class="footer_Row">
-          <!-- Primera columna -->
-          <div class="footer_Col">
-            <h4>¿Necesitas ayuda?</h4>
-            <ul>
-              <li><a href="#"onclick="openVentana('ventanaContacto')">Contáctanos</a></li>
-              <li><a href="#"onclick="openVentana('ventanaMasVendidos')">Más Vendidos</a></li>
-              <li><a href="#"onclick="openVentana('ventanaNovedad')">Novedades</a></li>
-            </ul>
-          </div>
-  
-          <!-- Segunda columna -->
-          <div class="footer_Col">
-            <h4>Atención al cliente</h4>
-            <ul>
-              <li><a href="#"onclick="openVentana('ventanaPreguntas')">Preguntas Frecuentes</a></li>
-              <li><a href="#"onclick="openVentana('ventanaEntregas')">Entregas</a></li>
-              <li><a href="#"onclick="openVentana('ventanaFpago')">Formas de pago</a></li>
-            </ul>
-          </div>
-  
-          <!-- Tercera columna -->
-          <div class="footer_Col">
-            <h4>Acerca de nosotros</h4>
-            <ul>
-              
-              <li><a href="#" onclick="openVentana('ventanaVelox')">Acerca de Velox</a></li>
-              <li><a href="#" onclick="openVentana('ventanaPrivacidad')">Aviso de Privacidad</a></li>
-              <li><a href="#" onclick="openVentana('ventanaTerminos')">Términos y condiciones</a></li>
-            </ul>
-          </div>
-  
-          <!-- Cuarta columna -->
-          <div class="footer_Col">
-            <h4>Newsletter</h4>
-            <input type="text" placeholder="Ingrese su nombre" class="inputNombre" />
-            <input type="text" placeholder="Ingrese su correo" class="inputCorreo" />
-            <input type="submit" value="Regístrame" class="inputSubmit" />
-            <div class="social_Icons">
-              <a href="" target="_blank" aria-label="Facebook"><i class="fa-brands fa-facebook"></i></a>
-              <a href="https://www.instagram.com/velox_boxing/" target="_blank" aria-label="Instagram"><i class="fa-brands fa-instagram"></i></a>
-              <a href="" target="_blank" aria-label="Twitter"><i class="fa-brands fa-x-twitter"></i></a>
-              <a href="" target="_blank" aria-label="YouTube"><i class="fa-brands fa-youtube"></i></a>
-            </div>
-          </div>
+  <div class="infinite-slider">
+    <h4>
+      <div class="sliderLogos">
+        <div class="logos_Slide">
+          <img src="SVGs/Sephora.svg" />
+          <img src="SVGs/NewSeason.svg" />
+          <img src="SVGs/Sephora.svg" />
+          <img src="SVGs/NewSeason.svg" />
+          <img src="SVGs/Sephora.svg" />
+          <img src="SVGs/NewSeason.svg" />
+          <img src="SVGs/Sephora.svg" />
+          <img src="SVGs/NewSeason.svg" />
+          <img src="SVGs/Sephora.svg" />
+          <img src="SVGs/NewSeason.svg" />
+          <img src="SVGs/Sephora.svg" />
+          <img src="SVGs/NewSeason.svg" />
+          <img src="SVGs/Sephora.svg" />
+          <img src="SVGs/NewSeason.svg" />
+          <img src="SVGs/Sephora.svg" />
+          <img src="SVGs/NewSeason.svg" />
         </div>
-        <hr />
-        <div class="footer_Bottom">
-          <div class="footer_Col">
-            <p>&#169;2025, Velox Boxing. Todos los derechos reservados.</p>
+
+        <div class="logos_Slide">
+          <img src="SVGs/Sephora.svg" />
+          <img src="SVGs/NewSeason.svg" />
+          <img src="SVGs/Sephora.svg" />
+          <img src="SVGs/NewSeason.svg" />
+          <img src="SVGs/Sephora.svg" />
+          <img src="SVGs/NewSeason.svg" />
+          <img src="SVGs/Sephora.svg" />
+          <img src="SVGs/NewSeason.svg" />
+          <img src="SVGs/Sephora.svg" />
+          <img src="SVGs/NewSeason.svg" />
+          <img src="SVGs/Sephora.svg" />
+          <img src="SVGs/NewSeason.svg" />
+          <img src="SVGs/Sephora.svg" />
+          <img src="SVGs/NewSeason.svg" />
+          <img src="SVGs/Sephora.svg" />
+          <img src="SVGs/NewSeason.svg" />
+        </div>
+      </div>
+
+    </h4>
+  </div>
+
+  <section class="sectionIDK">
+    <div class="Img-container-index">
+      <img src="https://www.veloxboxing.shop/cdn/shop/files/IMG_9854.jpg?v=1746425140&width=535">
+    </div>
+    <div class="Text-container-index">
+      <p>
+        En Velox Boxing, no solo vendemos ropa. Forjamos una Mentalidad.
+        Cada prenda de Velox Boxing está diseñada para reflejar la esencia del peleador. No es solo lo que llevas, es
+        lo que representas. Queremos que, al vestir nuestra marca, sientas la misma energía que sientes cuando entras
+        al ring: firmeza, seguridad, poder.
+      </p>
+
+    </div>
+  </section>
+
+  <section class="card-sephora">
+    <div class="div10">
+
+
+      <div class="div11"></div>
+      <div class="div12"></div>
+      <div class="div13">
+        <h3 class="estiloTitulos">NUESTROS FAVORITOS</h3>
+        <div class="swiper mySwiper">
+          <div class="swiper-wrapper">
+            <!-- Tarjeta 1 -->
+            <div class="swiper-slide">
+              <div class="card">
+                <div class="image-content">
+                  <span class="overlay"></span>
+                  <div class="card-image">
+                    <img
+                      src="https://www.veloxboxing.shop/cdn/shop/files/HARDWORK_92719e3f-7158-4fcf-9c22-a00590f7d772.jpg?v=1742877634&width=990"
+                      alt="" class="card-img" />
+                  </div>
+                </div>
+                <div class="card-content">
+                  <h3 class="name">Playera "Trabajo Duro"</h3>
+                  <p class="description">
+                    $640 </p>
+                  <button class="cardButton">VER MÁS</button>
+                </div>
+              </div>
+            </div>
+
+            <!-- Tarjeta 2 -->
+            <div class="swiper-slide">
+              <div class="card">
+                <div class="image-content">
+                  <span class="overlay"></span>
+                  <div class="card-image">
+                    <img
+                      src="https://www.veloxboxing.shop/cdn/shop/files/Playera_Agressive_Tras_V002.png?v=1747027684&width=990"
+                      alt="" class="card-img" />
+                  </div>
+                </div>
+                <div class="card-content">
+                  <h3 class="name">Playera "Agresividad"</h3>
+                  <p class="description">
+                    $640
+                  </p>
+                  <button class="cardButton">VER MÁS</button>
+                </div>
+              </div>
+            </div>
+
+            <!-- Tarjeta 3 -->
+            <div class="swiper-slide">
+              <div class="card">
+                <div class="image-content">
+                  <span class="overlay"></span>
+                  <div class="card-image">
+                    <img
+                      src="https://www.veloxboxing.shop/cdn/shop/files/faith_5a3f754a-d223-456c-8b38-f020009cdfb9.jpg?v=1742877664&width=990"
+                      alt="" class="card-img" />
+                  </div>
+                </div>
+                <div class="card-content">
+                  <h3 class="name">Playera "Agresividad"</h3>
+                  <p class="description">
+                    $640
+                  </p>
+                  <button class="cardButton">VER MÁS</button>
+                </div>
+              </div>
+            </div>
+
+            <!-- Tarjeta 4 -->
+            <div class="swiper-slide">
+              <div class="card">
+                <div class="image-content">
+                  <span class="overlay"></span>
+                  <div class="card-image">
+                    <img
+                      src="https://www.veloxboxing.shop/cdn/shop/files/Playera_Bravery_Tras.png?v=1747027573&width=990"
+                      alt="" class="card-img" />
+                  </div>
+                </div>
+                <div class="card-content">
+                  <h3 class="name">Playera "Fe"</h3>
+                  <p class="description">
+                    $640
+                  </p>
+                  <button class="cardButton">VER MÁS</button>
+                </div>
+              </div>
+            </div>
+
+            <!-- Tarjeta 5 -->
+            <div class="swiper-slide">
+              <div class="card">
+                <div class="image-content">
+                  <span class="overlay"></span>
+                  <div class="card-image">
+                    <img
+                      src="https://www.veloxboxing.shop/cdn/shop/files/HARDWORK_92719e3f-7158-4fcf-9c22-a00590f7d772.jpg?v=1742877634&width=990"
+                      alt="" class="card-img" />
+                  </div>
+                </div>
+                <div class="card-content">
+                  <h3 class="name">Playera "Valentía"</h3>
+                  <p class="description">$640</p>
+                  <button class="cardButton">VER MÁS</button>
+                </div>
+              </div>
+            </div>
+
+            <!-- Tarjeta 6-->
+            <div class="swiper-slide">
+              <div class="card">
+                <div class="image-content">
+                  <span class="overlay"></span>
+                  <div class="card-image">
+                    <img
+                      src="https://www.veloxboxing.shop/cdn/shop/files/Playera_Agressive_Tras_V002.png?v=1747027684&width=990"
+                      alt="" class="card-img" />
+                  </div>
+                </div>
+                <div class="card-content">
+                  <h3 class="name">URBAN DECAY</h3>
+                  <p class="description">
+                    $640
+                  </p>
+                  <button class="cardButton">VER MÁS</button>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Botones de navegación -->
+          <div class="swiper-button-next"></div>
+          <div class="swiper-button-prev"></div>
+
+          <!-- Paginación -->
+          <div class="swiper-pagination"></div>
+        </div>
+      </div>
+      <div class="div14"></div>
+    </div>
+  </section>
+
+
+  <footer>
+    <div class="footerContainer">
+      <div class="footer_Row">
+        <!-- Primera columna -->
+        <div class="footer_Col">
+          <h4>¿Necesitas ayuda?</h4>
+          <ul>
+            <li><a href="#" onclick="openVentana('ventanaContacto')">Contáctanos</a></li>
+            <li><a href="#" onclick="openVentana('ventanaMasVendidos')">Más Vendidos</a></li>
+            <li><a href="#" onclick="openVentana('ventanaNovedad')">Novedades</a></li>
+          </ul>
+        </div>
+
+        <!-- Segunda columna -->
+        <div class="footer_Col">
+          <h4>Atención al cliente</h4>
+          <ul>
+            <li><a href="#" onclick="openVentana('ventanaPreguntas')">Preguntas Frecuentes</a></li>
+            <li><a href="#" onclick="openVentana('ventanaEntregas')">Entregas</a></li>
+            <li><a href="#" onclick="openVentana('ventanaFpago')">Formas de pago</a></li>
+          </ul>
+        </div>
+
+        <!-- Tercera columna -->
+        <div class="footer_Col">
+          <h4>Acerca de nosotros</h4>
+          <ul>
+
+            <li><a href="#" onclick="openVentana('ventanaVelox')">Acerca de Velox</a></li>
+            <li><a href="#" onclick="openVentana('ventanaPrivacidad')">Aviso de Privacidad</a></li>
+            <li><a href="#" onclick="openVentana('ventanaTerminos')">Términos y condiciones</a></li>
+          </ul>
+        </div>
+
+        <!-- Cuarta columna -->
+        <div class="footer_Col">
+          <h4>Newsletter</h4>
+          <input type="text" placeholder="Ingrese su nombre" class="inputNombre" />
+          <input type="text" placeholder="Ingrese su correo" class="inputCorreo" />
+          <input type="submit" value="Regístrame" class="inputSubmit" />
+          <div class="social_Icons">
+            <a href="" target="_blank" aria-label="Facebook"><i class="fa-brands fa-facebook"></i></a>
+            <a href="https://www.instagram.com/velox_boxing/" target="_blank" aria-label="Instagram"><i
+                class="fa-brands fa-instagram"></i></a>
+            <a href="" target="_blank" aria-label="Twitter"><i class="fa-brands fa-x-twitter"></i></a>
+            <a href="" target="_blank" aria-label="YouTube"><i class="fa-brands fa-youtube"></i></a>
           </div>
         </div>
       </div>
-    
-    
+      <hr />
+      <div class="footer_Bottom">
+        <div class="footer_Col">
+          <p>&#169;2025, Velox Boxing. Todos los derechos reservados.</p>
+        </div>
+      </div>
+    </div>
+
+
     <div id="ventanaContacto" class="ventana">
       <div class="ventana-content">
         <span class="close" onclick="closeVentana('ventanaContacto')">&times;</span>
         <div class="texto-legal">
-        <h1>Contacto</h1>
-        <h2>¡Estamos aquí para ayudarte!</h2>
-  <p>Si tienes dudas, comentarios o necesitas más información sobre nuestros servicios, no dudes en escribirnos. Nuestro equipo responderá lo más pronto posible.</p>
-  
-  <ul>
-    <li><strong> Correo:</strong> w5794759@gmail.com</li>
-    
-    <li><strong> Dirección:</strong> Tlalnepantla , MEX, 54020, México</li>
-  </ul>
+          <h1>Contacto</h1>
+          <h2>¡Estamos aquí para ayudarte!</h2>
+          <p>Si tienes dudas, comentarios o necesitas más información sobre nuestros servicios, no dudes en
+            escribirnos. Nuestro equipo responderá lo más pronto posible.</p>
 
-  <p>También puedes encontrarnos en nuestras redes sociales:</p>
-  <div class="social_Icons">
-    <a href="https://www.facebook.com/" target="_blank"><i class="fa-brands fa-facebook"></i></a>
-    <a href="https://www.instagram.com/velox_boxing/" target="_blank"><i class="fa-brands fa-instagram"></i></a>
-    <a href="#" target="_blank"><i class="fa-brands fa-x-twitter"></i></a>
-    <a href="#" target="_blank"><i class="fa-brands fa-youtube"></i></a>
-</div>
-  </div>
+          <ul>
+            <li><strong> Correo:</strong> w5794759@gmail.com</li>
+
+            <li><strong> Dirección:</strong> Tlalnepantla , MEX, 54020, México</li>
+          </ul>
+
+          <p>También puedes encontrarnos en nuestras redes sociales:</p>
+          <div class="social_Icons">
+            <a href="https://www.facebook.com/" target="_blank"><i class="fa-brands fa-facebook"></i></a>
+            <a href="https://www.instagram.com/velox_boxing/" target="_blank"><i class="fa-brands fa-instagram"></i></a>
+            <a href="#" target="_blank"><i class="fa-brands fa-x-twitter"></i></a>
+            <a href="#" target="_blank"><i class="fa-brands fa-youtube"></i></a>
+          </div>
+        </div>
       </div>
     </div>
 
@@ -493,10 +431,10 @@ Cada prenda de Velox Boxing está diseñada para reflejar la esencia del peleado
       <div class="ventana-content">
         <span class="close" onclick="closeVentana('ventanaMasVendidos')">&times;</span>
         <div class="texto-legal">
-        <h1>Productos mas vendidos</h1>
-        <p>aqui van productos mas vendidos</p>
+          <h1>Productos mas vendidos</h1>
+          <p>aqui van productos mas vendidos</p>
+        </div>
       </div>
-    </div>
     </div>
 
 
@@ -504,12 +442,14 @@ Cada prenda de Velox Boxing está diseñada para reflejar la esencia del peleado
       <div class="ventana-content">
         <span class="close" onclick="closeVentana('ventanaNovedad')">&times;</span>
         <div class="texto-legal">
-        <h1>Novedades</h1>
-        <h2>¡Entérate de nuestras últimas novedades!</h2>
-            <p>Te mantenemos al día con todo lo nuevo en Velox Boxing: nuevos horarios, eventos especiales, promociones y más.</p>
-            <p>¡No te pierdas ninguna actualización y forma parte de nuestra comunidad activa y en constante movimiento!</p>
-            
-    </div>
+          <h1>Novedades</h1>
+          <h2>¡Entérate de nuestras últimas novedades!</h2>
+          <p>Te mantenemos al día con todo lo nuevo en Velox Boxing: nuevos horarios, eventos especiales, promociones
+            y más.</p>
+          <p>¡No te pierdas ninguna actualización y forma parte de nuestra comunidad activa y en constante movimiento!
+          </p>
+
+        </div>
       </div>
     </div>
 
@@ -518,37 +458,45 @@ Cada prenda de Velox Boxing está diseñada para reflejar la esencia del peleado
       <div class="ventana-content">
         <span class="close" onclick="closeVentana('ventanaPreguntas')">&times;</span>
         <div class="texto-legal">
-        <h1>Preguntas Frecuentes</h1>
-        
+          <h1>Preguntas Frecuentes</h1>
 
-    
-      <h4>¿Qué productos ofrece Velox Boxing?</h4>
-      <p>Ofrecemos ropa deportiva, accesorios para entrenamiento y artículos inspirados en el mundo del boxeo y fitness.</p>
 
-      <h4>¿Hacen envíos a todo México?</h4>
-      <p>Sí, realizamos envíos a toda la República Mexicana con tiempos de entrega estimados de 3 a 7 días hábiles.</p>
 
-      <h4>¿Cómo puedo rastrear mi pedido?</h4>
-      <p>Una vez enviado tu pedido, recibirás un correo con el número de rastreo y el enlace para monitorear tu paquete.</p>
+          <h4>¿Qué productos ofrece Velox Boxing?</h4>
+          <p>Ofrecemos ropa deportiva, accesorios para entrenamiento y artículos inspirados en el mundo del boxeo y
+            fitness.</p>
 
-      <h4>¿Puedo hacer cambios o devoluciones?</h4>
-      <p>Sí, puedes solicitar cambios o devoluciones dentro de los primeros 7 días naturales tras recibir tu pedido. El producto debe estar en perfectas condiciones y sin uso.</p>
+          <h4>¿Hacen envíos a todo México?</h4>
+          <p>Sí, realizamos envíos a toda la República Mexicana con tiempos de entrega estimados de 3 a 7 días
+            hábiles.</p>
 
-      <h4>¿Qué métodos de pago aceptan?</h4>
-      <p>Aceptamos tarjetas de crédito, débito, transferencias, PayPal, MercadoPago y otros métodos disponibles según tu ubicación.</p>
+          <h4>¿Cómo puedo rastrear mi pedido?</h4>
+          <p>Una vez enviado tu pedido, recibirás un correo con el número de rastreo y el enlace para monitorear tu
+            paquete.</p>
 
-      <h4>¿Es seguro comprar en su sitio web?</h4>
-      <p>Sí, contamos con certificados de seguridad y trabajamos con plataformas de pago confiables. No almacenamos datos de tarjetas.</p>
+          <h4>¿Puedo hacer cambios o devoluciones?</h4>
+          <p>Sí, puedes solicitar cambios o devoluciones dentro de los primeros 7 días naturales tras recibir tu
+            pedido. El producto debe estar en perfectas condiciones y sin uso.</p>
 
-      <h4>¿Puedo modificar mi pedido después de haberlo realizado?</h4>
-      <p>Si tu pedido aún no ha sido enviado, podemos ayudarte a modificarlo. Escríbenos lo antes posible a <a href="mailto:w5794759@gmail.com">w5794759@gmail.com</a>.</p>
+          <h4>¿Qué métodos de pago aceptan?</h4>
+          <p>Aceptamos tarjetas de crédito, débito, transferencias, PayPal, MercadoPago y otros métodos disponibles
+            según tu ubicación.</p>
 
-      <h4>¿Venden productos al por mayor?</h4>
-      <p>Sí, contáctanos para cotizaciones personalizadas en compras al mayoreo.</p>
+          <h4>¿Es seguro comprar en su sitio web?</h4>
+          <p>Sí, contamos con certificados de seguridad y trabajamos con plataformas de pago confiables. No
+            almacenamos datos de tarjetas.</p>
 
-      <h4>¿Cómo puedo contactar a Velox Boxing?</h4>
-      <p>Escríbenos a <a href="mailto:w5794759@gmail.com">w5794759@gmail.com</a> o utiliza el formulario de contacto en nuestro sitio web.</p>
-    </div>
+          <h4>¿Puedo modificar mi pedido después de haberlo realizado?</h4>
+          <p>Si tu pedido aún no ha sido enviado, podemos ayudarte a modificarlo. Escríbenos lo antes posible a <a
+              href="mailto:w5794759@gmail.com">w5794759@gmail.com</a>.</p>
+
+          <h4>¿Venden productos al por mayor?</h4>
+          <p>Sí, contáctanos para cotizaciones personalizadas en compras al mayoreo.</p>
+
+          <h4>¿Cómo puedo contactar a Velox Boxing?</h4>
+          <p>Escríbenos a <a href="mailto:w5794759@gmail.com">w5794759@gmail.com</a> o utiliza el formulario de
+            contacto en nuestro sitio web.</p>
+        </div>
       </div>
     </div>
 
@@ -557,12 +505,14 @@ Cada prenda de Velox Boxing está diseñada para reflejar la esencia del peleado
       <div class="ventana-content">
         <span class="close" onclick="closeVentana('ventanaEntregas')">&times;</span>
         <div class="texto-legal">
-        <h1>Entregas</h1>
-        
-    <p>Realizamos entregas rápidas y seguras en toda la ciudad. Nuestro tiempo estimado de entrega es de 1 a 3 días hábiles, dependiendo de tu ubicación.</p>
-    <p>Ofrecemos servicio a domicilio con seguimiento en tiempo real y confirmación vía WhatsApp o correo electrónico.</p>
-    <p>¿Tienes una duda sobre tu pedido? ¡Contáctanos y con gusto te ayudamos!</p>
-    </div>
+          <h1>Entregas</h1>
+
+          <p>Realizamos entregas rápidas y seguras en toda la ciudad. Nuestro tiempo estimado de entrega es de 1 a 3
+            días hábiles, dependiendo de tu ubicación.</p>
+          <p>Ofrecemos servicio a domicilio con seguimiento en tiempo real y confirmación vía WhatsApp o correo
+            electrónico.</p>
+          <p>¿Tienes una duda sobre tu pedido? ¡Contáctanos y con gusto te ayudamos!</p>
+        </div>
       </div>
     </div>
 
@@ -571,23 +521,29 @@ Cada prenda de Velox Boxing está diseñada para reflejar la esencia del peleado
       <div class="ventana-content">
         <span class="close" onclick="closeVentana('ventanaFpago')">&times;</span>
         <div class="texto-legal">
-        <h1>Formas de Pago</h1>
-        <p>En <strong>Velox Boxing</strong> ofrecemos varias opciones seguras y confiables para que puedas realizar tus compras con tranquilidad:</p>
+          <h1>Formas de Pago</h1>
+          <p>En <strong>Velox Boxing</strong> ofrecemos varias opciones seguras y confiables para que puedas realizar
+            tus compras con tranquilidad:</p>
 
-  <h4>1. Tarjetas de crédito y débito</h4>
-  <p>Aceptamos pagos con tarjetas Visa, MasterCard y American Express. Todas las transacciones están protegidas mediante cifrado SSL.</p>
+          <h4>1. Tarjetas de crédito y débito</h4>
+          <p>Aceptamos pagos con tarjetas Visa, MasterCard y American Express. Todas las transacciones están
+            protegidas mediante cifrado SSL.</p>
 
-  <h4>2. PayPal</h4>
-  <p>Realiza tus pagos de manera rápida y segura a través de tu cuenta de PayPal, sin compartir tus datos financieros.</p>
+          <h4>2. PayPal</h4>
+          <p>Realiza tus pagos de manera rápida y segura a través de tu cuenta de PayPal, sin compartir tus datos
+            financieros.</p>
 
-  <h4>3. Transferencia bancaria</h4>
-  <p>También puedes hacer tu pago mediante transferencia o depósito bancario. Una vez realizado, envíanos el comprobante por correo a <a href="mailto:w5794759@gmail.com">w5794759@gmail.com</a> para procesar tu pedido.</p>
+          <h4>3. Transferencia bancaria</h4>
+          <p>También puedes hacer tu pago mediante transferencia o depósito bancario. Una vez realizado, envíanos el
+            comprobante por correo a <a href="mailto:w5794759@gmail.com">w5794759@gmail.com</a> para procesar tu
+            pedido.</p>
 
-  <h4>4. Pagos en efectivo (OXXO)</h4>
-  <p>Con Shopify Payments, puedes generar una orden para pagar en tiendas OXXO. El pedido se procesará una vez confirmado el pago.</p>
+          <h4>4. Pagos en efectivo (OXXO)</h4>
+          <p>Con Shopify Payments, puedes generar una orden para pagar en tiendas OXXO. El pedido se procesará una vez
+            confirmado el pago.</p>
 
-  <p>Si tienes dudas o necesitas ayuda con el proceso de pago, contáctanos y con gusto te ayudaremos.</p>
-</div>
+          <p>Si tienes dudas o necesitas ayuda con el proceso de pago, contáctanos y con gusto te ayudaremos.</p>
+        </div>
       </div>
     </div>
 
@@ -595,137 +551,164 @@ Cada prenda de Velox Boxing está diseñada para reflejar la esencia del peleado
       <div class="ventana-content">
         <span class="close" onclick="closeVentana('ventanaVelox')">&times;</span>
         <div class="texto-legal">
-        <h1>Nosotros - Velox Boxing</h1>
-  
-  <h4>En Velox Boxing, no solo vendemos ropa. Forjamos una Mentalidad.</h4>
-  
-  <p>El boxeo y las artes marciales no son solo un deporte; son una prueba constante de carácter, sacrificio y determinación. Cada golpe, cada caída y cada levantada forjan no solo al peleador, sino al guerrero que vive dentro de él.</p>
-  
-  <p>Sabemos lo que es entregarlo todo en el ring, sentir el dolor y seguir adelante. Porque es sangre, sudor y lágrimas.</p>
-  
-  <p>Cada prenda de Velox Boxing está diseñada para reflejar la esencia del peleador. No es solo lo que llevas, es lo que representas. Queremos que, al vestir nuestra marca, sientas la misma energía que sientes cuando entras al ring: firmeza, seguridad, poder.</p>
-  
-   <h2>Porque en el ring y en la vida, solo hay un camino: avanzar, resistir y conquistar.</h4>
-  
-  <h4>Velox Boxing es para aquellos que no retroceden, que entienden que la verdadera lucha comienza en la mente y termina con la victoria.</h4>
+          <h1>Nosotros - Velox Boxing</h1>
+
+          <h4>En Velox Boxing, no solo vendemos ropa. Forjamos una Mentalidad.</h4>
+
+          <p>El boxeo y las artes marciales no son solo un deporte; son una prueba constante de carácter, sacrificio y
+            determinación. Cada golpe, cada caída y cada levantada forjan no solo al peleador, sino al guerrero que
+            vive dentro de él.</p>
+
+          <p>Sabemos lo que es entregarlo todo en el ring, sentir el dolor y seguir adelante. Porque es sangre, sudor
+            y lágrimas.</p>
+
+          <p>Cada prenda de Velox Boxing está diseñada para reflejar la esencia del peleador. No es solo lo que
+            llevas, es lo que representas. Queremos que, al vestir nuestra marca, sientas la misma energía que sientes
+            cuando entras al ring: firmeza, seguridad, poder.</p>
+
+          <h2>Porque en el ring y en la vida, solo hay un camino: avanzar, resistir y conquistar.</h4>
+
+            <h4>Velox Boxing es para aquellos que no retroceden, que entienden que la verdadera lucha comienza en la
+              mente y termina con la victoria.</h4>
+        </div>
       </div>
     </div>
-</div>
-  
+
     <div id="ventanaPrivacidad" class="ventana">
       <div class="ventana-content">
         <span class="close" onclick="closeVentana('ventanaPrivacidad')">&times;</span>
         <div class="texto-legal">
-        <h1>Aviso de Privacidad</h1>
-        <p>Esta Política de privacidad describe cómo se recopila, utiliza y comparte su información personal cuando visita o hace una compra en <a href="https://www.veloxboxing.shop/" target="_blank">https://www.veloxboxing.shop/</a> (denominado en lo sucesivo el “Sitio”).</p>
+          <h1>Aviso de Privacidad</h1>
+          <p>Esta Política de privacidad describe cómo se recopila, utiliza y comparte su información personal cuando
+            visita o hace una compra en <a href="https://www.veloxboxing.shop/"
+              target="_blank">https://www.veloxboxing.shop/</a> (denominado en lo sucesivo el “Sitio”).</p>
 
-        <h3>INFORMACIÓN PERSONAL QUE RECOPILAMOS</h3>
-        <p>Cuando visita el Sitio, recopilamos automáticamente cierta información sobre su dispositivo, como el navegador web, dirección IP, zona horaria y cookies instaladas. También recopilamos información sobre las páginas vistas, productos consultados, y términos de búsqueda.</p>
-        
-        <h4>Cookies que usamos:</h4>
-        <ul>
-          <li><strong>_session_id:</strong> Almacena información de sesión.</li>
-          <li><strong>_shopify_visit:</strong> Persistente por 30 minutos. Registra número de visitas.</li>
-          <li><strong>_shopify_uniq:</strong> Expira a la medianoche. Cuenta visitas únicas.</li>
-          <li><strong>cart:</strong> Persistente por 2 semanas. Guarda contenido del carrito.</li>
-          <li><strong>storefront_digest:</strong> Determina acceso si hay contraseña.</li>
-        </ul>
-      
-        <p>También usamos archivos de registro, balizas web, etiquetas y píxeles para rastrear navegación.</p>
-      
-        <h3>Información del pedido</h3>
-        <p>Cuando realiza una compra, recopilamos nombre, dirección de envío, información de pago, correo electrónico y teléfono.</p>
-      
-        <h3>¿Cómo usamos su información?</h3>
-        <ul>
-          <li>Procesar pedidos y pagos.</li>
-          <li>Enviar confirmaciones y facturas.</li>
-          <li>Detectar fraudes.</li>
-          <li>Ofrecer publicidad o promociones según sus preferencias.</li>
-        </ul>
-      
-        <h3>Compartir su información</h3>
-        <p>Compartimos su información con terceros como Shopify y Google Analytics. Más información:</p>
-        <ul>
-          <li><a href="https://www.shopify.com/legal/privacy" target="_blank">Política de Shopify</a></li>
-          <li><a href="https://www.google.com/intl/es/policies/privacy/" target="_blank">Política de Google</a></li>
-        </ul>
-      
-        <h3>Publicidad dirigida</h3>
-        <p>Utilizamos su información para ofrecer anuncios personalizados.</p>
-        <p>Puede darse de baja en:</p>
-        <ul>
-          <li><a href="https://www.facebook.com/settings/?tab=ads" target="_blank">Facebook</a></li>
-          <li><a href="https://adssettings.google.com/authenticated?hl=es" target="_blank">Google</a></li>
-          <li><a href="https://about.ads.microsoft.com/es-es/recursos/directivas/anuncios-personalizados" target="_blank">Bing</a></li>
-          <li><a href="http://optout.aboutads.info/" target="_blank">DAA Opt-Out</a></li>
-        </ul>
-      
-        <h3>No rastrear</h3>
-        <p>No modificamos nuestras prácticas cuando vemos señales de “No rastrear” desde su navegador.</p>
-      
-        <h3>Sus derechos</h3>
-        <p>Si es residente europeo, puede solicitar acceso, corrección o eliminación de su información personal.</p>
-      
-        <h3>Retención de datos</h3>
-        <p>Conservamos su información mientras no solicite su eliminación.</p>
-      
-        <h3>Menores</h3>
-        <p>El sitio no está destinado a menores de 18 años.</p>
-      
-        <h3>Cambios</h3>
-        <p>Podemos actualizar esta política por motivos legales u operativos.</p>
-       </p>
+          <h3>INFORMACIÓN PERSONAL QUE RECOPILAMOS</h3>
+          <p>Cuando visita el Sitio, recopilamos automáticamente cierta información sobre su dispositivo, como el
+            navegador web, dirección IP, zona horaria y cookies instaladas. También recopilamos información sobre las
+            páginas vistas, productos consultados, y términos de búsqueda.</p>
+
+          <h4>Cookies que usamos:</h4>
+          <ul>
+            <li><strong>_session_id:</strong> Almacena información de sesión.</li>
+            <li><strong>_shopify_visit:</strong> Persistente por 30 minutos. Registra número de visitas.</li>
+            <li><strong>_shopify_uniq:</strong> Expira a la medianoche. Cuenta visitas únicas.</li>
+            <li><strong>cart:</strong> Persistente por 2 semanas. Guarda contenido del carrito.</li>
+            <li><strong>storefront_digest:</strong> Determina acceso si hay contraseña.</li>
+          </ul>
+
+          <p>También usamos archivos de registro, balizas web, etiquetas y píxeles para rastrear navegación.</p>
+
+          <h3>Información del pedido</h3>
+          <p>Cuando realiza una compra, recopilamos nombre, dirección de envío, información de pago, correo
+            electrónico y teléfono.</p>
+
+          <h3>¿Cómo usamos su información?</h3>
+          <ul>
+            <li>Procesar pedidos y pagos.</li>
+            <li>Enviar confirmaciones y facturas.</li>
+            <li>Detectar fraudes.</li>
+            <li>Ofrecer publicidad o promociones según sus preferencias.</li>
+          </ul>
+
+          <h3>Compartir su información</h3>
+          <p>Compartimos su información con terceros como Shopify y Google Analytics. Más información:</p>
+          <ul>
+            <li><a href="https://www.shopify.com/legal/privacy" target="_blank">Política de Shopify</a></li>
+            <li><a href="https://www.google.com/intl/es/policies/privacy/" target="_blank">Política de Google</a></li>
+          </ul>
+
+          <h3>Publicidad dirigida</h3>
+          <p>Utilizamos su información para ofrecer anuncios personalizados.</p>
+          <p>Puede darse de baja en:</p>
+          <ul>
+            <li><a href="https://www.facebook.com/settings/?tab=ads" target="_blank">Facebook</a></li>
+            <li><a href="https://adssettings.google.com/authenticated?hl=es" target="_blank">Google</a></li>
+            <li><a href="https://about.ads.microsoft.com/es-es/recursos/directivas/anuncios-personalizados"
+                target="_blank">Bing</a></li>
+            <li><a href="http://optout.aboutads.info/" target="_blank">DAA Opt-Out</a></li>
+          </ul>
+
+          <h3>No rastrear</h3>
+          <p>No modificamos nuestras prácticas cuando vemos señales de “No rastrear” desde su navegador.</p>
+
+          <h3>Sus derechos</h3>
+          <p>Si es residente europeo, puede solicitar acceso, corrección o eliminación de su información personal.</p>
+
+          <h3>Retención de datos</h3>
+          <p>Conservamos su información mientras no solicite su eliminación.</p>
+
+          <h3>Menores</h3>
+          <p>El sitio no está destinado a menores de 18 años.</p>
+
+          <h3>Cambios</h3>
+          <p>Podemos actualizar esta política por motivos legales u operativos.</p>
+          </p>
+        </div>
       </div>
     </div>
-    </div>
-  
+
     <div id="ventanaTerminos" class="ventana">
       <div class="ventana-content">
         <span class="close" onclick="closeVentana('ventanaTerminos')">&times;</span>
         <div class="texto-legal">
-        <h1>Términos y Condiciones</h1>
-        
-        <p>Bienvenido a <strong>Velox Boxing</strong>. Al acceder y utilizar nuestro sitio web <a href="https://www.veloxboxing.shop" target="_blank">https://www.veloxboxing.shop</a>, aceptas cumplir con los siguientes Términos y Condiciones. Si no estás de acuerdo con alguno de estos términos, te recomendamos no utilizar nuestro sitio.</p>
+          <h1>Términos y Condiciones</h1>
 
-        <h3>1. Información general</h3>
-        <p>Este sitio es operado por Velox Boxing. En todo el sitio, los términos “nosotros”, “nos” y “nuestro” se refieren a Velox Boxing. Al visitar nuestro sitio y/o comprar algún producto, participas en nuestro “Servicio” y aceptas los términos descritos a continuación.</p>
-      
-        <h3>2. Condiciones de la tienda online</h3>
-        <ul>
-          <li>Debes tener al menos 18 años o contar con el permiso de un adulto para realizar compras.</li>
-          <li>No puedes utilizar nuestros productos con fines ilegales o no autorizados.</li>
-          <li>No debes transmitir virus o cualquier código de naturaleza destructiva.</li>
-        </ul>
-      
-        <h3>3. Productos y precios</h3>
-        <p>Nos reservamos el derecho de modificar los precios de nuestros productos sin previo aviso. Todos los productos están sujetos a disponibilidad y pueden ser retirados del sitio en cualquier momento.</p>
-      
-        <h3>4. Pagos</h3>
-        <p>Los pagos se realizan de forma segura a través de nuestros proveedores autorizados (como Shopify y pasarelas de pago asociadas). No almacenamos información confidencial de tarjetas de crédito.</p>
-      
-        <h3>5. Envíos y devoluciones</h3>
-        <p>Consulta nuestras políticas de <a href="#politica-envios">envíos</a> y <a href="#politica-devoluciones">devoluciones</a> para más detalles. Velox Boxing no se hace responsable por retrasos atribuibles a servicios de mensajería externa.</p>
-      
-        <h3>6. Propiedad intelectual</h3>
-        <p>Todo el contenido del sitio (diseños, logotipos, textos, imágenes) es propiedad de Velox Boxing y está protegido por derechos de autor. No está permitido el uso sin autorización previa por escrito.</p>
-      
-        <h3>7. Cambios en los términos</h3>
-        <p>Nos reservamos el derecho de modificar estos Términos y Condiciones en cualquier momento. Es responsabilidad del usuario revisar periódicamente esta sección.</p>
-      
-        <h3>8. Contacto</h3>
-        <p>Para cualquier duda o aclaración, puedes contactarnos al correo <a href="mailto:w5794759@gmail.com">w5794759@gmail.com</a> o por escrito a: Tlalnepantla, MEX, 54020, México.</p>
+          <p>Bienvenido a <strong>Velox Boxing</strong>. Al acceder y utilizar nuestro sitio web <a
+              href="https://www.veloxboxing.shop" target="_blank">https://www.veloxboxing.shop</a>, aceptas cumplir
+            con los siguientes Términos y Condiciones. Si no estás de acuerdo con alguno de estos términos, te
+            recomendamos no utilizar nuestro sitio.</p>
+
+          <h3>1. Información general</h3>
+          <p>Este sitio es operado por Velox Boxing. En todo el sitio, los términos “nosotros”, “nos” y “nuestro” se
+            refieren a Velox Boxing. Al visitar nuestro sitio y/o comprar algún producto, participas en nuestro
+            “Servicio” y aceptas los términos descritos a continuación.</p>
+
+          <h3>2. Condiciones de la tienda online</h3>
+          <ul>
+            <li>Debes tener al menos 18 años o contar con el permiso de un adulto para realizar compras.</li>
+            <li>No puedes utilizar nuestros productos con fines ilegales o no autorizados.</li>
+            <li>No debes transmitir virus o cualquier código de naturaleza destructiva.</li>
+          </ul>
+
+          <h3>3. Productos y precios</h3>
+          <p>Nos reservamos el derecho de modificar los precios de nuestros productos sin previo aviso. Todos los
+            productos están sujetos a disponibilidad y pueden ser retirados del sitio en cualquier momento.</p>
+
+          <h3>4. Pagos</h3>
+          <p>Los pagos se realizan de forma segura a través de nuestros proveedores autorizados (como Shopify y
+            pasarelas de pago asociadas). No almacenamos información confidencial de tarjetas de crédito.</p>
+
+          <h3>5. Envíos y devoluciones</h3>
+          <p>Consulta nuestras políticas de <a href="#politica-envios">envíos</a> y <a
+              href="#politica-devoluciones">devoluciones</a> para más detalles. Velox Boxing no se hace responsable
+            por retrasos atribuibles a servicios de mensajería externa.</p>
+
+          <h3>6. Propiedad intelectual</h3>
+          <p>Todo el contenido del sitio (diseños, logotipos, textos, imágenes) es propiedad de Velox Boxing y está
+            protegido por derechos de autor. No está permitido el uso sin autorización previa por escrito.</p>
+
+          <h3>7. Cambios en los términos</h3>
+          <p>Nos reservamos el derecho de modificar estos Términos y Condiciones en cualquier momento. Es
+            responsabilidad del usuario revisar periódicamente esta sección.</p>
+
+          <h3>8. Contacto</h3>
+          <p>Para cualquier duda o aclaración, puedes contactarnos al correo <a
+              href="mailto:w5794759@gmail.com">w5794759@gmail.com</a> o por escrito a: Tlalnepantla, MEX, 54020,
+            México.</p>
+        </div>
       </div>
     </div>
-    </div>
-    </footer>
+  </footer>
 
-    <script src="./JS/script_footer.js"></script>
-    <script src="./JS/script_index.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+  <script src="./JS/script_footer.js"></script>
+  <script src="./JS/script_index.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+    crossorigin="anonymous"></script>
 
-        <!-- Swiper JS -->
-        <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+  <!-- Swiper JS -->
+  <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
 
 
 </body>

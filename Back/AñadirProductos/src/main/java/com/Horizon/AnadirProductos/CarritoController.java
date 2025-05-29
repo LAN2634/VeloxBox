@@ -12,14 +12,17 @@ import org.springframework.web.bind.annotation.*;
     @Autowired
     private CarritoRepository carritoRepository;
 
-    @PostMapping("/agregar")
-    public ResponseEntity<Producto> agregarProducto(@RequestBody Producto producto) {
-        Producto guardado = carritoRepository.save(producto);
-        return ResponseEntity.ok(guardado);
+        @PostMapping("/agregar")
+        public ResponseEntity<Producto> agregarProducto(@RequestBody Producto producto) {
+            // Forzar id a null para evitar confusión
+            producto.setId(null);
 
-    }
+            Producto guardado = carritoRepository.save(producto);
+            return ResponseEntity.ok(guardado);
+        }
 
-    @GetMapping
+
+        @GetMapping
     public ResponseEntity<?> listarCarrito() {
         return ResponseEntity.ok(carritoRepository.findAll());
     }
@@ -28,6 +31,7 @@ import org.springframework.web.bind.annotation.*;
             long cantidad = carritoRepository.count();
             return ResponseEntity.ok(cantidad);
         }
+
 
 
     }

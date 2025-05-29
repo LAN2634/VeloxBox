@@ -598,7 +598,7 @@
         </div>
 
         <div class="cart-icon-container">
-            <a href="Index.html" id="cart-toggle" class="menu-item"
+            <a href="Compras_Carrito.html" id="cart-toggle" class="menu-item"
                 style="color: white; text-decoration: none; font-size: 1.2rem;">
                 <i class="fas fa-shopping-cart"></i>
                 <span id="cart-count">0</span>
@@ -680,7 +680,7 @@
         </div>
 
         <section class="product-grid">
-           
+
 
         </section>
     </main>
@@ -738,175 +738,196 @@
         </div>
     </footer>
 <script>
-        //Esta funcion hace que la pagina inicie hasta arriva
-        window.onload = function () {
-            window.scrollTo(0, 0);
-            updateCartCount();
-        }; document.addEventListener('DOMContentLoaded', () => {
-
-
-            loadPans();
-
-            // Menú hamburguesa (opcional, si lo necesitas)
-            const hamburgerBtn = document.getElementById('hamburgerBtn');
-            const menuOverlay = document.getElementById('menuOverlay');
-            const menuContainer = document.getElementById('menuContainer');
-
-            if (hamburgerBtn) {
-                hamburgerBtn.addEventListener('click', () => {
-                    menuContainer.classList.toggle('active');
-                    menuOverlay.classList.toggle('active');
-                });
-
-                menuOverlay.addEventListener('click', () => {
-                    menuContainer.classList.remove('active');
-                    menuOverlay.classList.remove('active');
-                });
-            }
-        });
-       // productos_pans.js
-document.addEventListener('DOMContentLoaded', () => {
-    loadPans(); // Carga inicial de pans
-    setupSearch(); // Configurar buscador
-});
-
-// ================ CARGAR PANS ================
-async function loadPans() {
-    try {
-        const response = await fetch('http://localhost:8080/api/Productos/filtrar?categoria=Pans');
-        if (!response.ok) throw new Error("Error al cargar pants");
-        
-        const pans = await response.json();
-        renderProducts(pans);
+    //Esta funcion hace que la pagina inicie hasta arriva
+    window.onload = function () {
+        window.scrollTo(0, 0);
         updateCartCount();
-    } catch (error) {
-        console.error("Error:", error);
-        Swal.fire({
-            icon: 'error',
-            title: 'Error',
-            text: 'No se pudieron cargar los pants. Intenta recargar la página.'
-        });
-    }
-}
+    }; document.addEventListener('DOMContentLoaded', () => {
 
-// ================ RENDERIZAR PRODUCTOS ================
-function renderProducts(pans) {
-    const grid = document.querySelector('.product-grid');
-    if (!grid) return;
+        // Cargar pans al iniciar
+        loadPans();
 
-    grid.innerHTML = pans.map(pan => `
-        <div class="product-card">
-            <a href="Detalle_Pans.html?id=${pan.id}">
-                <div class="product-img">
-                    <img src="${pan.imagen?.[0] || 'img/placeholder.jpg'}" 
-                         alt="${pan.nombre}" 
-                         onerror="this.src='img/placeholder.jpg'">
-                </div>
-            </a>
-            <div class="product-info">
-                <p class="product-name">${pan.nombre}</p>
-                <p class="product-price">$${pan.precio.toFixed(2)} MXN</p>
-                <button class="buy-btn" 
-                        data-id="${pan.id}"
-                        data-name="${pan.nombre}"
-                        data-price="${pan.precio}"
-                        data-img="${pan.imagen?.[0] || ''}">
-                    Agregar al carrito
-                </button>
-            </div>
-        </div>
-    `).join('');
+        // Menú hamburguesa
+        const hamburgerBtn = document.getElementById('hamburgerBtn');
+        const menuOverlay = document.getElementById('menuOverlay');
+        const menuContainer = document.getElementById('menuContainer');
 
-    // Eventos para botones
-    document.querySelectorAll('.buy-btn').forEach(btn => {
-        btn.addEventListener('click', addToCart);
-    });
-}
+        if (hamburgerBtn) {
+            hamburgerBtn.addEventListener('click', () => {
+                menuContainer.classList.toggle('active');
+                menuOverlay.classList.toggle('active');
+            });
 
-// ================ AÑADIR AL CARRITO ================
-async function addToCart(e) {
-    const button = e.currentTarget;
-    const producto = {
-        id: button.getAttribute('data-id'),
-        nombre: button.getAttribute('data-name'),
-        precio: parseFloat(button.getAttribute('data-price')),
-        imagen: [button.getAttribute('data-img')]
-    };
-
-    try {
-        const response = await fetch('http://localhost:8080/api/carrito/agregar', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify(producto)
-        });
-
-        if (!response.ok) throw new Error("Error al agregar al carrito");
-
-        Swal.fire({
-            toast: true,
-            position: 'top-end',
-            icon: 'success',
-            title: `${producto.nombre} añadido al carrito`,
-            showConfirmButton: false,
-            timer: 2000
-        });
-
-        updateCartCount();
-        animarIconoCarrito();
-    } catch (error) {
-        console.error("Error:", error);
-        Swal.fire({
-            icon: 'error',
-            title: 'Error',
-            text: 'No se pudo agregar al carrito'
-        });
-    }
-}
-
-// ================ BUSCADOR ================
-function setupSearch() {
-    const searchInput = document.getElementById('searchInput');
-    if (!searchInput) return;
-
-    searchInput.addEventListener('input', (e) => {
-        const searchTerm = e.target.value.toLowerCase();
-        document.querySelectorAll('.product-card').forEach(card => {
-            const name = card.querySelector('.product-name').textContent.toLowerCase();
-            card.style.display = name.includes(searchTerm) ? 'block' : 'none';
-        });
-    });
-}
-
-// ================ ACTUALIZAR CARRITO ================
-async function updateCartCount() {
-    try {
-        const response = await fetch('http://localhost:8080/api/carrito/cantidad');
-        const count = await response.json();
-        const cartCount = document.getElementById('cart-count');
-        
-        if (cartCount) {
-            cartCount.textContent = count;
-            if (count > 0) {
-                cartCount.classList.add('animate-bounce');
-                setTimeout(() => cartCount.classList.remove('animate-bounce'), 1000);
-            }
+            menuOverlay.addEventListener('click', () => {
+                menuContainer.classList.remove('active');
+                menuOverlay.classList.remove('active');
+            });
         }
-    } catch (error) {
-        console.error("Error actualizando carrito:", error);
-    }
-}
+    });
+    // productos_pans.js
+    document.addEventListener('DOMContentLoaded', () => {
+        // Cargar pans al iniciar
+        loadPans();
 
-// ================ ANIMACIÓN CARRITO ================
-function animarIconoCarrito() {
-    const cartIcon = document.querySelector('.cart-icon-container');
-    if (cartIcon) {
-        cartIcon.classList.add('animate-pulse');
-        setTimeout(() => cartIcon.classList.remove('animate-pulse'), 1000);
-    }
-}
-    </script>
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+        // Configurar el buscador
+        setupSearch();
+    });
 
+    // ================ CARGAR PANS ================
+    async function loadPans() {
+        try {
+            const response = await fetch('http://localhost:8080/api/Productos/filtrar?categoria=Pans');
+            if (!response.ok) throw new Error("Error al cargar pans");
+
+            const pans = await response.json();
+            renderPans(pans);
+
+            if (typeof updateCartCount === 'function') {
+                updateCartCount(); // Solo si está definida
+            }
+        } catch (error) {
+            console.error("Error:", error);
+            Swal.fire({
+                icon: 'error',
+                title: 'Error',
+                text: 'No se pudieron cargar los pans. Intenta recargar la página.'
+            });
+        }
+    }
+
+    // ================ RENDERIZAR PANS ================
+    function renderPans(pans) {
+        const grid = document.querySelector('.product-grid');
+        if (!grid) return;
+
+        grid.innerHTML = pans.map(pan => `
+            <div class="product-card">
+                <a href="Detalle_Pans.html?id=${pan.id}">
+                    <div class="product-img">
+                        <img src="${pan.imagen?.[0] || 'img/placeholder.jpg'}" 
+                             alt="${pan.nombre}" 
+                             onerror="this.src='img/placeholder.jpg'">
+                    </div>
+                </a>
+                <div class="product-info">
+                    <p class="product-name">${pan.nombre}</p>
+                    <p class="product-price">$${pan.precio.toFixed(2)} MXN</p>
+                    <button class="buy-btn" 
+                            data-id="${pan.id}"
+                            data-name="${pan.nombre}"
+                            data-price="${pan.precio}"
+                            data-img="${pan.imagen?.[0] || ''}">
+                        Agregar al carrito
+                    </button>
+                </div>
+            </div>
+        `).join('');
+
+        // Agregar eventos a los botones
+        document.querySelectorAll('.buy-btn').forEach(btn => {
+            btn.addEventListener('click', addToCart);
+        });
+    }
+
+    // ================ AÑADIR AL CARRITO ================
+    async function addToCart(e) {
+        const button = e.currentTarget;
+        const producto = {
+            id: button.getAttribute('data-id'),
+            nombre: String(button.getAttribute('data-name')),
+            precio: parseFloat(button.getAttribute('data-price')),
+            imagen: [button.getAttribute('data-img')]
+        };
+
+        try {
+            const response = await fetch('http://localhost:9090/api/carrito/agregar', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(producto)
+            });
+
+            if (!response.ok) throw new Error("Error al agregar al carrito");
+
+            // Feedback visual
+            Swal.fire({
+                toast: true,
+                position: 'top-end',
+                icon: 'success',
+                title: `${producto.nombre} añadido al carrito`,
+                showConfirmButton: false,
+                timer: 2000
+            });
+
+            updateCartCount();
+            animarIconoCarrito();
+        } catch (error) {
+            console.error("Error:", error);
+            Swal.fire({
+                icon: 'error',
+                title: 'Error',
+                text: 'No se pudo agregar al carrito'
+            });
+        }
+    }
+
+    // ================ BUSCADOR ================
+    function setupSearch() {
+        const searchInput = document.getElementById('searchInput');
+        if (!searchInput) return;
+
+        searchInput.addEventListener('input', (e) => {
+            const searchTerm = e.target.value.toLowerCase();
+            document.querySelectorAll('.product-card').forEach(card => {
+                const name = card.querySelector('.product-name').textContent.toLowerCase();
+                card.style.display = name.includes(searchTerm) ? 'block' : 'none';
+            });
+        });
+    }
+
+    // ================ ACTUALIZAR CARRITO ================
+    async function updateCartCount() {
+        try {
+            const response = await fetch('http://localhost:9090/api/carrito/cantidad');
+            const count = await response.json();
+            const cartCount = document.getElementById('cart-count');
+
+            if (cartCount) {
+                cartCount.textContent = count;
+                if (count > 0) {
+                    cartCount.classList.add('animate-bounce');
+                    setTimeout(() => cartCount.classList.remove('animate-bounce'), 1000);
+                }
+            }
+        } catch (error) {
+            console.error("Error actualizando carrito:", error);
+        }
+    }
+
+    // ================ ANIMACIÓN CARRITO ================
+    function animarIconoCarrito() {
+        const cartIcon = document.querySelector('.cart-icon-container');
+        if (cartIcon) {
+            cartIcon.classList.add('animate-pulse');
+            setTimeout(() => cartIcon.classList.remove('animate-pulse'), 1000);
+        }
+    }
+    
+    // Buscador alternativo (por si acaso)
+    const searchInput = document.getElementById('searchInput');
+    const productCards = document.querySelectorAll('.product-card');
+
+    if (searchInput && productCards) {
+        searchInput.addEventListener('input', function () {
+            const searchValue = this.value.toLowerCase();
+
+            productCards.forEach(card => {
+                const productName = card.querySelector('.product-name').textContent.toLowerCase();
+                card.style.display = productName.includes(searchValue) ? 'block' : 'none';
+            });
+        });
+    }
+</script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </body>
 
 </html>
