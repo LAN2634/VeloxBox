@@ -1,46 +1,236 @@
 <!DOCTYPE html>
 <html lang="es">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Productos</title>
-    <link rel="stylesheet" href="./CSS/style.css" />
-  </head>
-  <body>
-    <header class="productos-header">
-      <button id="backButton" class="back-button">←</button>
-      <h1>Productos</h1>
-      <button id="addProductBtn" class="add-product-btn">
-        Añadir Producto
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Productos</title>
+  <link rel="stylesheet" href="./CSS/style.css" />
+</head>
+
+<body>
+  <header class="productos-header">
+    <button id="backButton" class="back-button">←</button>
+    <h1>Productos</h1>
+    <button id="addProductBtn" class="add-product-btn">
+      Añadir Producto
+    </button>
+
+  </header>
+
+  <div class="productos-container">
+    <div class="productos-filtros">
+      <button class="filter-btn active" data-filter="todos">
+        <h3>Todos</h3>
       </button>
-
-    </header>
-
-    <div class="productos-container">
-      <div class="productos-filtros">
-        <button class="filter-btn active" data-filter="todos"><h3>Todos</h3></button>
-        <button class="filter-btn" data-filter="Activo"><h3>Activo</h3></button>
-        <button class="filter-btn" data-filter="Pausa"><h3>En Pausa</h3></button>
-        <button class="filter-btn" data-filter="agotado"><h3>Agotado</h3></button>
-        <button id="deleteProductBtn" class="delete-product-btn" disabled>
-          Eliminar
-        </button>
-      </div>
-
-      <table class="productos-table">
-        <thead>
-          <tr>
-            <th><input type="checkbox" id="selectAll" /></th>
-            <th>Producto</th>
-            <th>Estado</th>
-            <th>Inventario</th>
-            <th>Categoría</th>
-          </tr>
-        </thead>
-        <tbody id="productosList"></tbody>
-      </table>
+      <button class="filter-btn" data-filter="Activo">
+        <h3>Activo</h3>
+      </button>
+      <button class="filter-btn" data-filter="Pausa">
+        <h3>En Pausa</h3>
+      </button>
+      <button class="filter-btn" data-filter="agotado">
+        <h3>Agotado</h3>
+      </button>
+      <button id="deleteProductBtn" class="delete-product-btn" disabled>
+        Eliminar
+      </button>
     </div>
-    <script src="./JS/script.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-  </body>
+
+    <table class="productos-table">
+      <thead>
+        <tr>
+          <th><input type="checkbox" id="selectAll" /></th>
+          <th>Producto</th>
+          <th>Estado</th>
+          <th>Inventario</th>
+          <th>Categoría</th>
+        </tr>
+      </thead>
+      <tbody id="productosList"></tbody>
+    </table>
+  </div>
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      // Botón "Atrás"
+      document.getElementById('backButton').addEventListener('click', () => {
+        window.history.back();
+      });
+
+      // Botón "Añadir Producto"
+      document.getElementById('addProductBtn').addEventListener('click', () => {
+        window.location.href = 'Formulario_Agregar_Productos.html';
+      });
+
+      // Cargar productos al iniciar
+      loadAndRenderProducts();
+
+      // Filtros
+      document.querySelectorAll('.filter-btn').forEach(btn => {
+        btn.addEventListener('click', () => {
+          document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+          btn.classList.add('active');
+          const filter = btn.dataset.filter;
+          loadAndRenderProducts(filter);
+        });
+      });
+
+      // Eliminar productos seleccionados
+      document.getElementById('deleteProductBtn').addEventListener('click', deleteSelectedProducts);
+
+      // Seleccionar/deseleccionar todos
+      document.getElementById('selectAll').addEventListener('change', (e) => {
+        document.querySelectorAll('.product-checkbox').forEach(cb => {
+          cb.checked = e.target.checked;
+        });
+        updateDeleteButtonState();
+      });
+    });
+
+    // ===================== FUNCIONES PRINCIPALES =====================
+
+    async function loadAndRenderProducts(filter = 'todos') {
+      try {
+        const response = await fetch('http://localhost:8080/api/Productos');
+        if (!response.ok) throw new Error('Error al cargar productos');
+
+        const productos = await response.json();
+        renderProductos(productos, filter);
+        updateDeleteButtonState();
+      } catch (error) {
+        console.error('Error:', error);
+        Swal.fire({
+          icon: 'error',
+          title: 'Error',
+          text: 'No se pudieron cargar los productos.'
+        });
+      }
+    }
+
+    function renderProductos(productos, filter) {
+      const tbody = document.getElementById('productosList');
+      tbody.innerHTML = '';
+
+      // Filtrar productos según el botón seleccionado
+      const filteredProducts = filter === 'todos'
+        ? productos
+        : productos.filter(p => p.status === filter);
+
+      if (filteredProducts.length === 0) {
+        tbody.innerHTML = `<tr><td colspan="5" style="text-align:center;">No hay productos</td></tr>`;
+        return;
+      }
+
+      // Renderizar cada producto
+      filteredProducts.forEach(producto => {
+        const tr = document.createElement('tr');
+        tr.dataset.id = producto.id;
+        tr.innerHTML = `
+            <td><input type="checkbox" class="product-checkbox"></td>
+            <td>
+                <img src="${producto.imagen?.[0] || 'img/placeholder.png'}" class="miniatura-tabla">
+                ${producto.nombre}
+            </td>
+            <td>
+                <span class="estado estado-${producto.status || 'Activo'}" style="cursor:pointer;">
+                    ${producto.status || 'Activo'}
+                </span>
+            </td>
+            <td>${producto.stock}</td>
+            <td>${producto.categoria}</td>
+        `;
+        tbody.appendChild(tr);
+      });
+
+      // Evento para cambiar estado al hacer clic
+      tbody.querySelectorAll('.estado').forEach(span => {
+        span.addEventListener('click', async () => {
+          const id = span.closest('tr').dataset.id;
+          const newStatus = span.textContent === 'Activo' ? 'Pausa' : 'Activo';
+
+          try {
+            const response = await fetch(`http://localhost:8080/api/Productos/${id}`, {
+              method: 'PATCH',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify({ status: newStatus })
+            });
+
+            if (!response.ok) throw new Error('Error al actualizar');
+
+            span.textContent = newStatus;
+            span.className = `estado estado-${newStatus}`;
+          } catch (error) {
+            console.error('Error:', error);
+            Swal.fire({
+              icon: 'error',
+              title: 'Error',
+              text: 'No se pudo cambiar el estado.'
+            });
+          }
+        });
+      });
+
+      // Evento para checkboxes
+      document.querySelectorAll('.product-checkbox').forEach(cb => {
+        cb.addEventListener('change', updateDeleteButtonState);
+      });
+    }
+
+    function updateDeleteButtonState() {
+      const deleteBtn = document.getElementById('deleteProductBtn');
+      const anyChecked = document.querySelectorAll('.product-checkbox:checked').length > 0;
+
+      deleteBtn.disabled = !anyChecked;
+      deleteBtn.style.backgroundColor = anyChecked ? '#e74c3c' : '#ccc';
+      deleteBtn.style.cursor = anyChecked ? 'pointer' : 'not-allowed';
+    }
+
+    async function deleteSelectedProducts() {
+      const selectedIds = Array.from(document.querySelectorAll('.product-checkbox:checked'))
+        .map(cb => cb.closest('tr').dataset.id);
+
+      if (selectedIds.length === 0) return;
+
+      const { isConfirmed } = await Swal.fire({
+        title: '¿Eliminar productos?',
+        text: `Se eliminarán ${selectedIds.length} productos.`,
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#e74c3c',
+        cancelButtonColor: '#6c757d'
+      });
+
+      if (!isConfirmed) return;
+
+      try {
+        // Eliminar cada producto seleccionado
+        const deletePromises = selectedIds.map(id =>
+          fetch(`http://localhost:8080/api/Productos/${id}`, { method: 'DELETE' })
+        );
+
+        await Promise.all(deletePromises);
+
+        Swal.fire({
+          icon: 'success',
+          title: '¡Eliminados!',
+          showConfirmButton: false,
+          timer: 1500
+        });
+
+        // Recargar la tabla
+        const activeFilter = document.querySelector('.filter-btn.active').dataset.filter;
+        loadAndRenderProducts(activeFilter);
+      } catch (error) {
+        console.error('Error:', error);
+        Swal.fire({
+          icon: 'error',
+          title: 'Error',
+          text: 'No se pudieron eliminar los productos.'
+        });
+      }
+    }
+  </script>
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+</body>
+
 </html>

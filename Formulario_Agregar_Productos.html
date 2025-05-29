@@ -1,201 +1,376 @@
 <!DOCTYPE html>
 <html lang="es">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Añadir Producto</title>
-    <link rel="stylesheet" href="./CSS/style.css" />
-    <link
-      rel="stylesheet"
-      href="https://cdn.jsdelivr.net/npm/quill@1.3.7/dist/quill.snow.css"/>
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-  </head>
-  <body>
-    <div class="container">
-      <header>
-        <button class="back-button">←</button>
-        <h1>Añadir producto</h1>
-      </header>
- 
-      <form id="productForm" novalidate>
-        <section class="card">
-          <label for="title">Título</label>
-          <input
-            type="text"
-            id="title"
-            placeholder="Ingresa el título"
-            required
-          />
-          <div class="error-message" id="error-title"></div>
 
-          <label for="description">Descripción</label>
-          <div id="editor"></div>
-          <div class="error-message" id="error-description"></div>
-          
-          <label for="materiales">Materiales</label>
-          <input 
-            type="text"
-            id="materiales"
-            placeholder="Ingresa los materiales del producto"
-            required
-          />
-          <div class="error-message" id="error-materiales"></div>
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Añadir Producto</title>
+  <link rel="stylesheet" href="./CSS/style.css" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/quill@1.3.7/dist/quill.snow.css" />
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+</head>
 
-          <label for="cuidados">Cuidados</label>
-          <input 
-            type="text"
-            id="cuidados"
-            placeholder="Ingresa información sobre los cuidados"
-            required
-          />
-          <div class="error-message" id="error-cuidados"></div>
-          
-          <label for="entrega">Entrega Pago y Devolución</label>
-          <input 
-            type="text"
-            id="entrega"
-            placeholder="Ingresa información sobre la entrega, pago y devolución"
-            required
-          />
-          <div class="error-message" id="error-entrega"></div>          
+<body>
+  <div class="container">
+    <header>
+      <button class="back-button">←</button>
+      <h1>Añadir producto</h1>
+    </header>
 
-        </section>
+    <form id="productForm" novalidate>
+      <section class="card">
+        <label for="title">Título</label>
+        <input type="text" id="title" placeholder="Ingresa el título" required />
+        <div class="error-message" id="error-title"></div>
+
+        <label for="description">Descripción</label>
+        <div id="editor"></div>
+        <div class="error-message" id="error-description"></div>
+
+        <label for="materiales">Materiales</label>
+        <input type="text" id="materiales" placeholder="Ingresa los materiales del producto" required />
+        <div class="error-message" id="error-materiales"></div>
+
+        <label for="cuidados">Cuidados</label>
+        <input type="text" id="cuidados" placeholder="Ingresa información sobre los cuidados" required />
+        <div class="error-message" id="error-cuidados"></div>
+
+        <label for="entrega">Entrega Pago y Devolución</label>
+        <input type="text" id="entrega" placeholder="Ingresa información sobre la entrega, pago y devolución"
+          required />
+        <div class="error-message" id="error-entrega"></div>
+
+      </section>
 
 
-<!--Aqui esta el selector multimedia, ambos-->
+      <!--Aqui esta el selector multimedia, ambos-->
 
-        <section class="card">
-          <label>Miniatura del Producto</label>
-          <div class="upload-area" id="uploadAreaMiniatura">
-            <p>Agrega la miniatura</p>
-            <button type="button" id="uploadBtnMiniatura">Haz click aquí</button>
-            <input
-              type="file"
-              id="fileInputMiniatura"
-              hidden
-              accept="image/*,video/*"
-              required
-            />
-            <div id="previewMiniatura"></div>
-          </div>
-          <div class="error-message" id="error-media"></div>
-          <button type="button" id="resetBtnMiniatura">Reiniciar</button>
-        </section>
-
-        <section class="card">
-          <label>Elementos multimedia</label>
-          <div class="upload-area" id="uploadArea">
-            <p>Agrega imágenes o videos aquí</p>
-            <button type="button" id="uploadBtn">Haz click aquí</button>
-            <input
-              type="file"
-              id="fileInput"
-              multiple
-              hidden
-              accept="image/*,video/*"
-              required
-            />
-            <div id="previewArea"></div>
-          </div>
-          <div class="error-message" id="error-media"></div>
-          <button type="button" id="resetBtn">Reiniciar</button>
-        </section>
-
-      
-<!--Aqui termina el selector multimedia, ambos-->
-
-        <section class="card grid-2">
-          <div>
-            <label for="category">Elegir categoría</label>
-            <select id="category" required>
-              <option value="">Selecciona una categoría</option>
-              <option value="Playeras">Playeras</option>
-              <option value="Pantalones">Pantalones</option>
-              <option value="Tenis">Tenis</option>
-              <option value="Accesorios">Accesorios</option>
-              <option value="Sudaderas">Sudaderas</option>
-            </select>
-            <div class="error-message" id="error-category"></div>
-          </div>
-          <div>
-            <label for="newCategory">Crear categoría</label>
-            <input type="text" id="newCategory" placeholder="Nueva categoría" />
-            <button type="button" id="addCategoryBtn">Agregar</button>
-          </div>
-          <div>
-            <label for="deleteCategory">Eliminar categoría</label>
-            <select id="deleteCategory">
-              <option value="">Selecciona para eliminar</option>
-            </select>
-            <button type="button" id="deleteCategoryBtn" class="delete-btn">
-              Eliminar
-            </button>
-          </div>
-        </section>
-
-        <section class="card grid-2">
-          <div>
-            <label for="price">Precio</label>
-            <input
-              type="number"
-              id="price"
-              placeholder="$0.00"
-              min="0.01"
-              step="0.01"
-              required
-            />
-            <div class="error-message" id="error-price"></div>
-          </div>
-          <div>
-            <label for="inventory">Inventario</label>
-            <input
-              type="number"
-              id="inventory"
-              placeholder="0"
-              min="0"
-              required
-            />
-            <div class="error-message" id="error-inventory"></div>
-          </div>
-          <div>
-            <label for="discount">Descuento (%)</label>
-            <input
-              type="number"
-              id="discount"
-              placeholder="0%"
-              min="0"
-              max="100"
-            />
-          </div>
-          <div>
-            <label for="priceDiscount">Precio con descuento</label>
-            <input
-              type="number"
-              id="priceDiscount"
-              placeholder="$0.00"
-              readonly
-            />
-          </div>
-          <div>
-            <label for="size">Tallas</label>
-            <input type="text" id="size" placeholder="Ej: S, M, L" required />
-            <div class="error-message" id="error-size"></div>
-          </div>
-          <div>
-            <label for="color">Color</label>
-            <input type="text" id="color" placeholder="Color" required />
-            <div class="error-message" id="error-color"></div>
-          </div>
-        </section>
-
-        <div class="buttons">
-          <button type="button" id="cancelBtn" class="cancel">Cancelar</button>
-          <button type="submit" class="save">Guardar Producto</button>
+      <section class="card">
+        <label>Miniatura del Producto</label>
+        <div class="upload-area" id="uploadAreaMiniatura">
+          <p>Agrega la miniatura</p>
+          <button type="button" id="uploadBtnMiniatura">Haz click aquí</button>
+          <input type="file" id="fileInputMiniatura" hidden accept="image/*,video/*" required />
+          <div id="previewMiniatura"></div>
         </div>
-      </form>
-    </div>
+        <div class="error-message" id="error-media"></div>
+        <button type="button" id="resetBtnMiniatura">Reiniciar</button>
+      </section>
 
-    <script src="https://cdn.jsdelivr.net/npm/quill@1.3.7/dist/quill.min.js"></script>
-    <script src="./JS/script.js"></script>
-  </body>
+      <section class="card">
+        <label>Elementos multimedia</label>
+        <div class="upload-area" id="uploadArea">
+          <p>Agrega imágenes o videos aquí</p>
+          <button type="button" id="uploadBtn">Haz click aquí</button>
+          <input type="file" id="fileInput" multiple hidden accept="image/*,video/*" required />
+          <div id="previewArea"></div>
+        </div>
+        <div class="error-message" id="error-media"></div>
+        <button type="button" id="resetBtn">Reiniciar</button>
+      </section>
+
+
+      <!--Aqui termina el selector multimedia, ambos-->
+
+      <section class="card grid-2">
+        <div>
+          <label for="category">Elegir categoría</label>
+          <select id="category" required>
+            <option value="">Selecciona una categoría</option>
+            <option value="Playeras">Playeras</option>
+            <option value="Pantalones">Pantalones</option>
+            <option value="Tenis">Tenis</option>
+            <option value="Accesorios">Accesorios</option>
+            <option value="Sudaderas">Sudaderas</option>
+          </select>
+          <div class="error-message" id="error-category"></div>
+        </div>
+        <div>
+          <label for="newCategory">Crear categoría</label>
+          <input type="text" id="newCategory" placeholder="Nueva categoría" />
+          <button type="button" id="addCategoryBtn">Agregar</button>
+        </div>
+        <div>
+          <label for="deleteCategory">Eliminar categoría</label>
+          <select id="deleteCategory">
+            <option value="">Selecciona para eliminar</option>
+          </select>
+          <button type="button" id="deleteCategoryBtn" class="delete-btn">
+            Eliminar
+          </button>
+        </div>
+      </section>
+
+      <section class="card grid-2">
+        <div>
+          <label for="price">Precio</label>
+          <input type="number" id="price" placeholder="$0.00" min="0.01" step="0.01" required />
+          <div class="error-message" id="error-price"></div>
+        </div>
+        <div>
+          <label for="inventory">Inventario</label>
+          <input type="number" id="inventory" placeholder="0" min="0" required />
+          <div class="error-message" id="error-inventory"></div>
+        </div>
+        <div>
+          <label for="discount">Descuento (%)</label>
+          <input type="number" id="discount" placeholder="0%" min="0" max="100" />
+        </div>
+        <div>
+          <label for="priceDiscount">Precio con descuento</label>
+          <input type="number" id="priceDiscount" placeholder="$0.00" readonly />
+        </div>
+        <div>
+          <label for="size">Tallas</label>
+          <input type="text" id="size" placeholder="Ej: S, M, L" required />
+          <div class="error-message" id="error-size"></div>
+        </div>
+        <div>
+          <label for="color">Color</label>
+          <input type="text" id="color" placeholder="Color" required />
+          <div class="error-message" id="error-color"></div>
+        </div>
+      </section>
+
+      <div class="buttons">
+        <button type="button" id="cancelBtn" class="cancel">Cancelar</button>
+        <button type="submit" class="save">Guardar Producto</button>
+      </div>
+    </form>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/quill@1.3.7/dist/quill.min.js"></script>
+  <script>
+
+    document.addEventListener('DOMContentLoaded', () => {
+      // Editor Quill (para descripción enriquecida)
+      const quill = new Quill('#editor', {
+        theme: 'snow',
+        modules: { toolbar: true }
+      });
+
+      // Botón "Cancelar"
+      document.getElementById('cancelBtn').addEventListener('click', () => {
+        window.location.href = 'Tabla_productos_agregados.html';
+      });
+
+      // ===================== MANEJO DE ARCHIVOS (IMÁGENES/VIDEOS) =====================
+      const fileInput = document.getElementById('fileInput');
+      const previewArea = document.getElementById('previewArea');
+      const uploadBtn = document.getElementById('uploadBtn');
+      const resetBtn = document.getElementById('resetBtn');
+
+      const fileInputMiniatura = document.getElementById('fileInputMiniatura');
+      const previewMiniatura = document.getElementById('previewMiniatura');
+      const uploadBtnMiniatura = document.getElementById('uploadBtnMiniatura');
+      const resetBtnMiniatura = document.getElementById('resetBtnMiniatura');
+
+      // Galería principal
+      uploadBtn.addEventListener('click', () => fileInput.click());
+      fileInput.addEventListener('change', handleFileSelect);
+      resetBtn.addEventListener('click', resetFiles);
+
+      // Miniatura
+      uploadBtnMiniatura.addEventListener('click', () => fileInputMiniatura.click());
+      fileInputMiniatura.addEventListener('change', handleMiniaturaSelect);
+      resetBtnMiniatura.addEventListener('click', resetMiniatura);
+
+      function handleFileSelect(e) {
+        previewArea.innerHTML = '';
+        Array.from(e.target.files).forEach(file => {
+          const reader = new FileReader();
+          reader.onload = (event) => {
+            const previewElement = file.type.startsWith('image')
+              ? `<img src="${event.target.result}" class="preview-image">`
+              : `<video controls src="${event.target.result}" class="preview-video"></video>`;
+            previewArea.innerHTML += previewElement;
+          };
+          reader.readAsDataURL(file);
+        });
+      }
+
+      function handleMiniaturaSelect(e) {
+        previewMiniatura.innerHTML = '';
+        if (e.target.files.length > 0) {
+          const reader = new FileReader();
+          reader.onload = (event) => {
+            previewMiniatura.innerHTML = `<img src="${event.target.result}" class="preview-image">`;
+          };
+          reader.readAsDataURL(e.target.files[0]);
+        }
+      }
+
+      function resetFiles() {
+        fileInput.value = '';
+        previewArea.innerHTML = '';
+      }
+
+      function resetMiniatura() {
+        fileInputMiniatura.value = '';
+        previewMiniatura.innerHTML = '';
+      }
+
+      // ===================== MANEJO DE CATEGORÍAS =====================
+      let categories = JSON.parse(localStorage.getItem('categories')) || [];
+      updateCategories();
+
+      document.getElementById('addCategoryBtn').addEventListener('click', addCategory);
+      document.getElementById('deleteCategoryBtn').addEventListener('click', deleteCategory);
+
+      function updateCategories() {
+        const categorySelect = document.getElementById('category');
+        const deleteSelect = document.getElementById('deleteCategory');
+
+        categorySelect.innerHTML = '<option value="">Selecciona una categoría</option>';
+        deleteSelect.innerHTML = '<option value="">Selecciona para eliminar</option>';
+
+        categories.forEach(cat => {
+          categorySelect.innerHTML += `<option value="${cat}">${cat}</option>`;
+          deleteSelect.innerHTML += `<option value="${cat}">${cat}</option>`;
+        });
+      }
+
+      function addCategory() {
+        const newCat = document.getElementById('newCategory').value.trim();
+        if (newCat && !categories.includes(newCat)) {
+          categories.push(newCat);
+          localStorage.setItem('categories', JSON.stringify(categories));
+          updateCategories();
+          document.getElementById('newCategory').value = '';
+        }
+      }
+
+      function deleteCategory() {
+        const selected = document.getElementById('deleteCategory').value;
+        if (selected) {
+          categories = categories.filter(cat => cat !== selected);
+          localStorage.setItem('categories', JSON.stringify(categories));
+          updateCategories();
+        }
+      }
+
+      // ===================== CÁLCULO DE DESCUENTO =====================
+      document.getElementById('price').addEventListener('input', updateDiscountPrice);
+      document.getElementById('discount').addEventListener('input', updateDiscountPrice);
+
+      function updateDiscountPrice() {
+        const price = parseFloat(document.getElementById('price').value) || 0;
+        const discount = parseFloat(document.getElementById('discount').value) || 0;
+        const finalPrice = price - (price * discount / 100);
+        document.getElementById('priceDiscount').value = finalPrice.toFixed(2);
+      }
+
+      // ===================== ENVÍO DEL FORMULARIO =====================
+      document.getElementById('productForm').addEventListener('submit', async (e) => {
+        e.preventDefault();
+
+        // Validaciones
+        let isValid = true;
+        document.querySelectorAll('.error-message').forEach(el => el.textContent = '');
+
+        // Campos requeridos
+        const requiredFields = [
+          { id: 'title', errorId: 'error-title', message: 'El título es requerido' },
+          { id: 'materiales', errorId: 'error-materiales', message: 'Los materiales son requeridos' },
+          { id: 'cuidados', errorId: 'error-cuidados', message: 'Los cuidados son requeridos' },
+          { id: 'entrega', errorId: 'error-entrega', message: 'La información de entrega es requerida' },
+          { id: 'category', errorId: 'error-category', message: 'Selecciona una categoría' },
+          { id: 'price', errorId: 'error-price', message: 'El precio debe ser mayor a 0' },
+          { id: 'inventory', errorId: 'error-inventory', message: 'El inventario no puede ser negativo' },
+          { id: 'size', errorId: 'error-size', message: 'Las tallas son requeridas' },
+          { id: 'color', errorId: 'error-color', message: 'El color es requerido' }
+        ];
+
+        requiredFields.forEach(field => {
+          const element = document.getElementById(field.id);
+          if (!element.value || (element.type === 'number' && parseFloat(element.value) <= 0)) {
+            document.getElementById(field.errorId).textContent = field.message;
+            isValid = false;
+          }
+        });
+
+        // Validar descripción (Quill)
+        if (quill.getText().trim().length < 10) {
+          document.getElementById('error-description').textContent = 'La descripción debe tener al menos 10 caracteres';
+          isValid = false;
+        }
+
+        // Validar imágenes
+        if (fileInput.files.length === 0) {
+          document.getElementById('error-media').textContent = 'Debes subir al menos un archivo';
+          isValid = false;
+        }
+
+        if (!isValid) {
+          Swal.fire({
+            title: 'Error',
+            text: 'Por favor corrige los errores antes de continuar.',
+            icon: 'error',
+            confirmButtonColor: '#e74c3c'
+          });
+          return;
+        }
+
+        // Convertir imágenes a Base64
+        const toBase64 = (file) => new Promise((resolve, reject) => {
+          const reader = new FileReader();
+          reader.readAsDataURL(file);
+          reader.onload = () => resolve(reader.result); // Incluye "data:image/..."
+          reader.onerror = error => reject(error);
+        });
+
+        try {
+          // Convertir todas las imágenes
+          const imagenesBase64 = await Promise.all(
+            Array.from(fileInput.files).map(file => toBase64(file))
+          );
+
+          const miniaturaBase64 = fileInputMiniatura.files.length > 0
+            ? await toBase64(fileInputMiniatura.files[0])
+            : null;
+
+          // Datos para el backend
+          const productoData = {
+            nombre: document.getElementById('title').value,
+            categoria: document.getElementById('category').value,
+            descripcion: quill.root.innerHTML,
+            precio: parseFloat(document.getElementById('price').value),
+            stock: parseInt(document.getElementById('inventory').value),
+            imagen: miniaturaBase64 ? [miniaturaBase64, ...imagenesBase64] : imagenesBase64,
+            materiales: document.getElementById('materiales').value,
+            tamanio: document.getElementById('size').value,
+            color: document.getElementById('color').value
+          };
+
+          // Enviar al backend
+          const response = await fetch('http://localhost:8080/api/Productos', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(productoData)
+          });
+
+          if (!response.ok) throw new Error('Error al guardar el producto');
+
+          // Éxito
+          Swal.fire({
+            icon: 'success',
+            title: '¡Producto guardado!',
+            showConfirmButton: false,
+            timer: 1500
+          }).then(() => window.location.href = 'Tabla_productos_agregados.html');
+
+        } catch (error) {
+          console.error('Error:', error);
+          Swal.fire({
+            icon: 'error',
+            title: 'Error',
+            text: 'No se pudo guardar el producto. Por favor, inténtalo nuevamente.'
+          });
+        }
+      });
+    });
+
+  </script>
+</body>
+
 </html>
