@@ -1,4 +1,5 @@
-/* Reset básico */
+
+    /* Reset básico */
 * {
   margin: 0;
   padding: 0;
@@ -305,7 +306,21 @@ select {
 .estado-agotado {
   background-color: #ff9800;
 }
+/* Botón Actualizar*/
+.update-product-btn {
+  background-color: #ccc;     
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 8px;
+  cursor: not-allowed;
+  margin-left: 10px;
+}
 
+.update-product-btn.active {
+  background-color: rgb(255, 144, 18);      
+  cursor: pointer;
+}
 /* Botón Eliminar (igual al de Añadir pero gris y con estado activo rojo) */
 .delete-product-btn {
   background-color: #ccc;      /* gris cuando está deshabilitado */
