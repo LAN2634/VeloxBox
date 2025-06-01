@@ -6,6 +6,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Productos</title>
   <link rel="stylesheet" href="./CSS/style.css" />
+
 </head>
 
 <body>
@@ -32,6 +33,9 @@
       <button class="filter-btn" data-filter="agotado">
         <h3>Agotado</h3>
       </button>
+      <button id="updateProductBtn" class="update-product-btn" disabled>
+        Actualizar
+      </button>
       <button id="deleteProductBtn" class="delete-product-btn" disabled>
         Eliminar
       </button>
@@ -50,8 +54,7 @@
       <tbody id="productosList"></tbody>
     </table>
   </div>
-  <script>
-    document.addEventListener('DOMContentLoaded', () => {
+  <script>document.addEventListener('DOMContentLoaded', () => {
       // Botón "Atrás"
       document.getElementById('backButton').addEventListener('click', () => {
         window.history.back();
@@ -78,12 +81,15 @@
       // Eliminar productos seleccionados
       document.getElementById('deleteProductBtn').addEventListener('click', deleteSelectedProducts);
 
+      // Actualizar productos seleccionados
+      document.getElementById('updateProductBtn').addEventListener('click', updateSelectedProducts);
+
       // Seleccionar/deseleccionar todos
       document.getElementById('selectAll').addEventListener('change', (e) => {
         document.querySelectorAll('.product-checkbox').forEach(cb => {
           cb.checked = e.target.checked;
         });
-        updateDeleteButtonState();
+        updateButtonsState();
       });
     });
 
@@ -96,7 +102,7 @@
 
         const productos = await response.json();
         renderProductos(productos, filter);
-        updateDeleteButtonState();
+        updateButtonsState();
       } catch (error) {
         console.error('Error:', error);
         Swal.fire({
@@ -126,19 +132,19 @@
         const tr = document.createElement('tr');
         tr.dataset.id = producto.id;
         tr.innerHTML = `
-            <td><input type="checkbox" class="product-checkbox"></td>
-            <td>
-                <img src="${producto.imagen?.[0] || 'img/placeholder.png'}" class="miniatura-tabla">
-                ${producto.nombre}
-            </td>
-            <td>
-                <span class="estado estado-${producto.status || 'Activo'}" style="cursor:pointer;">
-                    ${producto.status || 'Activo'}
-                </span>
-            </td>
-            <td>${producto.stock}</td>
-            <td>${producto.categoria}</td>
-        `;
+        <td><input type="checkbox" class="product-checkbox"></td>
+        <td>
+            <img src="${producto.imagen?.[0] || 'img/placeholder.png'}" class="miniatura-tabla">
+            ${producto.nombre}
+        </td>
+        <td>
+            <span class="estado estado-${producto.status || 'Activo'}" style="cursor:pointer;">
+                ${producto.status || 'Activo'}
+            </span>
+        </td>
+        <td>${producto.stock}</td>
+        <td>${producto.categoria}</td>
+    `;
         tbody.appendChild(tr);
       });
 
@@ -172,17 +178,23 @@
 
       // Evento para checkboxes
       document.querySelectorAll('.product-checkbox').forEach(cb => {
-        cb.addEventListener('change', updateDeleteButtonState);
+        cb.addEventListener('change', updateButtonsState);
       });
     }
 
-    function updateDeleteButtonState() {
+    function updateButtonsState() {
       const deleteBtn = document.getElementById('deleteProductBtn');
+      const updateBtn = document.getElementById('updateProductBtn');
       const anyChecked = document.querySelectorAll('.product-checkbox:checked').length > 0;
+      const singleChecked = document.querySelectorAll('.product-checkbox:checked').length === 1;
 
+      // Actualizar botón eliminar
       deleteBtn.disabled = !anyChecked;
-      deleteBtn.style.backgroundColor = anyChecked ? '#e74c3c' : '#ccc';
-      deleteBtn.style.cursor = anyChecked ? 'pointer' : 'not-allowed';
+      deleteBtn.classList.toggle('active', anyChecked);
+
+      // Actualizar botón actualizar (solo activo cuando hay exactamente 1 seleccionado)
+      updateBtn.disabled = !singleChecked;
+      updateBtn.classList.toggle('active', singleChecked);
     }
 
     async function deleteSelectedProducts() {
@@ -228,6 +240,28 @@
           text: 'No se pudieron eliminar los productos.'
         });
       }
+    }
+
+    async function updateSelectedProducts() {
+      const selectedIds = Array.from(document.querySelectorAll('.product-checkbox:checked'))
+        .map(cb => cb.closest('tr').dataset.id);
+
+      if (selectedIds.length === 0) return;
+
+      // Solo permitir actualizar un producto a la vez
+      if (selectedIds.length > 1) {
+        Swal.fire({
+          icon: 'warning',
+          title: 'Actualización única',
+          text: 'Solo puedes actualizar un producto a la vez.',
+          confirmButtonColor: '#ff9012'
+        });
+        return;
+      }
+
+      // Redirigir a la página de actualización con el ID del producto
+      const productId = selectedIds[0];
+      window.location.href = `ActualizarProductos.html?id=${productId}`;
     }
   </script>
   <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
