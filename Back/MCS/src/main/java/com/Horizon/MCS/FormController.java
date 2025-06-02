@@ -7,14 +7,16 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-
 @RestController
 @RequestMapping("/api/Productos")
-@CrossOrigin(origins = "*") // Permite solicitudes CORS desde cualquier origen
+@CrossOrigin(origins = "http://127.0.0.1:5500")
 public class FormController {
 
     @Autowired
     private FormRepository productoRepository;
+
+    @Autowired
+    private FormularioService formularioService;  // <-- Inyectamos el servicio
 
     // Obtener todos los productos
     @GetMapping
@@ -38,31 +40,35 @@ public class FormController {
         return ResponseEntity.ok(productos);
     }
 
-    // Crear un nuevo producto
+    // Crear un nuevo producto - ahora usa FormularioService para generar SKU
     @PostMapping
     public Formulario createProducto(@RequestBody Formulario producto) {
-        return productoRepository.save(producto);
+        return formularioService.guardarFormulario(producto);
     }
-    // Actualizar un producto existente
+
     @PutMapping("/{id}")
     public ResponseEntity<Formulario> updateProducto(@PathVariable Long id, @RequestBody Formulario productoDetails) {
         return productoRepository.findById(id).map(producto -> {
+            // Actualiza solo los campos permitidos
             producto.setNombre(productoDetails.getNombre());
-            producto.setCategoria(productoDetails.getCategoria());
             producto.setDescripcion(productoDetails.getDescripcion());
             producto.setPrecio(productoDetails.getPrecio());
-            producto.setImagen(productoDetails.getImagen());
             producto.setStock(productoDetails.getStock());
+            producto.setMateriales(productoDetails.getMateriales());
+            producto.setTamanio(productoDetails.getTamanio());
+            producto.setColor(productoDetails.getColor());
+            producto.setCuidados(productoDetails.getCuidados());
+            producto.setPagodevolucion(productoDetails.getPagodevolucion());
+            producto.setImagen(productoDetails.getImagen());
             Formulario updatedProducto = productoRepository.save(producto);
             return ResponseEntity.ok(updatedProducto);
         }).orElseGet(() -> ResponseEntity.notFound().build());
     }
-
     // Eliminar un producto por ID
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteProducto(@PathVariable Long id) {
         return productoRepository.findById(id)
-                .<ResponseEntity<Void>>map(producto -> {  // <-- Especifica el tipo aquí
+                .<ResponseEntity<Void>>map(producto -> {
                     productoRepository.delete(producto);
                     return ResponseEntity.noContent().build();
                 }).orElseGet(() -> ResponseEntity.notFound().build());

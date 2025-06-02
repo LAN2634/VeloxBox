@@ -39,6 +39,15 @@ public class Formulario {
     @Column(name = "color")
     private String color;
 
+    @Column(name= "sku")
+    private String sku;
+
+    @Column(name="pagodevolucion")
+    private String pagodevolucion;
+
+    @Column(name="cuidados")
+    private String cuidados;
+
 
 
     //----Setters y Getters------
@@ -120,6 +129,30 @@ public class Formulario {
 
     public void setTamanio(String tamanio) {
         this.tamanio = tamanio;
+    }
+
+    public String getSku() {
+        return sku;
+    }
+
+    public void setSku(String sku) {
+        this.sku = sku;
+    }
+
+    public String getCuidados() {
+        return cuidados;
+    }
+
+    public void setCuidados(String cuidados) {
+        this.cuidados = cuidados;
+    }
+
+    public String getPagodevolucion() {
+        return pagodevolucion;
+    }
+
+    public void setPagodevolucion(String pagodevolucion) {
+        this.pagodevolucion = pagodevolucion;
     }
 }
 
