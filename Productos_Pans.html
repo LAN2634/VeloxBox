@@ -1103,7 +1103,7 @@
             <a href="Detalle_Pans.html?id=${pan.id}">
                 <div class="product-img">
                     <img src="${pan.imagen?.[0] || 'img/placeholder.jpg'}" 
-                         alt="${pan.nombre}" 
+                         alt="${pan.nombre}",alt="${pan.sku}" 
                          onerror="this.src='img/placeholder.jpg'">
                 </div>
             </a>
@@ -1114,6 +1114,7 @@
                         data-id="${pan.id}"
                         data-name="${pan.nombre}"
                         data-price="${pan.precio}"
+                        data-sku="${pan.sku}"
                         data-img="${pan.imagen?.[0] || ''}">
                     Agregar al carrito
                 </button>
@@ -1134,6 +1135,7 @@
                 id: button.getAttribute('data-id'),
                 nombre: button.getAttribute('data-name'),
                 precio: parseFloat(button.getAttribute('data-price')),
+                sku: button.getAttribute('data-sku'),
                 imagen: [button.getAttribute('data-img')]
             };
 

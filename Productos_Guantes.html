@@ -1090,7 +1090,7 @@
                 <a href="Detalle_Guantes.html?id=${guante.id}">
                     <div class="product-img">
                         <img src="${guante.imagen?.[0] || 'img/placeholder.jpg'}" 
-                             alt="${guante.nombre}" 
+                             alt="${guante.nombre}",alt="${guante.sku}"
                              onerror="this.src='img/placeholder.jpg'">
                     </div>
                 </a>
@@ -1101,6 +1101,7 @@
                             data-id="${guante.id}"
                             data-name="${guante.nombre}"
                             data-price="${guante.precio}"
+                            data-sku="${guante.sku}"
                             data-img="${guante.imagen?.[0] || ''}">
                         Agregar al carrito
                     </button>
@@ -1121,6 +1122,7 @@
             id: button.getAttribute('data-id'),
             nombre: button.getAttribute('data-name'),
             precio: parseFloat(button.getAttribute('data-price')),
+            sku:button.getAttribute('data-sku'),
             imagen: [button.getAttribute('data-img')]
         };
 

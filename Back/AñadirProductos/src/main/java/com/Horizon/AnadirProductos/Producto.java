@@ -21,6 +21,9 @@ public class Producto {
     @Column(name = "imagen")
     private String [] imagen;
 
+    @Column( name= "sku")
+    private String sku;
+
     public Long getId() {
         return id;
     }
@@ -51,5 +54,13 @@ public class Producto {
 
     public void setImagen(String[] imagen) {
         this.imagen = imagen;
+    }
+
+    public String getSku() {
+        return sku;
+    }
+
+    public void setSku(String sku) {
+        this.sku = sku;
     }
 }

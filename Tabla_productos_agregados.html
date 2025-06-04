@@ -46,7 +46,7 @@
         <tr>
           <th><input type="checkbox" id="selectAll" /></th>
           <th>Producto</th>
-          <th>Estado</th>
+          <th>Codigo</th>
           <th>Inventario</th>
           <th>Categoría</th>
         </tr>
@@ -138,9 +138,7 @@
             ${producto.nombre}
         </td>
         <td>
-            <span class="estado estado-${producto.status || 'Activo'}" style="cursor:pointer;">
-                ${producto.status || 'Activo'}
-            </span>
+            ${producto.sku}
         </td>
         <td>${producto.stock}</td>
         <td>${producto.categoria}</td>

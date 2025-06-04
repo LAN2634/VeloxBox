@@ -1091,7 +1091,7 @@
                 <a href="Detalle_Cascos.html?id=${casco.id}">
                     <div class="product-img">
                         <img src="${casco.imagen?.[0] || 'img/placeholder.jpg'}" 
-                             alt="${casco.nombre}" 
+                             alt="${casco.nombre}",alt="${casco.sku}"
                              onerror="this.src='img/placeholder.jpg'">
                     </div>
                 </a>
@@ -1102,6 +1102,7 @@
                             data-id="${casco.id}"
                             data-name="${casco.nombre}"
                             data-price="${casco.precio}"
+                            data-sku="${casco.sku}"
                             data-img="${casco.imagen?.[0] || ''}">
                         Agregar al carrito
                     </button>
@@ -1121,6 +1122,7 @@
                 id: button.getAttribute('data-id'),
                 nombre: button.getAttribute('data-name'),
                 precio: parseFloat(button.getAttribute('data-price')),
+                sku:button.getAttribute('data-sku'),
                 imagen: [button.getAttribute('data-img')]
             };
 
