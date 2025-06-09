@@ -49,7 +49,6 @@ public class Formulario {
     private String cuidados;
 
 
-
     //----Setters y Getters------
 
 

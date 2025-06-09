@@ -1,17 +1,15 @@
 package com.Horizon.MCS;
 
-import java.util.List;
-import java.util.Optional;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/api/Productos")
-@CrossOrigin(origins = "http://127.0.0.1:5500")
+@CrossOrigin("*")
 public class FormController {
 
     @Autowired
@@ -19,13 +17,14 @@ public class FormController {
 
     @Autowired
     private FormularioService formularioService;
+//===================================================================================================
 
     // Obtener todos los productos
     @GetMapping
     public List<Formulario> getAllProductos() {
         return FormRepository.findAll();
     }
-
+    //=====================================================================================================
     // Obtener un producto por Id
     @GetMapping("/{id}")
     public ResponseEntity<Formulario> getProductoById(@PathVariable Long id) {
@@ -33,7 +32,7 @@ public class FormController {
         return producto.map(ResponseEntity::ok)
                 .orElseGet(() -> ResponseEntity.notFound().build());
     }
-
+    //=====================================================================================================
     // Filtrar productos por categoría
     @GetMapping("/filtrar")
     public ResponseEntity<List<Formulario>> filtrarProductosPorCategoria(
@@ -41,13 +40,13 @@ public class FormController {
         List<Formulario> productos = FormRepository.findByCategoria(categoria);
         return ResponseEntity.ok(productos);
     }
-
+    //=====================================================================================================
     // Crear un nuevo producto
     @PostMapping
     public Formulario createProducto(@RequestBody Formulario producto) {
         return formularioService.guardarFormulario(producto);
     }
-
+    //=====================================================================================================
     // Actualizar un producto existente
     @PutMapping("/{id}")
     public ResponseEntity<Formulario> updateProducto(@PathVariable Long id, @RequestBody Formulario productoDetails) {
@@ -66,7 +65,7 @@ public class FormController {
             return ResponseEntity.ok(updatedProducto);
         }).orElseGet(() -> ResponseEntity.notFound().build());
     }
-
+    //=====================================================================================================================
     // Eliminar un producto por ID
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteProducto(@PathVariable Long id) {
@@ -76,24 +75,34 @@ public class FormController {
                     return ResponseEntity.noContent().build();
                 }).orElseGet(() -> ResponseEntity.notFound().build());
     }
-
-    // Obtener stock de un producto
+    //==============================================================================================================
+    // Obtener el stock de un producto por ID
     @GetMapping("/{id}/stock")
-    public ResponseEntity<Map<String, Object>> getProductStock(@PathVariable Long id) {
-        Optional<Formulario> productoOpt = FormRepository.findById(id);
-
-        if (!productoOpt.isPresent()) {
+    public ResponseEntity<Map<String, Object>> getStockById(@PathVariable Long id) {
+        Optional<Formulario> producto = FormRepository.findById(id);
+        if (producto.isPresent()) {
+            Map<String, Object> response = new HashMap<>();
+            response.put("id", id);
+            response.put("stock", producto.get().getStock());
+            return ResponseEntity.ok(response);
+        } else {
             return ResponseEntity.notFound().build();
         }
-
-        Formulario producto = productoOpt.get();
-        Map<String, Object> response = new HashMap<>();
-        response.put("stock", producto.getStock());
-        response.put("id", producto.getId());
-        response.put("nombre", producto.getNombre());
-
-        return ResponseEntity.ok(response);
     }
+    //==============================================================================================================
+    @GetMapping("/stock")
+    public ResponseEntity<Map<String, Integer>> obtenerStock(@RequestParam Long id) {
+        Optional<Formulario> producto = FormRepository.findById(id);
+
+        if (producto.isPresent()) {
+            Map<String, Integer> response = new HashMap<>();
+            response.put("stock", producto.get().getStock());
+            return ResponseEntity.ok(response);
+        } else {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
+        }
+    }
+//==================================================================================
 
 
 }
