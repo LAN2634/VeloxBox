@@ -410,7 +410,7 @@
         }
 
         .footer_Col .inputSubmit:hover {
-            background-color: #ff0055;
+            background-color: #ad013a;
             transform: scale(1.05);
         }
 
@@ -446,7 +446,7 @@
         }
 
         .footer_Col .social_Icons a:hover {
-            color: #ff0055;
+            color: #ad013a;
             transform: scale(1.2);
         }
 
@@ -705,7 +705,7 @@
 }
 
 .cardButton:hover {
-    color: #ff0055;
+    color: #ad013a;
     transform: scale(1.1);
 }
 

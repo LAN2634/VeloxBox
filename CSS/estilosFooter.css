@@ -65,7 +65,7 @@ font-family: Arial, Helvetica, sans-serif
 }
 
 .footer_Col .inputSubmit:hover {
-    background-color: #ff0055;
+    background-color: #ad013a;
     transform: scale(1.05);
 }
 
@@ -101,7 +101,7 @@ hr {
 }
 
 .footer_Col .social_Icons a:hover {
-    color: #ff0055;
+    color: #ad013a;
     transform: scale(1.2);
 }
 
@@ -268,7 +268,7 @@ footer {
 }
 
 .texto-legal a:hover {
-  color: #ff0055;
+  color: #ad013a;
 }
 
 .texto-legal ul {
