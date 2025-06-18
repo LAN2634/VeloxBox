@@ -8,6 +8,9 @@
         integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg=="
         crossorigin="anonymous" referrerpolicy="no-referrer" />
     <link rel="stylesheet" href="CSS/style_Detalle_Productos.css">
+    <link rel="icon" href="./SVGs/logoVelox.png" type="image/png">
+    <link rel="stylesheet" href="./CSS/estilosFooter.css">
+
     <title>Detalle del producto</title>
 </head>
 
@@ -104,93 +107,517 @@
         </div>
     </div>
 
-    <main class="pestanaProducto">
-        <section class="pagina-grid">
-            <!-- Información del producto -->
+<main class="pestanaProducto">
+    <section class="pagina-grid">
+        <!-- Columna izquierda - Imagen -->
+        <div class="imgProducto">
+            <img id="product-image" src="" class="img-producto" alt="Imagen del producto">
+        </div>
+
+        <!-- Columna derecha - Info básica y opciones -->
+        <div class="contenedor-derecho">
             <div class="infoProducto">
-                <h2>Ver más +</h2>
                 <h3 id="product-name">Cargando...</h3>
-                <p id="product-description"></p>
-                <ul class="listaDesplegable">
-                    <li class="item-desplegable">
-                        <button class="btn-desplegar">+ Materiales</button>
-                        <div class="contenido-desplegable">
-                            <p id="product-materials"></p>
-                        </div>
-                    </li>
-                    <li class="item-desplegable">
-                        <button class="btn-desplegar">+ Guía de cuidados</button>
-                        <div class="contenido-desplegable">
-                            <p id="product-care"></p>
-                        </div>
-                    </li>
-                    <li class="item-desplegable">
-                        <button class="btn-desplegar">+ Entrega, pago y devolución</button>
-                        <div class="contenido-desplegable">
-                            <p id="product-delivery"></p>
-                        </div>
-                    </li>
-                </ul>
-            </div>
-
-            <!-- Imagen del producto -->
-            <div class="imgProducto">
-                <img id="product-image" src="" class="img-producto" alt="Imagen del producto">
-            </div>
-
-            <!-- Opciones de compra -->
-            <div class="opcionesProducto">
-                <div class="tallas" id="product-sizes">
-                    <!-- Tallas se llenarán dinámicamente -->
-                </div>
-                <a href="#">Guía de tallas</a>
                 <h5 id="product-price">$0.00 MXN</h5>
+            </div>
+
+            <div class="opcionesProducto">
+                <h6 class="titulo-tallas">Tallas disponibles:</h6>
+                <div class="tallas" id="product-sizes"></div>
+                <a href="#" class="guia-tallas">Guía de tallas</a>
                 <button class="comprar" id="buy-btn">Comprar</button>
             </div>
-        </section>
+        </div>
 
-        <!-- Productos similares -->
-        <section class="similares">
-            <h3>Productos similares</h3>
-            <div class="product-grid" id="similar-products">
-                <!-- Se llenará dinámicamente -->
-            </div>
-        </section>
-    </main>
+        <!-- Sección inferior - Descripción y detalles -->
+        <div class="info-detallada">
+            <p id="product-description"></p>
+            <ul class="listaDesplegable">
+                <li class="item-desplegable">
+                    <button class="btn-desplegar">+ Materiales</button>
+                    <div class="contenido-desplegable">
+                        <p id="product-materials"></p>
+                    </div>
+                </li>
+                <li class="item-desplegable">
+                    <button class="btn-desplegar">+ Guía de cuidados</button>
+                    <div class="contenido-desplegable">
+                        <p id="product-care"></p>
+                    </div>
+                </li>
+                <li class="item-desplegable">
+                    <button class="btn-desplegar">+ Entrega, pago y devolución</button>
+                    <div class="contenido-desplegable">
+                        <p id="product-delivery"></p>
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </section>
 
-    <footer>
-        <!-- ... (código del footer igual al que ya tienes) ... -->
-    </footer>
+    <!-- Productos similares -->
+    <section class="similares">
+        <h3>Productos similares</h3>
+        <div class="product-grid" id="similar-products"></div>
+    </section>
+
+        <!-- Modal de Guía de Tallas -->
+    <div id="modalTallas" class="modal">
+        <span class="close-modal" id="cerrarModal">&times;</span>
+        <img class="modal-content" id="imgGuiaTallas" src="./SVGs/guiaTallas.jpg" alt="Guía de tallas">
+    </div>
+</main>
+  <footer class="footer">
+    <div class="footerContainer">
+      <div class="footer_Row">
+        <!-- Primera columna -->
+        <div class="footer_Col">
+          <h4>¿Necesitas ayuda?</h4>
+          <ul>
+            <li><a href="#" onclick="openVentana('ventanaContacto'); return false;">Contáctanos</a></li>
+            <li><a href="#" onclick="openVentana('ventanaMasVendidos'); return false;">Más Vendidos</a></li>
+            <li><a href="#" onclick="openVentana('ventanaNovedad'); return false;">Novedades</a></li>
+          </ul>
+        </div>
+
+        <!-- Segunda columna -->
+        <div class="footer_Col">
+          <h4>Atención al cliente</h4>
+          <ul>
+            <li><a href="#" onclick="openVentana('ventanaPreguntas'); return false;">Preguntas Frecuentes</a></li>
+            <li><a href="#" onclick="openVentana('ventanaEntregas'); return false;">Entregas</a></li>
+            <li><a href="#" onclick="openVentana('ventanaFpago'); return false;">Formas de pago</a></li>
+          </ul>
+        </div>
+
+        <!-- Tercera columna -->
+        <div class="footer_Col">
+          <h4>Acerca de nosotros</h4>
+          <ul>
+
+            <li><a href="#" onclick="openVentana('ventanaVelox'); return false;">Acerca de Velox</a></li>
+            <li><a href="#" onclick="openVentana('ventanaPrivacidad'); return false;">Aviso de Privacidad</a></li>
+            <li><a href="#" onclick="openVentana('ventanaTerminos'); return false;">Términos y condiciones</a></li>
+          </ul>
+        </div>
+
+        <!-- Cuarta columna -->
+        <div class="footer_Col">
+          <h4>Newsletter</h4>
+          <input type="text" placeholder="Ingrese su nombre" class="inputNombre" />
+          <input type="text" placeholder="Ingrese su correo" class="inputCorreo" />
+          <input type="submit" value="Regístrame" class="inputSubmit" />
+          <div class="social_Icons">
+            <a href="https://www.instagram.com/velox_boxing/" target="_blank" aria-label="Instagram"><i
+                class="fa-brands fa-instagram"></i></a>
+            <a href="https://www.tiktok.com/@velox_boxing" target="_blank" aria-label="TikTok">
+            <i class="fa-brands fa-tiktok"></i>
+          </a>
+
+          </div>
+        </div>
+      </div>
+      <hr />
+      <div class="footer_Bottom">
+        <div class="footer_Col">
+          <p>&#169;2025, Velox Boxing. Todos los derechos reservados.</p>
+        </div>
+      </div>
+    </div>
+
+
+    <div id="ventanaContacto" class="ventana">
+      <div class="ventana-content">
+        <span class="close" onclick="closeVentana('ventanaContacto')">&times;</span>
+        <div class="texto-legal">
+          <h1>Contacto</h1>
+          <h2>¡Estamos aquí para ayudarte!</h2>
+          <p>Si tienes dudas, comentarios o necesitas más información sobre nuestros servicios, no dudes en escribirnos.
+            Nuestro equipo responderá lo más pronto posible.</p>
+          <p>Si tienes dudas, comentarios o necesitas más información sobre nuestros servicios, no dudes en
+            escribirnos. Nuestro equipo responderá lo más pronto posible.</p>
+
+          <ul>
+            <li><strong> Correo:</strong> w5794759@gmail.com</li>
+
+            <li><strong> Dirección:</strong> Tlalnepantla , MEX, 54020, México</li>
+          </ul>
+
+          <p>También puedes encontrarnos en nuestras redes sociales:</p>
+          <div class="social_Icons">
+            <a href="https://www.instagram.com/velox_boxing/" target="_blank"><i class="fa-brands fa-instagram"></i></a>
+              <a href="https://www.tiktok.com/@velox_boxing" target="_blank" aria-label="TikTok"><i class="fa-brands fa-tiktok"></i></a>
+
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+    <div id="ventanaMasVendidos" class="ventana">
+      <div class="ventana-content">
+        <span class="close" onclick="closeVentana('ventanaMasVendidos')">&times;</span>
+        <div class="texto-legal">
+          <h1>Productos mas vendidos</h1>
+          <p>aqui van productos mas vendidos</p>
+        </div>
+      </div>
+    </div>
+
+
+    <div id="ventanaNovedad" class="ventana">
+      <div class="ventana-content">
+        <span class="close" onclick="closeVentana('ventanaNovedad')">&times;</span>
+        <div class="texto-legal">
+          <h1>Novedades</h1>
+          <h2>¡Entérate de nuestras últimas novedades!</h2>
+          <p>Te mantenemos al día con todo lo nuevo en Velox Boxing: nuevos horarios, eventos especiales, promociones y
+            más.</p>
+          <p>Te mantenemos al día con todo lo nuevo en Velox Boxing: nuevos horarios, eventos especiales, promociones
+            y más.</p>
+          <p>¡No te pierdas ninguna actualización y forma parte de nuestra comunidad activa y en constante movimiento!
+          </p>
+
+        </div>
+      </div>
+    </div>
+
+
+    <div id="ventanaPreguntas" class="ventana">
+      <div class="ventana-content">
+        <span class="close" onclick="closeVentana('ventanaPreguntas')">&times;</span>
+        <div class="texto-legal">
+          <h1>Preguntas Frecuentes</h1>
+
+
+
+          <h4>¿Qué productos ofrece Velox Boxing?</h4>
+          <p>Ofrecemos ropa deportiva, accesorios para entrenamiento y artículos inspirados en el mundo del boxeo y
+            fitness.</p>
+
+          <h4>¿Hacen envíos a todo México?</h4>
+          <p>Sí, realizamos envíos a toda la República Mexicana con tiempos de entrega estimados de 3 a 7 días hábiles.
+          </p>
+         <p>Sí, realizamos envíos a toda la República Mexicana con tiempos de entrega estimados de 3 a 7 días
+            hábiles.</p>
+          <h4>¿Cómo puedo rastrear mi pedido?</h4>
+          <p>Una vez enviado tu pedido, recibirás un correo con el número de rastreo y el enlace para monitorear tu
+            paquete.</p>
+
+          <h4>¿Puedo hacer cambios o devoluciones?</h4>
+          <p>Sí, puedes solicitar cambios o devoluciones dentro de los primeros 7 días naturales tras recibir tu pedido.
+            El producto debe estar en perfectas condiciones y sin uso.</p>
+          <p>Sí, puedes solicitar cambios o devoluciones dentro de los primeros 7 días naturales tras recibir tu
+            pedido. El producto debe estar en perfectas condiciones y sin uso.</p>
+
+          <h4>¿Qué métodos de pago aceptan?</h4>
+          <p>Aceptamos tarjetas de crédito, débito, transferencias, PayPal, MercadoPago y otros métodos disponibles
+            según tu ubicación.</p>
+
+          <h4>¿Es seguro comprar en su sitio web?</h4>
+          <p>Sí, contamos con certificados de seguridad y trabajamos con plataformas de pago confiables. No almacenamos
+            datos de tarjetas.</p>
+          <p>Sí, contamos con certificados de seguridad y trabajamos con plataformas de pago confiables. No
+            almacenamos datos de tarjetas.</p>
+
+          <h4>¿Puedo modificar mi pedido después de haberlo realizado?</h4>
+          <p>Si tu pedido aún no ha sido enviado, podemos ayudarte a modificarlo. Escríbenos lo antes posible a <a
+              href="mailto:w5794759@gmail.com">w5794759@gmail.com</a>.</p>
+
+          <h4>¿Venden productos al por mayor?</h4>
+          <p>Sí, contáctanos para cotizaciones personalizadas en compras al mayoreo.</p>
+
+          <h4>¿Cómo puedo contactar a Velox Boxing?</h4>
+          <p>Escríbenos a <a href="mailto:w5794759@gmail.com">w5794759@gmail.com</a> o utiliza el formulario de contacto
+            en nuestro sitio web.</p>
+          <p>Escríbenos a <a href="mailto:w5794759@gmail.com">w5794759@gmail.com</a> o utiliza el formulario de
+            contacto en nuestro sitio web.</p>
+\        </div>
+      </div>
+    </div>
+
+
+    <div id="ventanaEntregas" class="ventana">
+      <div class="ventana-content">
+        <span class="close" onclick="closeVentana('ventanaEntregas')">&times;</span>
+        <div class="texto-legal">
+          <h1>Entregas</h1>
+
+          <p>Realizamos entregas rápidas y seguras en toda la ciudad. Nuestro tiempo estimado de entrega es de 1 a 3
+            días hábiles, dependiendo de tu ubicación.</p>
+          <p>Ofrecemos servicio a domicilio con seguimiento en tiempo real y confirmación vía WhatsApp o correo
+            electrónico.</p>
+          <p>¿Tienes una duda sobre tu pedido? ¡Contáctanos y con gusto te ayudamos!</p>
+        </div>
+      </div>
+    </div>
+
+
+    <div id="ventanaFpago" class="ventana">
+      <div class="ventana-content">
+        <span class="close" onclick="closeVentana('ventanaFpago')">&times;</span>
+        <div class="texto-legal">
+          <h1>Formas de Pago</h1>
+          <p>En <strong>Velox Boxing</strong> ofrecemos varias opciones seguras y confiables para que puedas realizar
+            tus compras con tranquilidad:</p>
+
+          <h4>1. Tarjetas de crédito y débito</h4>
+
+          <p>Aceptamos pagos con tarjetas Visa, MasterCard y American Express. Todas las transacciones están protegidas
+            mediante cifrado SSL.</p>
+          <p>Aceptamos pagos con tarjetas Visa, MasterCard y American Express. Todas las transacciones están
+            protegidas mediante cifrado SSL.</p>
+
+          <h4>2. PayPal</h4>
+          <p>Realiza tus pagos de manera rápida y segura a través de tu cuenta de PayPal, sin compartir tus datos
+            financieros.</p>
+
+          <h4>3. Transferencia bancaria</h4>
+          <p>También puedes hacer tu pago mediante transferencia o depósito bancario. Una vez realizado, envíanos el
+            comprobante por correo a <a href="mailto:w5794759@gmail.com">w5794759@gmail.com</a> para procesar tu pedido.
+          </p>
+            comprobante por correo a <a href="mailto:w5794759@gmail.com">w5794759@gmail.com</a> para procesar tu
+            pedido.</p>
+
+          <h4>4. Pagos en efectivo (OXXO)</h4>
+          <p>Con Shopify Payments, puedes generar una orden para pagar en tiendas OXXO. El pedido se procesará una vez
+            confirmado el pago.</p>
+
+          <p>Si tienes dudas o necesitas ayuda con el proceso de pago, contáctanos y con gusto te ayudaremos.</p>
+        </div>
+      </div>
+    </div>
+
+    <div id="ventanaVelox" class="ventana">
+      <div class="ventana-content">
+        <span class="close" onclick="closeVentana('ventanaVelox')">&times;</span>
+        <div class="texto-legal">
+          <h1>Nosotros - Velox Boxing</h1>
+
+          <h4>En Velox Boxing, no solo vendemos ropa. Forjamos una Mentalidad.</h4>
+
+          <p>El boxeo y las artes marciales no son solo un deporte; son una prueba constante de carácter, sacrificio y
+            determinación. Cada golpe, cada caída y cada levantada forjan no solo al peleador, sino al guerrero que vive
+            dentro de él.</p>
+
+          <p>Sabemos lo que es entregarlo todo en el ring, sentir el dolor y seguir adelante. Porque es sangre, sudor y
+            lágrimas.</p>
+
+          <p>Cada prenda de Velox Boxing está diseñada para reflejar la esencia del peleador. No es solo lo que llevas,
+            es lo que representas. Queremos que, al vestir nuestra marca, sientas la misma energía que sientes cuando
+            entras al ring: firmeza, seguridad, poder.</p>
+            determinación. Cada golpe, cada caída y cada levantada forjan no solo al peleador, sino al guerrero que
+            vive dentro de él.</p>
+
+          <p>Sabemos lo que es entregarlo todo en el ring, sentir el dolor y seguir adelante. Porque es sangre, sudor
+            y lágrimas.</p>
+
+          <p>Cada prenda de Velox Boxing está diseñada para reflejar la esencia del peleador. No es solo lo que
+            llevas, es lo que representas. Queremos que, al vestir nuestra marca, sientas la misma energía que sientes
+            cuando entras al ring: firmeza, seguridad, poder.</p>
+\
+          <h2>Porque en el ring y en la vida, solo hay un camino: avanzar, resistir y conquistar.</h4>
+
+            <h4>Velox Boxing es para aquellos que no retroceden, que entienden que la verdadera lucha comienza en la
+              mente y termina con la victoria.</h4>
+        </div>
+      </div>
+    </div>
+
+    <div id="ventanaPrivacidad" class="ventana">
+      <div class="ventana-content">
+        <span class="close" onclick="closeVentana('ventanaPrivacidad')">&times;</span>
+        <div class="texto-legal">
+          <h1>Aviso de Privacidad</h1>
+          <p>Esta Política de privacidad describe cómo se recopila, utiliza y comparte su información personal cuando
+            visita o hace una compra en <a href="https://www.veloxboxing.shop/"
+              target="_blank">https://www.veloxboxing.shop/</a> (denominado en lo sucesivo el “Sitio”).</p>
+
+          <h3>INFORMACIÓN PERSONAL QUE RECOPILAMOS</h3>
+          <p>Cuando visita el Sitio, recopilamos automáticamente cierta información sobre su dispositivo, como el
+            navegador web, dirección IP, zona horaria y cookies instaladas. También recopilamos información sobre las
+            páginas vistas, productos consultados, y términos de búsqueda.</p>
+
+          <h4>Cookies que usamos:</h4>
+          <ul>
+            <li><strong>_session_id:</strong> Almacena información de sesión.</li>
+            <li><strong>_shopify_visit:</strong> Persistente por 30 minutos. Registra número de visitas.</li>
+            <li><strong>_shopify_uniq:</strong> Expira a la medianoche. Cuenta visitas únicas.</li>
+            <li><strong>cart:</strong> Persistente por 2 semanas. Guarda contenido del carrito.</li>
+            <li><strong>storefront_digest:</strong> Determina acceso si hay contraseña.</li>
+          </ul>
+
+          <p>También usamos archivos de registro, balizas web, etiquetas y píxeles para rastrear navegación.</p>
+
+          <h3>Información del pedido</h3>
+          <p>Cuando realiza una compra, recopilamos nombre, dirección de envío, información de pago, correo electrónico
+            y teléfono.</p>
+
+          <h3>¿Cómo usamos su información?</h3>
+          <ul>
+            <li>Procesar pedidos y pagos.</li>
+            <li>Enviar confirmaciones y facturas.</li>
+            <li>Detectar fraudes.</li>
+            <li>Ofrecer publicidad o promociones según sus preferencias.</li>
+          </ul>
+
+          <h3>Compartir su información</h3>
+          <p>Compartimos su información con terceros como Shopify y Google Analytics. Más información:</p>
+          <ul>
+            <li><a href="https://www.shopify.com/legal/privacy" target="_blank">Política de Shopify</a></li>
+            <li><a href="https://www.google.com/intl/es/policies/privacy/" target="_blank">Política de Google</a></li>
+          </ul>
+
+          <h3>Publicidad dirigida</h3>
+          <p>Utilizamos su información para ofrecer anuncios personalizados.</p>
+          <p>Puede darse de baja en:</p>
+          <ul>
+            <li><a href="https://www.facebook.com/settings/?tab=ads" target="_blank">Facebook</a></li>
+            <li><a href="https://adssettings.google.com/authenticated?hl=es" target="_blank">Google</a></li>
+            <li><a href="https://about.ads.microsoft.com/es-es/recursos/directivas/anuncios-personalizados"
+                target="_blank">Bing</a></li>
+            <li><a href="http://optout.aboutads.info/" target="_blank">DAA Opt-Out</a></li>
+          </ul>
+
+          <h3>No rastrear</h3>
+          <p>No modificamos nuestras prácticas cuando vemos señales de “No rastrear” desde su navegador.</p>
+
+          <h3>Sus derechos</h3>
+          <p>Si es residente europeo, puede solicitar acceso, corrección o eliminación de su información personal.</p>
+
+          <h3>Retención de datos</h3>
+          <p>Conservamos su información mientras no solicite su eliminación.</p>
+
+          <h3>Menores</h3>
+          <p>El sitio no está destinado a menores de 18 años.</p>
+
+          <h3>Cambios</h3>
+          <p>Podemos actualizar esta política por motivos legales u operativos.</p>
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <div id="ventanaTerminos" class="ventana">
+      <div class="ventana-content">
+        <span class="close" onclick="closeVentana('ventanaTerminos')">&times;</span>
+        <div class="texto-legal">
+          <h1>Términos y Condiciones</h1>
+
+          <p>Bienvenido a <strong>Velox Boxing</strong>. Al acceder y utilizar nuestro sitio web <a
+              href="https://www.veloxboxing.shop" target="_blank">https://www.veloxboxing.shop</a>, aceptas cumplir con
+            los siguientes Términos y Condiciones. Si no estás de acuerdo con alguno de estos términos, te recomendamos
+            no utilizar nuestro sitio.</p>
+
+          <h3>1. Información general</h3>
+          <p>Este sitio es operado por Velox Boxing. En todo el sitio, los términos “nosotros”, “nos” y “nuestro” se
+            refieren a Velox Boxing. Al visitar nuestro sitio y/o comprar algún producto, participas en nuestro
+            “Servicio” y aceptas los términos descritos a continuación.</p>
+
+          <h3>2. Condiciones de la tienda online</h3>
+          <ul>
+            <li>Debes tener al menos 18 años o contar con el permiso de un adulto para realizar compras.</li>
+            <li>No puedes utilizar nuestros productos con fines ilegales o no autorizados.</li>
+            <li>No debes transmitir virus o cualquier código de naturaleza destructiva.</li>
+          </ul>
+
+          <h3>3. Productos y precios</h3>
+          <p>Nos reservamos el derecho de modificar los precios de nuestros productos sin previo aviso. Todos los
+            productos están sujetos a disponibilidad y pueden ser retirados del sitio en cualquier momento.</p>
+
+          <h3>4. Pagos</h3>
+          <p>Los pagos se realizan de forma segura a través de nuestros proveedores autorizados (como Shopify y
+            pasarelas de pago asociadas). No almacenamos información confidencial de tarjetas de crédito.</p>
+
+          <h3>5. Envíos y devoluciones</h3>
+          <p>Consulta nuestras políticas de <a href="#politica-envios">envíos</a> y <a
+              href="#politica-devoluciones">devoluciones</a> para más detalles. Velox Boxing no se hace responsable
+            por retrasos atribuibles a servicios de mensajería externa.</p>
+
+          <h3>6. Propiedad intelectual</h3>
+          <p>Todo el contenido del sitio (diseños, logotipos, textos, imágenes) es propiedad de Velox Boxing y está
+            protegido por derechos de autor. No está permitido el uso sin autorización previa por escrito.</p>
+
+          <h3>7. Cambios en los términos</h3>
+          <p>Nos reservamos el derecho de modificar estos Términos y Condiciones en cualquier momento. Es
+            responsabilidad del usuario revisar periódicamente esta sección.</p>
+
+          <h3>8. Contacto</h3>
+          <p>Para cualquier duda o aclaración, puedes contactarnos al correo <a
+              href="mailto:w5794759@gmail.com">w5794759@gmail.com</a> o por escrito a: Tlalnepantla, MEX, 54020, México.
+          </p>
+              href="mailto:w5794759@gmail.com">w5794759@gmail.com</a> o por escrito a: Tlalnepantla, MEX, 54020,
+            México.</p>
+        </div>
+      </div>
+    </div>
+  </footer>
 
     <!-- Scripts -->
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-    <script>
+
+ <script>
+    // Modal de Guía de Tallas
+document.addEventListener('DOMContentLoaded', function() {
+  const enlaceGuia = document.querySelector('.guia-tallas');
+  const modal = document.getElementById("modalTallas");
+  const cerrar = document.getElementById("cerrarModal");
+
+  if (enlaceGuia && modal && cerrar) {
+    enlaceGuia.addEventListener("click", (e) => {
+      e.preventDefault();
+      modal.style.display = "block";
+      document.body.style.overflow = "hidden"; // Evita scroll cuando el modal está abierto
+    });
+
+    cerrar.addEventListener("click", () => {
+      modal.style.display = "none";
+      document.body.style.overflow = "auto";
+    });
+
+    window.addEventListener("click", (e) => {
+      if (e.target === modal) {
+        modal.style.display = "none";
+        document.body.style.overflow = "auto";
+      }
+    });
+  }
+});
+ </script>
+
+ <script>
         // ==================== INICIALIZACIÓN ====================
 document.addEventListener('DOMContentLoaded', async () => {
     // Obtener ID del producto desde la URL
     const urlParams = new URLSearchParams(window.location.search);
     const productId = urlParams.get('id');
 
+
     if (!productId) {
         showError('No se encontró el producto');
         return;
     }
+
 
     try {
         // 1. Obtener datos del producto
         const response = await fetch(`http://localhost:8080/api/Productos/${productId}`);
         if (!response.ok) throw new Error('Producto no encontrado');
 
+
         const producto = await response.json();
         renderProductDetails(producto);
         setupEventListeners();
         setupCart(); // Configurar funcionalidad del carrito
 
+
         // 2. Cargar productos similares (opcional)
         await loadSimilarProducts(producto.categoria);
 
+
         // 3. Actualizar contador del carrito
         await updateCartCount();
+
 
     } catch (error) {
         console.error('Error:', error);
@@ -198,10 +625,12 @@ document.addEventListener('DOMContentLoaded', async () => {
     }
 });
 
+
 // ==================== CONFIGURACIÓN DEL CARRITO ====================
 function setupCart() {
     const cartToggle = document.getElementById('cart-toggle');
     const cartPanel = document.getElementById('cartPanel');
+
 
     if (cartToggle && cartPanel) {
         cartToggle.addEventListener('click', async (e) => {
@@ -209,10 +638,12 @@ function setupCart() {
             e.stopPropagation();
             cartPanel.classList.toggle('hidden');
 
+
             if (!cartPanel.classList.contains('hidden')) {
                 await loadCartItems();
             }
         });
+
 
         // Cerrar al hacer click fuera
         document.addEventListener('click', (e) => {
@@ -223,7 +654,9 @@ function setupCart() {
     }
 }
 
+
 // ==================== FUNCIONES PARA MOSTRAR PRODUCTOS ====================
+
 
 // Renderizar detalles del producto principal
 function renderProductDetails(producto) {
@@ -231,6 +664,7 @@ function renderProductDetails(producto) {
     document.getElementById('product-name').textContent = producto.nombre || 'Nombre no disponible';
     document.getElementById('product-description').textContent =
         producto.descripcion || 'Descripción no disponible';
+
 
     // 2. Detalles específicos
     document.getElementById('product-materials').textContent =
@@ -240,14 +674,17 @@ function renderProductDetails(producto) {
     document.getElementById('product-delivery').textContent =
         producto.pagodevolucion || 'Información no disponible';
 
+
     // 3. Imagen
     const imgElement = document.getElementById('product-image');
     imgElement.src = producto.imagen?.[0] || 'img/placeholder.jpg';
     imgElement.alt = producto.nombre || 'Producto';
 
+
     // 4. Precio
     document.getElementById('product-price').textContent =
         `$${producto.precio?.toFixed(2) || '0.00'} MXN`;
+
 
     // 5. Tallas (ejemplo: "S,M,L" -> botones individuales)
     const sizesContainer = document.getElementById('product-sizes');
@@ -256,6 +693,7 @@ function renderProductDetails(producto) {
             .map(size => `<button class="talla"><h3>${size.trim()}</h3></button>`)
             .join('');
     }
+
 
     // 6. Configurar botón de compra
     const buyBtn = document.getElementById('buy-btn');
@@ -268,13 +706,15 @@ function renderProductDetails(producto) {
     }
 }
 
+
 // Cargar productos similares
 async function loadSimilarProducts(categoria) {
     if (!categoria) return;
-    
+   
     try {
         const response = await fetch(`http://localhost:8080/api/Productos/filtrar?categoria=${categoria}&limit=4`);
         if (!response.ok) return;
+
 
         const similares = await response.json();
         renderSimilarProducts(similares);
@@ -283,24 +723,26 @@ async function loadSimilarProducts(categoria) {
     }
 }
 
+
 // Renderizar productos similares con botones de agregar al carrito
 function renderSimilarProducts(productos) {
     const container = document.getElementById('similar-products');
     if (!container) return;
 
+
     container.innerHTML = productos.map(producto => `
         <div class="product-card">
             <a href="Detalle_Productos.html?id=${producto.id}">
                 <div class="product-img">
-                    <img src="${producto.imagen?.[0] || 'img/placeholder.jpg'}" 
-                         alt="${producto.nombre}" 
+                    <img src="${producto.imagen?.[0] || 'img/placeholder.jpg'}"
+                         alt="${producto.nombre}"
                          onerror="this.src='img/placeholder.jpg'">
                 </div>
             </a>
             <div class="product-info">
                 <p class="product-name">${producto.nombre}</p>
                 <p class="product-price">$${producto.precio?.toFixed(2) || '0.00'} MXN</p>
-                <button class="add-to-cart" 
+                <button class="add-to-cart"
                         data-id="${producto.id}"
                         data-name="${producto.nombre}"
                         data-price="${producto.precio}"
@@ -312,11 +754,14 @@ function renderSimilarProducts(productos) {
         </div>
     `).join('');
 
+
     // Agregar event listeners a los nuevos botones
     setupAddToCartButtons();
 }
 
+
 // ==================== FUNCIONALIDADES DEL CARRITO ====================
+
 
 // Configurar botones de agregar al carrito
 function setupAddToCartButtons() {
@@ -332,10 +777,12 @@ function setupAddToCartButtons() {
                 cantidad: 1
             };
 
+
             await addToCart(producto);
         });
     });
 }
+
 
 // Función principal para agregar al carrito
 async function addToCart(producto) {
@@ -343,14 +790,16 @@ async function addToCart(producto) {
         // 1. Consultar stock actual
         const stockResponse = await fetch(`http://localhost:8080/api/Productos/${producto.id}/stock`);
         if (!stockResponse.ok) throw new Error("Error al consultar stock");
-        
+       
         const stockData = await stockResponse.json();
+
 
         // 2. Verificar si hay stock disponible
         if (stockData.stock < 1) {
             showError('Lo sentimos, este producto está agotado.');
             return;
         }
+
 
         // 3. Agregar al carrito solo si hay stock
         const response = await fetch('http://localhost:9090/api/carrito/agregar', {
@@ -359,11 +808,14 @@ async function addToCart(producto) {
             body: JSON.stringify(producto)
         });
 
+
         if (!response.ok) throw new Error("Error al agregar al carrito");
+
 
         showSuccess(`${producto.nombre} añadido al carrito`);
         updateCartCount();
         animateCartIcon();
+
 
         // Actualizar panel del carrito si está visible
         const cartPanel = document.getElementById('cartPanel');
@@ -376,11 +828,13 @@ async function addToCart(producto) {
     }
 }
 
+
 // Cargar items del carrito
 async function loadCartItems() {
     try {
         const response = await fetch('http://localhost:9090/api/carrito');
         if (!response.ok) throw new Error("Error al cargar el carrito");
+
 
         const cartProducts = await response.json();
         renderCartItems(cartProducts);
@@ -397,15 +851,18 @@ async function loadCartItems() {
     }
 }
 
+
 // Renderizar items del carrito
 function renderCartItems(items) {
     const cartItemsContainer = document.getElementById('cartItems');
     if (!cartItemsContainer) return;
 
+
     if (!items || items.length === 0) {
         cartItemsContainer.innerHTML = '<p class="empty-cart">Tu carrito está vacío</p>';
         return;
     }
+
 
     cartItemsContainer.innerHTML = items.map(item => {
         const producto = item.producto || item;
@@ -414,6 +871,7 @@ function renderCartItems(items) {
         const precio = producto.precio ? producto.precio.toFixed(2) : '0.00';
         const imagen = producto.imagen?.[0] || 'img/placeholder.jpg';
         const cantidad = item.cantidad || 1;
+
 
         return `
         <div class="cart-item" data-id="${id}">
@@ -424,7 +882,7 @@ function renderCartItems(items) {
                 <h4>${nombre}</h4>
                 <p>Precio: $${precio} MXN</p>
                 <p>
-                    Cantidad: 
+                    Cantidad:
                     <button class="btn-disminuir" data-id="${id}">-</button>
                     <span class="cantidad">${cantidad}</span>
                     <button class="btn-aumentar" data-id="${id}">+</button>
@@ -436,10 +894,12 @@ function renderCartItems(items) {
         `;
     }).join('');
 
+
     // Configurar eventos para los controles del carrito
     setupCartControls();
     updateCartTotal(items);
 }
+
 
 // Configurar controles del carrito (eliminar, aumentar/disminuir cantidad)
 function setupCartControls() {
@@ -448,6 +908,7 @@ function setupCartControls() {
         btn.addEventListener('click', removeFromCart);
     });
 
+
     // Eventos aumentar cantidad
     document.querySelectorAll('.btn-aumentar').forEach(btn => {
         btn.addEventListener('click', async (e) => {
@@ -455,6 +916,7 @@ function setupCartControls() {
             await cambiarCantidad(id, 'incrementar');
         });
     });
+
 
     // Eventos disminuir cantidad
     document.querySelectorAll('.btn-disminuir').forEach(btn => {
@@ -465,12 +927,14 @@ function setupCartControls() {
     });
 }
 
+
 // Cambiar cantidad de un producto en el carrito
 async function cambiarCantidad(id, accion) {
     try {
         const url = `http://localhost:9090/api/carrito/${accion}/${id}`;
         const response = await fetch(url, { method: 'PUT' });
         if (!response.ok) throw new Error('Error al cambiar cantidad');
+
 
         await loadCartItems();
         updateCartCount();
@@ -480,16 +944,20 @@ async function cambiarCantidad(id, accion) {
     }
 }
 
+
 // Eliminar producto del carrito
 async function removeFromCart(e) {
     const productId = e.currentTarget.getAttribute('data-id');
+
 
     try {
         const response = await fetch(`http://localhost:9090/api/carrito/eliminar/${productId}`, {
             method: 'DELETE'
         });
 
+
         if (!response.ok) throw new Error("Error al eliminar del carrito");
+
 
         showSuccess('Producto eliminado del carrito');
         updateCartCount();
@@ -500,15 +968,18 @@ async function removeFromCart(e) {
     }
 }
 
+
 // Actualizar total del carrito
 function updateCartTotal(items) {
     const totalContainer = document.createElement('div');
     totalContainer.className = 'cart-total';
 
+
     const total = items.reduce((sum, item) => {
         const producto = item.producto || item;
         return sum + (producto.precio * (item.cantidad || 1));
     }, 0);
+
 
     totalContainer.innerHTML = `
         <div class="total-line"></div>
@@ -519,8 +990,10 @@ function updateCartTotal(items) {
         <a href="Compras_Carrito.html" class="checkout-btn">Proceder al pago</a>
     `;
 
+
     const oldTotal = document.querySelector('.cart-total');
     if (oldTotal) oldTotal.remove();
+
 
     const cartItemsContainer = document.getElementById('cartItems');
     if (cartItemsContainer) {
@@ -528,14 +1001,17 @@ function updateCartTotal(items) {
     }
 }
 
+
 // Actualizar contador del carrito
 async function updateCartCount() {
     try {
         const response = await fetch('http://localhost:9090/api/carrito/cantidad');
         if (!response.ok) throw new Error("Error al obtener cantidad");
 
+
         const cantidad = await response.json();
         const cartCount = document.getElementById('cart-count');
+
 
         if (cartCount) {
             cartCount.textContent = cantidad;
@@ -551,7 +1027,9 @@ async function updateCartCount() {
     }
 }
 
+
 // ==================== EVENT LISTENERS Y UTILIDADES ====================
+
 
 // Configurar event listeners
 function setupEventListeners() {
@@ -569,6 +1047,7 @@ function setupEventListeners() {
         await addToCart(producto);
     });
 
+
     // Acordeones de información
     document.querySelectorAll('.btn-desplegar').forEach(btn => {
         btn.addEventListener('click', (e) => {
@@ -577,20 +1056,24 @@ function setupEventListeners() {
         });
     });
 
+
     // Menú hamburguesa
     const hamburgerBtn = document.getElementById('hamburgerBtn');
     const menuOverlay = document.getElementById('menuOverlay');
     const menuContainer = document.getElementById('menuContainer');
+
 
     hamburgerBtn?.addEventListener('click', () => {
         menuContainer.classList.toggle('active');
         menuOverlay.classList.toggle('active');
     });
 
+
     menuOverlay?.addEventListener('click', () => {
         menuContainer.classList.remove('active');
         menuOverlay.classList.remove('active');
     });
+
 
     // Buscador
     const searchInput = document.getElementById('searchInput');
@@ -605,6 +1088,7 @@ function setupEventListeners() {
     }
 }
 
+
 // Animación del icono del carrito
 function animateCartIcon() {
     const cartIcon = document.querySelector('.cart-icon-container');
@@ -613,6 +1097,7 @@ function animateCartIcon() {
         setTimeout(() => cartIcon.classList.remove('animate-pulse'), 1000);
     }
 }
+
 
 // Mostrar mensaje de éxito
 function showSuccess(message) {
@@ -626,6 +1111,7 @@ function showSuccess(message) {
     });
 }
 
+
 // Mostrar mensaje de error
 function showError(message) {
     Swal.fire({
@@ -635,6 +1121,8 @@ function showError(message) {
     });
 }
     </script>
+
+
 </body>
 
 </html>
