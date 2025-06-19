@@ -19,15 +19,19 @@ CREATE TABLE Producto (
     stock INT NOT NULL,
     materiales NVARCHAR(255),
     tamanio NVARCHAR(50),
-    color NVARCHAR(50);
+    color NVARCHAR(50));
 
 EXEC sp_rename 'Producto.pagodevolución', 'pagodevolucion', 'COLUMN';
 
 select * from Producto;
 Delete from Producto;
 
+
 ALTER TABLE Producto
-DROP COLUMN descuento;
+ADD descuento FLOAT ;
+
+ALTER TABLE Producto
+DROP COLUMN descuento ;
 
 
 ALTER TABLE Producto
@@ -85,7 +89,7 @@ CREATE TABLE Devolucion (
 VALUES ('Papos buapos', 'Playeras', 'Papos super rapidos del rasho MCquen', 1500, 23);
 
 	select * from Producto ;
-
+	select * from sys.tables
 
 
  USE master;

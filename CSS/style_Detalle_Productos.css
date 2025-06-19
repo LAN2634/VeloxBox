@@ -5,17 +5,13 @@
         font-family: Arial, Helvetica, sans-serif;
     }
 
-    body {
-        background: #ffffff;
-        color: #111;
-        display: flex;
-        flex-direction: column;
-        min-height: 100vh;
-    }
-
-    .contenedor-derecho {
-        margin-top: 4rem;
-    }
+body {
+    background: #ffffff;
+    color: #111;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
 
     /* HEADER STYLES */
     header {
@@ -354,18 +350,17 @@
         margin-top: 70px;
     }
 
-    .pagina-grid {
-        display: grid;
-        grid-template-columns: 1fr 1fr;
-        gap: 2rem;
-        padding: 6rem;
-        align-items: start;
-        background-color: #ffffff;
-    }
+.pagina-grid {
+    display: grid;
+    grid-template-columns: repeat(12, 1fr);
+    gap: 20px;
+    padding: 2rem;
+    background-color: #ffffff;
+}
 
-    .infoProducto {
-        grid-column: 4 / 3;
-    }
+.infoProducto {
+    grid-column: 2 / 5;
+}
 
     .infoProducto h2 {
         font-size: 26px;
@@ -373,22 +368,11 @@
         margin-bottom: 20px;
     }
 
-    .infoProducto h3 {
-        font-size: 35px;
-        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-        letter-spacing: -1.1px;
-
-    }
-
-    .titulo-tallas {
-        display: block;
-        text-align: left;
-        margin-top: 10px;
-        font-size: 16px;
-        /* O el tamaño que prefieras */
-        font-weight: normal;
-        width: 100%;
-    }
+.infoProducto h3 {
+    font-size: 20px;
+    margin-bottom: 5px;
+    margin-left: 18px;
+}
 
     .infoProducto p {
         font-size: 16px;
@@ -396,130 +380,44 @@
         font-weight: normal;
     }
 
+.imgProducto {
+    grid-column: 5 / 8;
+    background-color: #d6d6d6;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 1rem;
+    border-radius: 2px;
+    height: 380px;
+    width: 380px;
+}
 
-    /* Contenedor de la imagen */
-    .imgProducto {
-        grid-column: 1/2;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        height: 470px;
-        width: 470px;
-        background-color: #dedede;
-        border-radius: 8px;
-        overflow: hidden;
-    }
+.imgProducto img.img-producto {
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: contain;
+    border-radius: 8px;
+}
 
-    /* Imagen del producto */
-    .img-producto {
-        width: 100%;
-        max-width: 490px;
-        max-height: 470px;
-        object-fit: contain;
-        display: block;
-        margin: auto;
-        /* Centrado adicional */
-    }
+.opcionesProducto {
+    grid-column: 9 / 13;
+}
 
-    /* Modal base */
-    .modal {
-        display: none;
-        position: fixed;
-        z-index: 9999;
-        left: 0;
-        top: 0;
-        width: 100%;
-        height: 100%;
-        overflow: auto;
-        background-color: rgba(0, 0, 0, 0.8);
-    }
+.tallas {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 20px;
+}
 
-    /* Imagen en el centro */
-    .modal-content {
-        display: block;
-        margin: 5% auto;
-        max-width: 90%;
-        max-height: 90%;
-        border-radius: 10px;
-    }
-
-    /* Botón cerrar */
-    .close-modal {
-        position: absolute;
-        top: 30px;
-        right: 50px;
-        color: #b8254d;
-        font-size: 40px;
-        font-weight: bold;
-        cursor: pointer;
-    }
-
-
-
-    .product-card {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        justify-content: center;
-        text-align: center;
-        width: 100%;
-
-    }
-
-    .opcionesProducto h5 {
-        grid-column: 2 / 3;
-        display: flex;
-        font-size: 22px;
-        margin: 20px 0;
-        /* Espacio arriba y abajo */
-        font-weight: normal;
-        text-align: center;
-        width: 100%;
-    }
-
-
-    .opcionesProducto a:hover {
-        text-decoration: underline;
-    }
-
-    .guia-tallas {
-        display: block;
-        text-align: left;
-        margin: 5px 0 0 0;
-        /* Solo margen superior de 5px, los demás a 0 */
-        padding: 0;
-        /* Sin padding */
-        color: black;
-        text-decoration: none;
-        font-size: 13.5px;
-        width: 100%;
-        align-self: flex-start;
-        /* Alinea a la izquierda */
-    }
-
-    .tallas {
-        display: flex;
-        gap: 7px;
-        margin: 15px 0 5px 0;
-        flex-wrap: wrap;
-        gap: 10px;
-        width: 100%;
-        max-width: 320px;
-        justify-content: flex-start;
-    }
-
-    .talla {
-        background: #ffffff;
-        color: black;
-        padding: 0.5rem 1rem;
-        transition: background 0.3s, color 0.3s;
-        cursor: pointer;
-        border: none;
-        min-width: 60px;
-        height: 45px;
-        margin: 0;
-        text-align: center;
-    }
+.talla {
+    background: #ffffff;
+    color: black;
+    padding: 0.5rem 1rem;
+    transition: background 0.3s, color 0.3s;
+    cursor: pointer;
+    border: none;
+    margin-left: 1.30rem;
+}
 
     .talla:hover {
         background: #f0f0f0;
@@ -541,46 +439,18 @@
 
     }
 
-    .comprar {
-        background: black;
-        color: white;
-        border: none;
-        padding: 1rem;
-        /* Aumenté el padding para más altura */
-        width: 100%;
-        /* Ocupará todo el ancho disponible */
-        cursor: pointer;
-        transition: all 0.3s ease;
-        /* Transición suave para todos los cambios */
-        margin-top: 30px;
-        margin-left: 0;
-        /* Eliminé el margen izquierdo */
-        font-size: 18px;
-        /* Texto un poco más grande */
-        text-transform: uppercase;
-        /* Texto en mayúsculas */
-        letter-spacing: 1px;
-        /* Espaciado entre letras */
-        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-        /* Sombra sutil */
-        display: block;
-        /* Para que ocupe su propia línea */
-    }
-
-    .comprar:hover {
-        background: #333;
-        transform: translateY(-2px);
-        /* Efecto de levitación al hover */
-        box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
-        /* Sombra más pronunciada al hover */
-    }
-
-    .comprar:active {
-        transform: translateY(1px);
-        /* Efecto de pulsación */
-        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-        /* Sombra más plana al hacer click */
-    }
+.comprar {
+    background: black;
+    color: white;
+    border: none;
+    padding: 0.5rem;
+    width: 65%;
+    cursor: pointer;
+    transition: background 0.3s;
+    margin-top: 30px;
+    margin-left: 10px;
+    font-size: 16px;
+}
 
     .comprar:hover {
         background: #333;
@@ -670,12 +540,13 @@
         margin-left: 40px;
     }
 
-    /* Precio */
-    h5 {
-        font-size: 25px;
-        margin-top: 35px;
-        font-weight: normal;
-    }
+/* Precio */
+h5 {
+    font-size: 18px;
+    margin-top: 20px;
+    margin-left: 60px;
+    font-weight: normal;
+}
 
     /*Responsive*/
     @media (max-width: 768px) {
@@ -684,10 +555,10 @@
             padding: 1rem;
         }
 
-        .infoProducto {
-            grid-column: 2 / 2;
-            text-align: center;
-        }
+    .infoProducto {
+        grid-column: 1 / -1;
+        text-align: center;
+    }
 
         .imgProducto {
             grid-column: 1 / -1;
@@ -940,20 +811,10 @@
         }
     }
 
-    @keyframes pulse {
-
-        0%,
-        100% {
-            transform: scale(1);
-        }
-
-        50% {
-            transform: scale(1.1);
-        }
-
-    }
-
-
+@keyframes pulse {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.1); }
+}
 
     /* Estilo para talla seleccionada */
     .talla.selected {

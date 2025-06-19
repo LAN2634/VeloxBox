@@ -35,7 +35,7 @@
             padding: 2rem;
             gap: 2rem; /* espacio entre imagen y texto */
             flex-wrap: wrap; /* para que se acomode bien en pantallas pequeñas */
-            margin-top: 70px; /* espacio para el header */
+            margin-bottom: 70px;
         }
 
 
@@ -627,7 +627,7 @@
    
 /*Carrusel*/
 .card-sephora{
-    margin-top: 3.5rem;
+    margin-top: 100px;
 }
 .swiper {
     width: 100%;
