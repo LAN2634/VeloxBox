@@ -237,7 +237,7 @@
         // ================ CARGAR PLAYERAS ================
         async function loadPlayeras() {
             try {
-                const response = await fetch('http://localhost:9090/api/Productos/filtrar?categoria=Playeras');
+                const response = await fetch('http://localhost:8080/api/Productos/filtrar?categoria=Playeras');
                 if (!response.ok) throw new Error("Error al cargar playeras");
 
                 const playeras = await response.json();
@@ -297,11 +297,7 @@
 
             try {
                 // 1. Consultar stock actual
-<<<<<<< HEAD
                 const stockResponse = await fetch(`http://localhost:8080/api/Productos/stock?id=${producto.id}`);
-=======
-                const stockResponse = await fetch(`http://localhost:9090/api/Productos/${producto.id}/stock`);
->>>>>>> 148593a9e89cfe826d2659c213f7131c4cb9ab2d
                 if (!stockResponse.ok) throw new Error("Error al consultar stock");
                 const stockData = await stockResponse.json();
 
