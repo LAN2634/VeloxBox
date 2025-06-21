@@ -1,43 +1,252 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Registro - Unimix</title>
-    <link rel="stylesheet" href="CSS/style_registro.css">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Registro - Unimix</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: Arial, sans-serif;
+      background: url('') no-repeat center center fixed;
+      background-size: cover;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+      background-color: #f4f4f4;
+    }
+
+    .registro-container {
+      background: #ffffff;
+      border-radius: 10px;
+      padding: 40px;
+      width: 360px;
+      box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
+      text-align: center;
+    }
+
+    h2 {
+      font-size: 30px;
+      margin-bottom: 20px;
+      color: #000;
+    }
+
+    label {
+      display: block;
+      font-size: 14px;
+      margin-bottom: 5px;
+      text-align: left;
+      color: #000;
+    }
+
+    input {
+      width: 100%;
+      padding: 12px;
+      margin-bottom: 15px;
+      border: 1px solid #ddd;
+      border-radius: 5px;
+      font-size: 14px;
+      background-color: #fff;
+      color: #000;
+      outline: none;
+      transition: border-color 0.3s ease;
+    }
+
+    input:focus {
+      border-color: #000;
+    }
+
+    input.error {
+      border: 2px solid #e74c3c;
+      background-color: #fdecea;
+    }
+
+    button {
+      width: 100%;
+      padding: 12px;
+      background-color: #000;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      font-size: 16px;
+      cursor: pointer;
+      transition: background 0.3s;
+    }
+
+    button:hover {
+      background-color: #333;
+    }
+
+    a {
+      color: #000;
+      text-decoration: none;
+      font-size: 14px;
+    }
+
+    a:hover {
+      text-decoration: underline;
+    }
+
+    .extra-links {
+      display: flex;
+      justify-content: space-between;
+      margin-top: 15px;
+    }
+
+    .container {
+      text-align: center;
+      padding: 10px;
+      color: #000;
+    }
+
+    .loader {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: black;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      z-index: 100;
+    }
+
+    .spinner {
+      width: 60px;
+      height: 60px;
+      border: 6px solid #fff;
+      border-top-color: #000;
+      border-radius: 50%;
+      animation: spin 1s linear infinite;
+    }
+
+    @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+
+    .hidden {
+      opacity: 0;
+      visibility: hidden;
+      transition: opacity 0.5s ease, visibility 0.5s;
+    }
+
+    body.swal2-shown {
+      overflow: hidden !important;
+    }
+  </style>
 </head>
 <body>
-     <!-- Loader -->
-     <div class="loader">
-        <div class="spinner"></div>
+  <!-- Loader -->
+  <div class="loader">
+    <div class="spinner"></div>
+  </div>
+
+  <div class="registro-container">
+    <h2>Crear cuenta</h2>
+    <form id="registroForm" novalidate>
+      <label for="email">Correo electrónico</label>
+      <input type="email" id="email" placeholder="Ingresa tu correo electrónico" />
+
+      <label for="password">Contraseña</label>
+      <input type="password" id="password" placeholder="Crea una contraseña" />
+
+      <label for="confirmPassword">Confirmar contraseña</label>
+      <input type="password" id="confirmPassword" placeholder="Repite tu contraseña" />
+
+      <div class="container">
+        <a href="terminos.html">Términos y Condiciones</a>
+      </div>
+
+      <button type="submit">Registrar</button>
+    </form>
+
+    <div class="extra-links">
+      <a href="Logeo.html">¿Ya tienes una cuenta?</a>
+      <a href="Recuperar_contraseña.html">Recuperar contraseña</a>
     </div>
-    
-    <div class="registro-container">
-        <h2>Crear cuenta</h2>
-        <form id="registroForm">
-            <!-- Campos del formulario -->
-            <label for="email">Correo electrónico</label>
-            <input type="email" id="email" name="email" placeholder="Ingresa tu correo electrónico" required>
-            
-            <label for="password">Contraseña</label>
-            <input type="password" id="password" name="password" placeholder="Crea una contraseña" required>
-            
-            <label for="confirmPassword">Confirmar contraseña</label>
-            <input type="password" id="confirmPassword" name="confirmPassword" placeholder="Repite tu contraseña" required>
-            
-            <div class="container">
-                <a href="terminos.html" id="registroLink">Términos y Condiciónes</a>
-            </div>
+  </div>
 
+  <!-- SweetAlert2 -->
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
-            <button type="submit">Registrar</button>
-        </form>
-        <div class="extra-links">
-            <a href="login.html">¿Ya tienes una cuenta?</a>
-            <a href="recovery.html">Recuperar contraseña</a>
-        </div>
-    </div>
+  <script>
+    window.addEventListener("load", () => {
+      document.querySelector(".loader").classList.add("hidden");
+    });
 
-    <script src="JS/script_registro.js"></script>
+    function limpiarErrores() {
+      document.getElementById("email").classList.remove("error");
+      document.getElementById("password").classList.remove("error");
+      document.getElementById("confirmPassword").classList.remove("error");
+    }
+
+    function marcarError(id) {
+      document.getElementById(id).classList.add("error");
+    }
+
+    document.getElementById("registroForm").addEventListener("submit", function (e) {
+      e.preventDefault();
+      limpiarErrores();
+
+      const email = document.getElementById("email").value.trim();
+      const password = document.getElementById("password").value.trim();
+      const confirmPassword = document.getElementById("confirmPassword").value.trim();
+
+      if (!email || !password || !confirmPassword) {
+        if (!email) marcarError("email");
+        if (!password) marcarError("password");
+        if (!confirmPassword) marcarError("confirmPassword");
+
+        Swal.fire({
+          icon: "warning",
+          title: "Campos incompletos",
+          text: "Por favor, completa todos los campos.",
+          confirmButtonColor: "#000"
+        });
+        return;
+      }
+
+      if (password.length < 6) {
+        marcarError("password");
+        Swal.fire({
+          icon: "error",
+          title: "Contraseña débil",
+          text: "Debe tener al menos 6 caracteres.",
+          confirmButtonColor: "#000"
+        });
+        return;
+      }
+
+      if (password !== confirmPassword) {
+        marcarError("password");
+        marcarError("confirmPassword");
+        Swal.fire({
+          icon: "error",
+          title: "Contraseñas no coinciden",
+          text: "Verifica que ambas contraseñas sean iguales.",
+          confirmButtonColor: "#000"
+        });
+        return;
+      }
+
+      Swal.fire({
+        icon: "success",
+        title: "¡Registro exitoso!",
+        text: "Ahora puedes iniciar sesión.",
+        confirmButtonColor: "#000"
+      }).then(() => {
+        window.location.href = "login.html";
+      });
+    });
+  </script>
 </body>
 </html>

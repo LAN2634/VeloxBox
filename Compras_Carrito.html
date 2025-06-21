@@ -104,9 +104,8 @@
   </div>
 
   <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-  <script
-    src="https://www.paypal.com/sdk/js?client-id=AZAAZYL5L3emroAmF-iLlJLPG7JK53LRSslgcrA_28CTc5B7_yCR5QoqyfnpFPitDe9e-JY3A54WRd13&currency=MXN"></script>
-
+  <script src="https://www.paypal.com/sdk/js?client-id=AZAAZYL5L3emroAmF-iLlJLPG7JK53LRSslgcrA_28CTc5B7_yCR5QoqyfnpFPitDe9e-JY3A54WRd13&currency=MXN"></script>
+  
   <script>
     // ===== CONSTANTES Y CONFIGURACIÓN =====
     const CART_API_URL = 'http://localhost:9090/api/carrito';
@@ -224,7 +223,7 @@
         async createOrder() {
           try {
             const total = calcularTotal();
-            const response = await fetch(`${PAYPAL_API_URL}/crear-orden`, {  // corregido a crear-orden
+            const response = await fetch(`${PAYPAL_API_URL}/create-order`, {  // corregido a crear-orden
               method: "POST",
               headers: { "Content-Type": "application/json" },
               body: JSON.stringify({
@@ -248,7 +247,7 @@
         // Capturar pago
         async onApprove(data) {
           try {
-            const response = await fetch(`${PAYPAL_API_URL}/capturar-orden/${data.orderID}`, {  // corregido a capturar-orden/{orderId}
+            const response = await fetch(`${PAYPAL_API_URL}/capture-order/${data.orderID}`, {  // corregido a capturar-orden/{orderId}
               method: "POST"
             });
 
