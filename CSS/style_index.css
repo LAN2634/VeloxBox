@@ -719,6 +719,11 @@ footer {
     color: #ad013a;
     transform: scale(1.1);
 }
+/* Agrega esto a tu CSS */
+.swiper-wrapper.loading {
+    min-height: 300px;
+    background: url('img/loader.gif') center no-repeat;
+}
 
 .swiper-button-next,
 .swiper-button-prev {
