@@ -12,19 +12,17 @@ body {
     color: #fff; /* Color del texto */
 }
 
-/* Contenedor del formulario de registro */
 .registro-container {
-    background: rgb(0, 0, 0); /* Fondo semitransparente oscuro */
-    border-radius: 16px; /* Bordes redondeados */
-    padding: 30px; /* Espaciado interno */
-    width: 360px; /* Ancho del contenedor */
-    box-shadow: 0 8px 15px rgba(0, 0, 0, 0.5); /* Sombra más pronunciada */
-    text-align: center; /* Centrado del texto */
+    background: rgb(0, 0, 0);
+    border-radius: 16px;
+    padding: 30px; 
+    width: 360px;
+    box-shadow: 0 8px 15px rgba(0, 0, 0, 0.5);
+    text-align: center; 
 }
 
-/* Estilo del encabezado */
 .registro-container h2 {
-    font-size: 24px; /* Tamaño del texto */
+    font-size: 24px; 
     margin-bottom: 20px; /* Espaciado inferior */
     color: #fff; /* Color del texto */
 }

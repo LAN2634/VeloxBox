@@ -7,7 +7,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
         integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg=="
         crossorigin="anonymous" referrerpolicy="no-referrer" />
-        <link rel="stylesheet" href="CSS/style_product.css">
+    <link rel="stylesheet" href="CSS/style_product.css">
     <title>Tienda Online</title>
 </head>
 
@@ -301,52 +301,52 @@
         }
 
         // ================ AÑADIR AL CARRITO ================
-      
-async function addToCart(e) {
-    const button = e.currentTarget;
-    const producto = {
-        id: button.getAttribute('data-id'),
-        nombre: button.getAttribute('data-name'),
-        precio: parseFloat(button.getAttribute('data-price')),
-        sku: button.getAttribute('data-sku'),
-        imagen: [button.getAttribute('data-img')],
-        cantidad: 1
-    };
 
-    try {
-        // 1. Consultar stock actual
-        const stockResponse = await fetch(`http://localhost:8080/api/Productos/stock?id=${producto.id}`);
-        if (!stockResponse.ok) throw new Error("Error al consultar stock");
-        const stockData = await stockResponse.json();
+        async function addToCart(e) {
+            const button = e.currentTarget;
+            const producto = {
+                id: button.getAttribute('data-id'),
+                nombre: button.getAttribute('data-name'),
+                precio: parseFloat(button.getAttribute('data-price')),
+                sku: button.getAttribute('data-sku'),
+                imagen: [button.getAttribute('data-img')],
+                cantidad: 1
+            };
 
-        // 2. Verificar si hay stock disponible
-        if (stockData.stock < 1) {
-            showError('Lo sentimos, este producto está agotado.');
-            return;
+            try {
+                // 1. Consultar stock actual
+                const stockResponse = await fetch(`http://localhost:8080/api/Productos/stock?id=${producto.id}`);
+                if (!stockResponse.ok) throw new Error("Error al consultar stock");
+                const stockData = await stockResponse.json();
+
+                // 2. Verificar si hay stock disponible
+                if (stockData.stock < 1) {
+                    showError('Lo sentimos, este producto está agotado.');
+                    return;
+                }
+
+                // 3. Agregar al carrito solo si hay stock
+                const response = await fetch('http://localhost:9090/api/carrito/agregar', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(producto)
+                });
+
+                if (!response.ok) throw new Error("Error al agregar al carrito");
+
+                showSuccess(`${producto.nombre} añadida al carrito`);
+                updateCartCount();
+                animateCartIcon();
+
+                const cartPanel = document.getElementById('cart');
+                if (cartPanel && !cartPanel.classList.contains('hidden')) {
+                    await loadCartItems();
+                }
+            } catch (error) {
+                console.error("Error:", error);
+                showError('Producto agotado ( ˘︹˘ )');
+            }
         }
-
-        // 3. Agregar al carrito solo si hay stock
-        const response = await fetch('http://localhost:9090/api/carrito/agregar', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify(producto)
-        });
-
-        if (!response.ok) throw new Error("Error al agregar al carrito");
-
-        showSuccess(`${producto.nombre} añadida al carrito`);
-        updateCartCount();
-        animateCartIcon();
-
-        const cartPanel = document.getElementById('cart');
-        if (cartPanel && !cartPanel.classList.contains('hidden')) {
-            await loadCartItems();
-        }
-    } catch (error) {
-        console.error("Error:", error);
-        showError('No se pudo agregar al carrito');
-    }
-}
 
 
         async function loadCartItems() {
@@ -366,25 +366,25 @@ async function addToCart(e) {
             }
         }
 
-       
-   function renderCartItems(items) {
-    const cartItemsContainer = document.getElementById('cartItems');
-    if (!cartItemsContainer) return;
 
-    if (!items || items.length === 0) {
-        cartItemsContainer.innerHTML = '<p class="empty-cart">Tu carrito está vacío</p>';
-        return;
-    }
+        function renderCartItems(items) {
+            const cartItemsContainer = document.getElementById('cartItems');
+            if (!cartItemsContainer) return;
 
-    cartItemsContainer.innerHTML = items.map(item => {
-        const producto = item.producto || item;
-        const id = producto.id || '';
-        const nombre = producto.nombre || 'Producto sin nombre';
-        const precio = producto.precio ? producto.precio.toFixed(2) : '0.00';
-        const imagen = producto.imagen?.[0] || 'img/placeholder.jpg';
-        const cantidad = item.cantidad || 1;
+            if (!items || items.length === 0) {
+                cartItemsContainer.innerHTML = '<p class="empty-cart">Tu carrito está vacío</p>';
+                return;
+            }
 
-        return `
+            cartItemsContainer.innerHTML = items.map(item => {
+                const producto = item.producto || item;
+                const id = producto.id || '';
+                const nombre = producto.nombre || 'Producto sin nombre';
+                const precio = producto.precio ? producto.precio.toFixed(2) : '0.00';
+                const imagen = producto.imagen?.[0] || 'img/placeholder.jpg';
+                const cantidad = item.cantidad || 1;
+
+                return `
         <div class="cart-item" data-id="${id}">
             <div class="cart-item-img-container">
                 <img src="${imagen}" alt="${nombre}" class="cart-item-img" onerror="this.src='img/placeholder.jpg'">
@@ -403,65 +403,65 @@ async function addToCart(e) {
             </div>
         </div>
         `;
-    }).join('');
+            }).join('');
 
-    // Eventos eliminar
-    document.querySelectorAll('.remove-item').forEach(btn => {
-        btn.addEventListener('click', removeFromCart);
-    });
+            // Eventos eliminar
+            document.querySelectorAll('.remove-item').forEach(btn => {
+                btn.addEventListener('click', removeFromCart);
+            });
 
-    // Eventos aumentar/disminuir cantidad
-    document.querySelectorAll('.btn-aumentar').forEach(btn => {
-        btn.addEventListener('click', async (e) => {
-            const id = e.currentTarget.getAttribute('data-id');
-            await cambiarCantidad(id, 'incrementar');
-        });
-    });
+            // Eventos aumentar/disminuir cantidad
+            document.querySelectorAll('.btn-aumentar').forEach(btn => {
+                btn.addEventListener('click', async (e) => {
+                    const id = e.currentTarget.getAttribute('data-id');
+                    await cambiarCantidad(id, 'incrementar');
+                });
+            });
 
-    document.querySelectorAll('.btn-disminuir').forEach(btn => {
-        btn.addEventListener('click', async (e) => {
-            const id = e.currentTarget.getAttribute('data-id');
-            await cambiarCantidad(id, 'disminuir');
-        });
-    });
+            document.querySelectorAll('.btn-disminuir').forEach(btn => {
+                btn.addEventListener('click', async (e) => {
+                    const id = e.currentTarget.getAttribute('data-id');
+                    await cambiarCantidad(id, 'disminuir');
+                });
+            });
 
-    updateCartTotal(items);
-}
+            updateCartTotal(items);
+        }
 
-async function cambiarCantidad(id, accion) {
-    try {
-        const url = `http://localhost:9090/api/carrito/${accion}/${id}`;
-        const response = await fetch(url, { method: 'PUT' });
-        if (!response.ok) throw new Error('Error al cambiar cantidad');
+        async function cambiarCantidad(id, accion) {
+            try {
+                const url = `http://localhost:9090/api/carrito/${accion}/${id}`;
+                const response = await fetch(url, { method: 'PUT' });
+                if (!response.ok) throw new Error('Error al cambiar cantidad');
 
-        await loadCartItems();
-        updateCartCount();
-    } catch (error) {
-        console.error(error);
-        showError('Error al actualizar la cantidad');
-    }
-}
+                await loadCartItems();
+                updateCartCount();
+            } catch (error) {
+                console.error(error);
+                showError('Error al actualizar la cantidad');
+            }
+        }
 
         // ================ RENDERIZAR ITEMS DEL CARRITO ================
-   
-   function renderCartItems(items) {
-    const cartItemsContainer = document.getElementById('cartItems');
-    if (!cartItemsContainer) return;
 
-    if (!items || items.length === 0) {
-        cartItemsContainer.innerHTML = '<p class="empty-cart">Tu carrito está vacío</p>';
-        return;
-    }
+        function renderCartItems(items) {
+            const cartItemsContainer = document.getElementById('cartItems');
+            if (!cartItemsContainer) return;
 
-    cartItemsContainer.innerHTML = items.map(item => {
-        const producto = item.producto || item;
-        const id = producto.id || '';
-        const nombre = producto.nombre || 'Producto sin nombre';
-        const precio = producto.precio ? producto.precio.toFixed(2) : '0.00';
-        const imagen = producto.imagen?.[0] || 'img/placeholder.jpg';
-        const cantidad = item.cantidad || 1;
+            if (!items || items.length === 0) {
+                cartItemsContainer.innerHTML = '<p class="empty-cart">Tu carrito está vacío</p>';
+                return;
+            }
 
-        return `
+            cartItemsContainer.innerHTML = items.map(item => {
+                const producto = item.producto || item;
+                const id = producto.id || '';
+                const nombre = producto.nombre || 'Producto sin nombre';
+                const precio = producto.precio ? producto.precio.toFixed(2) : '0.00';
+                const imagen = producto.imagen?.[0] || 'img/placeholder.jpg';
+                const cantidad = item.cantidad || 1;
+
+                return `
         <div class="cart-item" data-id="${id}">
             <div class="cart-item-img-container">
                 <img src="${imagen}" alt="${nombre}" class="cart-item-img" onerror="this.src='img/placeholder.jpg'">
@@ -473,51 +473,51 @@ async function cambiarCantidad(id, accion) {
                     Cantidad: 
                     <button class="btn-disminuir" data-id="${id}">-</button>
                     <span class="cantidad">${cantidad}</span>
-                    <button class="btn-aumentar" data-id="${id}">+</button>
+                    <button class="btn-aumentar" data-id="${id}" disabled>+</button>
                 </p>
                 <p>Subtotal: $${(parseFloat(precio) * cantidad).toFixed(2)} MXN</p>
                 <button class="remove-item" data-id="${id}">Eliminar</button>
             </div>
         </div>
         `;
-    }).join('');
+            }).join('');
 
-    // Eventos eliminar
-    document.querySelectorAll('.remove-item').forEach(btn => {
-        btn.addEventListener('click', removeFromCart);
-    });
+            // Eventos eliminar
+            document.querySelectorAll('.remove-item').forEach(btn => {
+                btn.addEventListener('click', removeFromCart);
+            });
 
-    // Eventos aumentar/disminuir cantidad
-    document.querySelectorAll('.btn-aumentar').forEach(btn => {
-        btn.addEventListener('click', async (e) => {
-            const id = e.currentTarget.getAttribute('data-id');
-            await cambiarCantidad(id, 'incrementar');
-        });
-    });
+            // Eventos aumentar/disminuir cantidad
+            document.querySelectorAll('.btn-aumentar').forEach(btn => {
+                btn.addEventListener('click', async (e) => {
+                    const id = e.currentTarget.getAttribute('data-id');
+                    await cambiarCantidad(id, 'incrementar');
+                });
+            });
 
-    document.querySelectorAll('.btn-disminuir').forEach(btn => {
-        btn.addEventListener('click', async (e) => {
-            const id = e.currentTarget.getAttribute('data-id');
-            await cambiarCantidad(id, 'disminuir');
-        });
-    });
+            document.querySelectorAll('.btn-disminuir').forEach(btn => {
+                btn.addEventListener('click', async (e) => {
+                    const id = e.currentTarget.getAttribute('data-id');
+                    await cambiarCantidad(id, 'disminuir');
+                });
+            });
 
-    updateCartTotal(items);
-}
+            updateCartTotal(items);
+        }
 
-async function cambiarCantidad(id, accion) {
-    try {
-        const url = `http://localhost:9090/api/carrito/${accion}/${id}`;
-        const response = await fetch(url, { method: 'PUT' });
-        if (!response.ok) throw new Error('Error al cambiar cantidad');
+        async function cambiarCantidad(id, accion) {
+            try {
+                const url = `http://localhost:9090/api/carrito/${accion}/${id}`;
+                const response = await fetch(url, { method: 'PUT' });
+                if (!response.ok) throw new Error('Error al cambiar cantidad');
 
-        await loadCartItems();
-        updateCartCount();
-    } catch (error) {
-        console.error(error);
-        showError('Error al actualizar la cantidad');
-    }
-}
+                await loadCartItems();
+                updateCartCount();
+            } catch (error) {
+                console.error(error);
+                showError('Error al actualizar la cantidad');
+            }
+        }
         // ================ ELIMINAR DEL CARRITO ================
         async function removeFromCart(e) {
             const productId = e.currentTarget.getAttribute('data-id');

@@ -6,294 +6,12 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" />
   <link rel="icon" href="./SVGs/logoVelox.png" type="image/png">
+<<<<<<< HEAD
+  <link rel="stylesheet" href="./CSS/styles_carrito.css">
+=======
 
+>>>>>>> 148593a9e89cfe826d2659c213f7131c4cb9ab2d
   <title>Carrito compras</title>
-  <style>
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-    }
-
-    body {
-      font-family: sans-serif;
-      background: #e5e5e5;
-      color: #111;
-    }
-
-    header {
-      background: #000;
-      color: white;
-      padding: 1rem 2rem;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      position: fixed;
-      top: 0;
-      width: 100%;
-      z-index: 100;
-    }
-
-    .container {
-      padding: 2rem;
-      margin-top: 70px;
-      padding-bottom: 80px;
-      /* Espacio para la sección de checkout */
-    }
-
-    .product-grid {
-      display: grid;
-      grid-template-columns: repeat(4, 1fr);
-      gap: 1.5rem;
-      padding-left: 2rem;
-      padding-right: 2rem;
-    }
-
-    .card {
-      background: white;
-      border-radius: 8px;
-      overflow: hidden;
-      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-      display: flex;
-      flex-direction: column;
-      transition: transform 0.3s;
-    }
-
-    .card:hover {
-      transform: translateY(-5px);
-    }
-
-    .image {
-      height: 200px;
-      background-size: cover;
-      background-position: center;
-    }
-
-    .info {
-      padding: 1rem;
-      flex-grow: 1;
-      display: flex;
-      flex-direction: column;
-    }
-
-    .info h2 {
-      font-size: 1rem;
-      margin-bottom: 0.25rem;
-    }
-
-    .info p {
-      margin-bottom: 1rem;
-    }
-
-    .remove-from-cart {
-      background: black;
-      color: white;
-      border: none;
-      padding: 0.5rem;
-      width: 100%;
-      cursor: pointer;
-      transition: background 0.3s;
-      margin-top: auto;
-    }
-
-    .remove-from-cart:hover {
-      background: #333;
-    }
-
-    .added-notification {
-      position: fixed;
-      bottom: 20px;
-      right: 20px;
-      background: #4caf50;
-      color: white;
-      padding: 15px;
-      border-radius: 4px;
-      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-      z-index: 1000;
-      display: none;
-    }
-
-    /* Menú hamburguesa */
-    .hamburger-btn {
-      background: none;
-      border: none;
-      color: white;
-      font-size: 28px;
-      cursor: pointer;
-      padding: 10px 15px;
-      transition: transform 0.3s;
-    }
-
-    .hamburger-btn:hover {
-      transform: scale(1.1);
-    }
-
-    .menu-overlay {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background-color: rgba(0, 0, 0, 0.5);
-      z-index: 999;
-      opacity: 0;
-      visibility: hidden;
-      transition: opacity 0.3s, visibility 0.3s;
-    }
-
-    .menu-overlay.active {
-      opacity: 1;
-      visibility: visible;
-    }
-
-    .menu-container {
-      position: fixed;
-      top: 70px;
-      left: 0;
-      width: 300px;
-      height: calc(100vh - 70px);
-      background-color: #222;
-      transform: translateX(-100%);
-      transition: transform 0.3s ease;
-      z-index: 1000;
-      overflow-y: auto;
-      padding: 20px 0;
-    }
-
-    .menu-container.active {
-      transform: translateX(0);
-    }
-
-    .menu-section {
-      margin-bottom: 25px;
-      border-bottom: 1px solid #333;
-      padding-bottom: 15px;
-    }
-
-    .menu-section:last-child {
-      border-bottom: none;
-    }
-
-    .menu-title {
-      color: #aaa;
-      font-size: 14px;
-      text-transform: uppercase;
-      letter-spacing: 1px;
-      padding: 0 25px 10px;
-      margin-bottom: 10px;
-    }
-
-    .menu-item {
-      display: flex;
-      align-items: center;
-      color: white;
-      text-decoration: none;
-      padding: 12px 25px;
-      transition: background-color 0.2s;
-    }
-
-    .menu-item:hover {
-      background-color: #333;
-    }
-
-    .menu-item i {
-      margin-right: 15px;
-      font-size: 20px;
-      width: 24px;
-      text-align: center;
-    }
-
-    .menu-item-text {
-      font-size: 16px;
-    }
-
-    .cart-icon-container {
-      display: flex;
-      align-items: center;
-      gap: 5px;
-    }
-
-    /*input para buscar*/
-    .input {
-      max-width: 300px;
-      background-color: #f5f5f5;
-      color: #000000;
-      padding: 0.15rem 0.5rem;
-      min-height: 30px;
-      border-radius: 4px;
-      outline: none;
-      border: none;
-      line-height: 1.15;
-      box-shadow: 0px 10px 20px -18px;
-    }
-
-    input:focus {
-      border-bottom: 2px solid #000000;
-      border-radius: 4px 4px 2px 2px;
-    }
-
-    input:hover {
-      outline: 1px solid lightgrey;
-    }
-
-    .menu-search {
-      padding: 0 25px 20px 25px;
-      border-bottom: 1px solid #333;
-      margin-bottom: 20px;
-    }
-
-    /* Sección de checkout */
-    .checkout-section {
-      position: fixed;
-      bottom: 0;
-      left: 0;
-      width: 100%;
-      background: white;
-      padding: 1rem;
-      box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.1);
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      z-index: 99;
-    }
-
-    .checkout-total {
-      font-size: 1.2rem;
-    }
-
-    #checkout-btn {
-      padding: 0.75rem 2rem;
-      background: black;
-      color: white;
-      border: none;
-      border-radius: 4px;
-      font-size: 1rem;
-      cursor: pointer;
-      transition: background 0.3s;
-    }
-
-    #checkout-btn:hover {
-      background: #333;
-    }
-
-    @media (max-width: 768px) {
-      .product-grid {
-        grid-template-columns: repeat(2, 1fr);
-        padding-left: 1rem;
-        padding-right: 1rem;
-      }
-    }
-
-    @media (max-width: 480px) {
-      .product-grid {
-        grid-template-columns: 1fr;
-      }
-
-      header {
-        padding: 1rem;
-      }
-    }
-  </style>
 </head>
 
 <body>
@@ -305,7 +23,7 @@
     <h1>Tienda Online</h1>
 
     <div class="cart-icon-container">
-
+      <!-- Icono del carrito si es necesario -->
     </div>
   </header>
 
@@ -381,119 +99,200 @@
     <div class="checkout-total">
       <strong>Total: </strong><span id="checkout-total">$0.00 MXN</span>
     </div>
-    <button id="checkout-btn">Proceder al pago</button>
+    <div id="paypal-button-container"></div>
+    <p id="result-message"></p>
   </div>
-<script>
-  // ===== CONSTANTES Y CONFIGURACIÓN =====
-  const API_URL = 'http://localhost:9090/api/carrito';
-  const CART_KEY = 'velox_boxing_cart';
 
-  // ===== ELEMENTOS DEL DOM =====
-  const notification = document.getElementById("added-notification");
-  const productGrid = document.querySelector(".product-grid");
-  const checkoutTotal = document.getElementById("checkout-total");
-  const hamburgerBtn = document.getElementById('hamburgerBtn');
-  const menuOverlay = document.getElementById('menuOverlay');
-  const menuContainer = document.getElementById('menuContainer');
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+  <script src="https://www.paypal.com/sdk/js?client-id=AZAAZYL5L3emroAmF-iLlJLPG7JK53LRSslgcrA_28CTc5B7_yCR5QoqyfnpFPitDe9e-JY3A54WRd13&currency=MXN"></script>
+  
+  <script>
+    // ===== CONSTANTES Y CONFIGURACIÓN =====
+    const CART_API_URL = 'http://localhost:9090/api/carrito';
+    const PAYPAL_API_URL = 'http://localhost:9090/api/paypal';  // Mismo puerto
+    const CART_KEY = 'velox_boxing_cart';
 
-  // ===== ESTADO GLOBAL =====
-  let productos = [];
+    // ===== ELEMENTOS DEL DOM =====
+    const notification = document.getElementById("added-notification");
+    const productGrid = document.querySelector(".product-grid");
+    const checkoutTotal = document.getElementById("checkout-total");
+    const hamburgerBtn = document.getElementById('hamburgerBtn');
+    const menuOverlay = document.getElementById('menuOverlay');
+    const menuContainer = document.getElementById('menuContainer');
+    const resultMessage = document.getElementById('result-message');
 
-  // ===== FUNCIONES PRINCIPALES =====
+    // ===== ESTADO GLOBAL =====
+    let productos = [];
+2
+    // ===== FUNCIONES PRINCIPALES =====
 
-  // Cargar productos desde el backend
-  async function loadProducts() {
-    try {
-      const response = await fetch(API_URL);
-      if (!response.ok) throw new Error('Error al cargar productos');
+    // Cargar productos desde el backend
+    async function loadProducts() {
+      try {
+        const response = await fetch(CART_API_URL);
+        if (!response.ok) throw new Error('Error al cargar productos');
 
-      productos = await response.json();
-      renderProducts();
-      calcularTotal();
-    } catch (error) {
-      console.error('Error:', error);
-      productGrid.innerHTML = '<p class="error">Error al cargar los productos. Intente nuevamente.</p>';
-    }
-  }
-
-  // Renderizar productos en la página
-  function renderProducts() {
-    productGrid.innerHTML = productos.map(product => `
-      <div class="card" 
-           data-id="${product.id}"
-           data-title="${product.nombre}"
-           data-price="${product.precio}"
-           data-image="${product.imagen ? product.imagen : 'img/default.jpg'}">
-        <div class="image" style="background-image: url('${product.imagen ? product.imagen : 'img/default.jpg'}')"></div>
-        <div class="info">
-          <h2>${product.nombre}</h2>
-          <p>$${product.precio.toFixed(2)} MXN</p>
-          <button class="remove-from-cart">Eliminar</button>
-        </div>
-      </div>
-    `).join('');
-
-    // Asignar evento a los botones de eliminar
-    document.querySelectorAll('.remove-from-cart').forEach(btn => {
-      btn.addEventListener('click', removeFromCart);
-    });
-  }
-
-  // Función para eliminar producto del carrito (DELETE al backend)
-  async function removeFromCart(e) {
-    const card = e.target.closest('.card');
-    const id = card.dataset.id;
-
-    try {
-      const response = await fetch(`${API_URL}/eliminar/${id}`, {
-        method: 'DELETE'
-      });
-
-      if (!response.ok) {
-        throw new Error(`Error al eliminar el producto con ID ${id}`);
+        productos = await response.json();
+        renderProducts();
+        calcularTotal();
+      } catch (error) {
+        console.error('Error:', error);
+        productGrid.innerHTML = '<p class="error">Error al cargar los productos. Intente nuevamente.</p>';
       }
-
-      // Actualizar arreglo local y renderizar de nuevo
-      productos = productos.filter(p => p.id != id);
-      renderProducts();
-      calcularTotal();
-      mostrarNotificacion("Producto eliminado del carrito");
-    } catch (error) {
-      console.error('Error al eliminar producto:', error);
-      mostrarNotificacion("No se pudo eliminar el producto");
     }
-  }
 
-  // Mostrar mensaje flotante
-  function mostrarNotificacion(msg) {
-    notification.textContent = msg;
-    notification.style.display = "block";
-    setTimeout(() => {
-      notification.style.display = "none";
-    }, 2000);
-  }
+    function renderProducts() {
+      productGrid.innerHTML = productos.map(product => {
+        const cantidad = product.cantidad || 1;
+        const subtotal = product.precio * cantidad;
 
-  // Calcular el total de productos
-  function calcularTotal() {
-    const total = productos.reduce((sum, p) => sum + p.precio, 0);
-    checkoutTotal.textContent = `$${total.toFixed(2)} MXN`;
-  }
+        return `
+        <div class="card" 
+             data-id="${product.id}"
+             data-title="${product.nombre}"
+             data-price="${product.precio}"
+             data-image="${product.imagen || 'img/default.jpg'}"
+             data-cantidad="${cantidad}">
+          <div class="image" style="background-image: url('${product.imagen || 'img/default.jpg'}')"></div>
+          <div class="info">
+            <h2>${product.nombre}</h2>
+            <p>Precio unitario: $${product.precio.toFixed(2)} MXN</p>
+            <p>Cantidad: ${cantidad}</p>
+            <p>Subtotal: $${subtotal.toFixed(2)} MXN</p>
+            <button class="remove-from-cart">Eliminar</button>
+          </div>
+        </div>
+      `;
+      }).join('');
 
-  // ===== MENÚ HAMBURGUESA =====
-  hamburgerBtn.addEventListener('click', () => {
-    menuContainer.classList.toggle('active');
-    menuOverlay.classList.toggle('active');
-  });
+      document.querySelectorAll('.remove-from-cart').forEach(btn => {
+        btn.addEventListener('click', removeFromCart);
+      });
+    }
 
-  menuOverlay.addEventListener('click', () => {
-    menuContainer.classList.remove('active');
-    menuOverlay.classList.remove('active');
-  });
+    // Eliminar producto
+    async function removeFromCart(e) {
+      const card = e.target.closest('.card');
+      const id = card.dataset.id;
 
-  // ===== INICIAR =====
-  loadProducts();
-</script>
-<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+      try {
+        const response = await fetch(`${CART_API_URL}/eliminar/${id}`, {
+          method: 'DELETE'
+        });
+
+        if (!response.ok) throw new Error(`Error al eliminar producto ID ${id}`);
+
+        productos = productos.filter(p => p.id != id);
+        renderProducts();
+        calcularTotal();
+        mostrarNotificacion("Producto eliminado del carrito");
+      } catch (error) {
+        console.error('Error:', error);
+        mostrarNotificacion("No se pudo eliminar el producto");
+      }
+    }
+
+    // Mostrar notificación
+    function mostrarNotificacion(msg) {
+      notification.textContent = msg;
+      notification.style.display = "block";
+      setTimeout(() => notification.style.display = "none", 2000);
+    }
+
+    function calcularTotal() {
+      const total = productos.reduce((sum, p) => {
+        const cantidad = p.cantidad || 1;
+        return sum + (p.precio * cantidad);
+      }, 0);
+
+      checkoutTotal.textContent = `$${total.toFixed(2)} MXN`;
+      return total;
+    }
+
+    // ===== INTEGRACIÓN PAYPAL =====
+    function initPayPalButton() {
+      paypal.Buttons({
+        style: {
+          shape: "rect",
+          layout: "vertical",
+          color: "gold",
+          label: "paypal"
+        },
+
+        // Crear orden
+        async createOrder() {
+          try {
+            const total = calcularTotal();
+            const response = await fetch(`${PAYPAL_API_URL}/create-order`, {  // corregido a crear-orden
+              method: "POST",
+              headers: { "Content-Type": "application/json" },
+              body: JSON.stringify({
+                monto: total,      // cambia a 'monto' para coincidir con backend
+                moneda: "MXN"
+              })
+            });
+
+            if (!response.ok) throw new Error(await response.text());
+
+            const { id } = await response.json();
+            return id;
+
+          } catch (error) {
+            console.error("Error creando orden:", error);
+            mostrarNotificacion("Error al procesar el pago");
+            throw error;
+          }
+        },
+
+        // Capturar pago
+        async onApprove(data) {
+          try {
+            const response = await fetch(`${PAYPAL_API_URL}/capture-order/${data.orderID}`, {  // corregido a capturar-orden/{orderId}
+              method: "POST"
+            });
+
+            const result = await response.json();
+
+            if (result.status === "COMPLETED") {
+              Swal.fire({
+                title: "¡Pago exitoso!",
+                text: `ID: ${result.id}`,
+                icon: "success"
+              });
+              // Vaciar carrito
+              productos = [];
+              renderProducts();
+              calcularTotal();
+            }
+          } catch (error) {
+            Swal.fire("Error", "No se pudo completar el pago", "error");
+          }
+        },
+
+        onError: (err) => {
+          console.error("Error PayPal:", err);
+          Swal.fire("Error", "Ocurrió un error con PayPal", "error");
+        }
+      }).render('#paypal-button-container');
+    }
+
+    // ===== EVENTOS =====
+    hamburgerBtn.addEventListener('click', () => {
+      menuContainer.classList.toggle('active');
+      menuOverlay.classList.toggle('active');
+    });
+
+    menuOverlay.addEventListener('click', () => {
+      menuContainer.classList.remove('active');
+      menuOverlay.classList.remove('active');
+    });
+
+    // ===== INICIALIZACIÓN =====
+    document.addEventListener('DOMContentLoaded', () => {
+      loadProducts();
+      initPayPalButton();
+    });
+  </script>
 
 </body>
 

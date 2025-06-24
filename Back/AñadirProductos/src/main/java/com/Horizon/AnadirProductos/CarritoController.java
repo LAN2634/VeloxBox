@@ -143,4 +143,12 @@ public ResponseEntity<?> agregarProducto(@RequestBody Producto producto) {
         }
     }
 //==================================================================================================================
-    }
+// Obtener un producto del carrito por su ID
+@GetMapping("/{id}")
+public ResponseEntity<Producto> obtenerProductoCarrito(@PathVariable Long id) {
+    Optional<Producto> productoOpt = carritoRepository.findById(id);
+    return productoOpt.map(ResponseEntity::ok)
+            .orElseGet(() -> ResponseEntity.notFound().build());
+}
+
+}

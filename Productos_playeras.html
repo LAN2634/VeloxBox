@@ -168,26 +168,27 @@
     </footer>
 
     <script>
-        // ==================== INICIALIZACIÓN ====================
-        window.onload = function () {
-            window.scrollTo(0, 0);
-            updateCartCount();
-        };
-
         document.addEventListener('DOMContentLoaded', () => {
+            // Inicializar la página
+            window.scrollTo(0, 0);
+
+            // Cargar productos y funcionalidades
             loadPlayeras();
             setupSearch();
             setupCart();
             setupMenu();
+
+            // Actualizar contador del carrito
+            updateCartCount();
         });
 
-        // ==================== CONFIGURACIÓN DEL MENÚ ====================
+        // ================ CONFIGURACIÓN DEL MENÚ HAMBURGUESA ================
         function setupMenu() {
             const hamburgerBtn = document.getElementById('hamburgerBtn');
             const menuOverlay = document.getElementById('menuOverlay');
             const menuContainer = document.getElementById('menuContainer');
 
-            if (hamburgerBtn) {
+            if (hamburgerBtn && menuOverlay && menuContainer) {
                 hamburgerBtn.addEventListener('click', () => {
                     menuContainer.classList.toggle('active');
                     menuOverlay.classList.toggle('active');
@@ -200,10 +201,11 @@
             }
         }
 
-        // ==================== CONFIGURACIÓN DEL CARRITO ====================
+        // ================ CONFIGURACIÓN DEL CARRITO ================
         function setupCart() {
             const cartToggle = document.getElementById('cart-toggle');
             const cartPanel = document.getElementById('cartPanel');
+            const closeCartBtn = document.querySelector('.close-cart');
 
             if (cartToggle && cartPanel) {
                 cartToggle.addEventListener('click', async (e) => {
@@ -216,6 +218,13 @@
                     }
                 });
 
+                if (closeCartBtn) {
+                    closeCartBtn.addEventListener('click', (e) => {
+                        e.stopPropagation();
+                        cartPanel.classList.add('hidden');
+                    });
+                }
+
                 // Cerrar al hacer click fuera
                 document.addEventListener('click', (e) => {
                     if (!cartPanel.contains(e.target) && e.target !== cartToggle && !cartToggle.contains(e.target)) {
@@ -225,7 +234,7 @@
             }
         }
 
-        // ==================== CARGAR PLAYERAS ====================
+        // ================ CARGAR PLAYERAS ================
         async function loadPlayeras() {
             try {
                 const response = await fetch('http://localhost:8080/api/Productos/filtrar?categoria=Playeras');
@@ -233,48 +242,48 @@
 
                 const playeras = await response.json();
                 renderPlayeras(playeras);
-                updateCartCount();
             } catch (error) {
                 console.error("Error:", error);
                 showError('No se pudieron cargar las playeras. Intenta recargar la página.');
             }
         }
 
-        // ==================== RENDERIZAR PLAYERAS ====================
+        // ================ RENDERIZAR PLAYERAS ================
         function renderPlayeras(playeras) {
             const grid = document.querySelector('.product-grid');
             if (!grid) return;
 
             grid.innerHTML = playeras.map(playera => `
-                <div class="product-card">
-                    <a href="Detalle_Productos.html?id=${playera.id}">
-                        <div class="product-img">
-                            <img src="${playera.imagen?.[0] || 'img/placeholder.jpg'}" 
-                                 alt="${playera.nombre} - ${playera.sku}"
-                                 onerror="this.src='img/placeholder.jpg'">
-                        </div>
-                    </a>
-                    <div class="product-info">
-                        <p class="product-name">${playera.nombre}</p>
-                        <p class="product-price">$${playera.precio.toFixed(2)} MXN</p>
-                        <button class="buy-btn" 
-                                data-id="${playera.id}"
-                                data-name="${playera.nombre}"
-                                data-price="${playera.precio}"
-                                data-sku="${playera.sku}"
-                                data-img="${playera.imagen?.[0] || ''}">
-                            Agregar al carrito
-                        </button>
+            <div class="product-card">
+                <a href="Detalle_Productos.html?id=${playera.id}">
+                    <div class="product-img">
+                        <img src="${playera.imagen?.[0] || 'img/placeholder.jpg'}" 
+                             alt="${playera.nombre} - ${playera.sku}"
+                             onerror="this.src='img/placeholder.jpg'">
                     </div>
+                </a>
+                <div class="product-info">
+                    <p class="product-name">${playera.nombre}</p>
+                    <p class="product-price">$${playera.precio.toFixed(2)} MXN</p>
+                    <button class="buy-btn" 
+                            data-id="${playera.id}"
+                            data-name="${playera.nombre}"
+                            data-price="${playera.precio}"
+                            data-sku="${playera.sku}"
+                            data-img="${playera.imagen?.[0] || ''}">
+                        Agregar al carrito
+                    </button>
                 </div>
-            `).join('');
+            </div>
+        `).join('');
 
+            // Agregar eventos a los botones
             document.querySelectorAll('.buy-btn').forEach(btn => {
                 btn.addEventListener('click', addToCart);
             });
         }
 
-        // ==================== FUNCIONALIDADES DEL CARRITO ====================
+        // ================ AÑADIR AL CARRITO ================
         async function addToCart(e) {
             const button = e.currentTarget;
             const producto = {
@@ -288,13 +297,17 @@
 
             try {
                 // 1. Consultar stock actual
+<<<<<<< HEAD
                 const stockResponse = await fetch(`http://localhost:8080/api/Productos/${producto.id}/stock`);
+=======
+                const stockResponse = await fetch(`http://localhost:8080/api/Productos/stock?id=${producto.id}`);
+>>>>>>> 0ff02ae8aace8c9b0422a3d31066842f45470b46
                 if (!stockResponse.ok) throw new Error("Error al consultar stock");
                 const stockData = await stockResponse.json();
 
                 // 2. Verificar si hay stock disponible
                 if (stockData.stock < 1) {
-                    showError('Lo sentimos, este producto está agotado.');
+                    showError('Lo sentimos, esta playera está agotada.');
                     return;
                 }
 
@@ -317,10 +330,11 @@
                 }
             } catch (error) {
                 console.error("Error:", error);
-                showError('No se pudo agregar al carrito');
+                showError('Producto agotado ( ˘︹˘ )');
             }
         }
 
+        // ================ CARGAR ITEMS DEL CARRITO ================
         async function loadCartItems() {
             try {
                 const response = await fetch('http://localhost:9090/api/carrito');
@@ -331,13 +345,14 @@
             } catch (error) {
                 console.error("Error:", error);
                 document.getElementById('cartItems').innerHTML = `
-                    <div class="error">
-                        <p>Error al cargar el carrito</p>
-                        <small>${error.message}</small>
-                    </div>`;
+                <div class="error">
+                    <p>Error al cargar el carrito</p>
+                    <small>${error.message}</small>
+                </div>`;
             }
         }
 
+        // ================ RENDERIZAR ITEMS DEL CARRITO ================
         function renderCartItems(items) {
             const cartItemsContainer = document.getElementById('cartItems');
             if (!cartItemsContainer) return;
@@ -356,24 +371,24 @@
                 const cantidad = item.cantidad || 1;
 
                 return `
-                <div class="cart-item" data-id="${id}">
-            <div class="cart-item-img-container">
-                <img src="${imagen}" alt="${nombre}" class="cart-item-img" onerror="this.src='img/placeholder.jpg'">
-            </div>
-            <div class="cart-item-info">
-                <h4>${nombre}</h4>
-                <p>Precio: $${precio} MXN</p>
-                <p>
-                    Cantidad: 
-                    <button class="btn-disminuir" data-id="${id}">-</button>
-                    <span class="cantidad">${cantidad}</span>
-                    <button class="btn-aumentar" data-id="${id}">+</button>
-                </p>
-                <p>Subtotal: $${(parseFloat(precio) * cantidad).toFixed(2)} MXN</p>
-                <button class="remove-item" data-id="${id}">Eliminar</button>
-                    </div>
+            <div class="cart-item" data-id="${id}">
+                <div class="cart-item-img-container">
+                    <img src="${imagen}" alt="${nombre}" class="cart-item-img" onerror="this.src='img/placeholder.jpg'">
                 </div>
-                `;
+                <div class="cart-item-info">
+                    <h4>${nombre}</h4>
+                    <p>Precio: $${precio} MXN</p>
+                    <p>
+                        Cantidad: 
+                        <button class="btn-disminuir" data-id="${id}">-</button>
+                        <span class="cantidad">${cantidad}</span>
+                        <button class="btn-aumentar" data-id="${id}">+</button>
+                    </p>
+                    <p>Subtotal: $${(parseFloat(precio) * cantidad).toFixed(2)} MXN</p>
+                    <button class="remove-item" data-id="${id}">Eliminar</button>
+                </div>
+            </div>
+            `;
             }).join('');
 
             // Eventos eliminar
@@ -399,8 +414,10 @@
             updateCartTotal(items);
         }
 
+        // ================ CAMBIAR CANTIDAD ================
         async function cambiarCantidad(id, accion) {
             try {
+                
                 const url = `http://localhost:9090/api/carrito/${accion}/${id}`;
                 const response = await fetch(url, { method: 'PUT' });
                 if (!response.ok) throw new Error('Error al cambiar cantidad');
@@ -413,6 +430,7 @@
             }
         }
 
+        // ================ ELIMINAR DEL CARRITO ================
         async function removeFromCart(e) {
             const productId = e.currentTarget.getAttribute('data-id');
 
@@ -423,15 +441,16 @@
 
                 if (!response.ok) throw new Error("Error al eliminar del carrito");
 
-                showSuccess('Producto eliminado del carrito');
+                showSuccess('Playera eliminada del carrito');
                 updateCartCount();
                 await loadCartItems();
             } catch (error) {
                 console.error("Error:", error);
-                showError('No se pudo eliminar del carrito');
+                showError('No se pudo eliminar la playera del carrito');
             }
         }
 
+        // ================ ACTUALIZAR TOTAL DEL CARRITO ================
         function updateCartTotal(items) {
             const totalContainer = document.createElement('div');
             totalContainer.className = 'cart-total';
@@ -442,20 +461,21 @@
             }, 0);
 
             totalContainer.innerHTML = `
-                <div class="total-line"></div>
-                <div class="total-amount">
-                    <span>Total:</span>
-                    <span>$${total.toFixed(2)} MXN</span>
-                </div>
-            `;
+            <div class="total-line"></div>
+            <div class="total-amount">
+                <span>Total:</span>
+                <span>$${total.toFixed(2)} MXN</span>
+            </div>
+        `;
 
+            // Limpiar total anterior si existe
             const oldTotal = document.querySelector('.cart-total');
             if (oldTotal) oldTotal.remove();
 
             document.getElementById('cartItems').appendChild(totalContainer);
         }
 
-        // ==================== ACTUALIZAR CONTADOR DEL CARRITO ====================
+        // ================ ACTUALIZAR CONTADOR DEL CARRITO ================
         async function updateCartCount() {
             try {
                 const response = await fetch('http://localhost:9090/api/carrito/cantidad');
@@ -478,7 +498,7 @@
             }
         }
 
-        // ==================== CONFIGURAR BUSCADOR ====================
+        // ================ CONFIGURAR BUSCADOR ================
         function setupSearch() {
             const searchInput = document.getElementById('searchInput');
             if (!searchInput) return;
@@ -492,7 +512,7 @@
             });
         }
 
-        // ==================== ANIMACIÓN DEL ICONO CARRITO ====================
+        // ================ ANIMACIÓN DEL ICONO CARRITO ================
         function animateCartIcon() {
             const cartIcon = document.querySelector('.cart-icon-container');
             if (cartIcon) {
@@ -501,7 +521,7 @@
             }
         }
 
-        // ==================== MOSTRAR MENSAJES ====================
+        // ================ MOSTRAR MENSAJES ================
         function showSuccess(message) {
             Swal.fire({
                 toast: true,
