@@ -9,7 +9,7 @@ CREATE TABLE CarritoP(
     precio FLOAT,
     imagen VARBINARY(MAX)	 
 );
-
+DROP TABLE CarritoP;
 select * from CarritoP;
 delete from CarritoP;
 -------------------------------------------------------------
@@ -21,6 +21,11 @@ INSERT INTO CarritoP(nombre, categoria, precio, imagen) VALUES
 
 ALTER TABLE CarritoP 
 ADD 
-    cantidad INT NOT NULL DEFAULT 1,
-    producto_id BIGINT,
-    stock_original INT;
+    cantidad INT NOT NULL DEFAULT 1;
+   
+
+ALTER TABLE CarritoP
+add sku NVARCHAR(50) NOT NULL;
+
+ALTER TABLE CarritoP
+DROP COLUMN sku;

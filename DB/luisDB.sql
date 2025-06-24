@@ -19,33 +19,21 @@ CREATE TABLE Producto (
     stock INT NOT NULL,
     materiales NVARCHAR(255),
     tamanio NVARCHAR(50),
-    color NVARCHAR(50));
+    color NVARCHAR(50),
+	sku NVARCHAR(50),
+	cuidados  NVARCHAR(200),
+	descuento  NVARCHAR(50);
 
-EXEC sp_rename 'Producto.pagodevolución', 'pagodevolucion', 'COLUMN';
-
-select * from Producto;
-Delete from Producto;
-
-
-ALTER TABLE Producto
-ADD descuento FLOAT ;
-
-ALTER TABLE Producto
-DROP COLUMN descuento ;
-
-
-ALTER TABLE Producto
-DROP CONSTRAINT DF__Producto__descue__0E391C95;
-
-	ALTER TABLE Producto
-ADD 
-    materiales NVARCHAR(255),
-    tamanio NVARCHAR(50),
-    color NVARCHAR(50);
-	
-	ALTER TABLE Producto
-ADD 
-    materiales NVARCHAR(255),
+	select * from Producto;
+---------------------------------------------------------------------
+CREATE TABLE TallaCantidad (
+    id BIGINT IDENTITY(1,1) PRIMARY KEY,
+    talla NVARCHAR(20) NOT NULL,
+    cantidad INT NOT NULL,
+    producto_id BIGINT NOT NULL,
+    FOREIGN KEY (producto_id) REFERENCES Producto(id_producto)
+);
+drop table ;
 
 
 ----------------------------------------------------------------------
@@ -82,17 +70,57 @@ CREATE TABLE Devolucion (
     FOREIGN KEY (id_pedido) REFERENCES Pedido(id_pedido)
 );
  
- SELECT * FROM Usuario;
+CREATE TABLE Productos (
+    id_producto INT IDENTITY(1,1) PRIMARY KEY,
+    nombre NVARCHAR(100) NOT NULL,
+    categoria NVARCHAR(50) NOT NULL,
+    descripcion NVARCHAR(MAX) NOT NULL,
+    precio DECIMAL(10, 2) NOT NULL,
+    stock INT NOT NULL DEFAULT 0,
+    materiales NVARCHAR(255) NOT NULL,
+    color NVARCHAR(50) NOT NULL,
+    sku NVARCHAR(50) UNIQUE,
+    cuidados NVARCHAR(255) NOT NULL,
+    pagodevolucion NVARCHAR(255) NOT NULL,
+    descuento DECIMAL(5, 2) NULL,
+    -- Campos para almacenar imágenes (como texto Base64)
+    imagen_principal NVARCHAR(MAX) NULL,
+    imagen_secundaria1 NVARCHAR(MAX) NULL,
+    imagen_secundaria2 NVARCHAR(MAX) NULL,
+    imagen_secundaria3 NVARCHAR(MAX) NULL,
+    -- Auditoría
+    fecha_creacion DATETIME DEFAULT GETDATE(),
+    fecha_actualizacion DATETIME DEFAULT GETDATE()
+);
+
+drop table Productos;
 
 
- INSERT INTO Producto (nombre, categoria, descripcion, precio, stock)
-VALUES ('Papos buapos', 'Playeras', 'Papos super rapidos del rasho MCquen', 1500, 23);
 
-	select * from Producto ;
-	select * from sys.tables
+CREATE TABLE producto_talla (
+    id INT IDENTITY(1,1) PRIMARY KEY,
+    id_producto INT NOT NULL,
+    talla NVARCHAR(20) NOT NULL,
+    cantidad INT NOT NULL DEFAULT 0,
+    -- Restricciones
+    CONSTRAINT FK_producto_talla_producto FOREIGN KEY (id_producto) REFERENCES Productos(id_producto) ON DELETE CASCADE,
+    CONSTRAINT UQ_producto_talla UNIQUE (id_producto, talla),
+    -- Auditoría
+    fecha_actualizacion DATETIME DEFAULT GETDATE()
+);
+
+CREATE TABLE Administrador(
+    id INT IDENTITY(1,1) PRIMARY KEY,
+    usuario VARCHAR(25) NOT NULL UNIQUE,
+    contrasena VARCHAR(255) NOT NULL
+);
+select * from Administrador;
+--Este es un admin de prueba
+INSERT INTO Administrador (usuario, contrasena)
+VALUES ('luis', 'luis123');
+SELECT * FROM Administrador WHERE usuario = 'luis' AND contrasena = 'luis123';
 
 
- USE master;
-GO
 
-SELECT DISTINCT categoria FROM Producto;
+"luis"
+"luis123"
