@@ -1,106 +1,115 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
 
-/* Estilo para el cuerpo del documento */
+
 body {
-    font-family: Arial, sans-serif; /* Fuente general */
-    background: url('') no-repeat center center fixed; /* Nueva imagen de fondo */
-    background-size: cover; /* Ajuste del tamaño de fondo */
-    display: flex; /* Diseño flexible */
-    justify-content: center; /* Centrar contenido horizontalmente */
-    align-items: center; /* Centrar contenido verticalmente */
-    height: 100vh; /* Altura completa de la ventana */
-    margin: 0; /* Sin márgenes */
-    color: #fff; /* Color del texto */
+    font-family: 'Arial', sans-serif;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: url('') no-repeat center center fixed;
+    background-size: cover;
+    overflow-y: auto;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+
 }
 
 .registro-container {
-    background: rgb(0, 0, 0);
-    border-radius: 16px;
-    padding: 30px; 
+    border-radius: 10px;
+    padding: 40px;
     width: 360px;
-    box-shadow: 0 8px 15px rgba(0, 0, 0, 0.5);
-    text-align: center; 
+    text-align: center;
+    background-color: rgb(255, 255, 255);
+    box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.5);
+    max-width: 400px;
+    position: relative;
+    z-index: 1;
+    margin: 20px auto;
+
 }
 
-.registro-container h2 {
-    font-size: 24px; 
-    margin-bottom: 20px; /* Espaciado inferior */
-    color: #fff; /* Color del texto */
+h2 {
+    font-size: 30px;
+    margin-bottom: 20px;
+    color: #000;
 }
 
-/* Estilo para las etiquetas */
-.registro-container label {
-    display: block; /* Mostrar como bloque */
-    font-size: 14px; /* Tamaño del texto */
-    margin-bottom: 5px; /* Espaciado inferior */
-    text-align: left; /* Alineación a la izquierda */
-    color: #fff; /* Color del texto */
-    width: 100%; /* Ancho completo */
+label {
+    display: block;
+    font-size: 14px;
+    margin-bottom: 5px;
+    text-align: left;
+    color: #000;
 }
 
-/* Estilo para los campos de entrada */
-.registro-container input {
-    width: 100%; /* Tamaño de los campos de entrada */
-    padding: 10px; /* Grosor de las líneas */
-    margin-bottom: 15px; /* Espaciado inferior */
-    border: none; /* Sin borde */
-    border-radius: 8px; /* Bordes redondeados */
-    font-size: 14px; /* Tamaño del texto */
-    background: rgba(255, 255, 255, 0.2); /* Fondo semitransparente claro */
-    color: #fff; /* Color del texto */
-}
-
-/* Placeholder dentro de los campos */
-.registro-container input::placeholder {
-    color: #ccc; /* Color del texto placeholder */
-}
-
-/* Botón de registro */
-.registro-container button {
-    width: 100%; /* Tamaño del botón */
-    padding: 12px; /* Espaciado interno */
-    background-color: #ff7b58; /* Color de fondo */
-    color: white; /* Color del texto */
-    border: none; /* Sin borde */
-    border-radius: 8px; /* Bordes redondeados */
-    font-size: 16px; /* Tamaño del texto */
-    cursor: pointer; /* Manito al pasar el mouse */
-    transition: background 0.3s; /* Transición en el fondo */
-}
-
-/* Efecto hover en el botón */
-.registro-container button:hover {
-    background-color: #d1654b; /* Color de fondo al pasar el mouse */
-}
-
-/* Enlaces adicionales */
-.registro-container a {
-    color: #ff7b58; /* Color del enlace */
-    text-decoration: none; /* Sin subrayado */
-    font-size: 14px; /* Tamaño del texto */
-}
-
-/* Efecto hover en los enlaces */
-.registro-container a:hover {
-    text-decoration: underline; /* Subrayado al pasar el mouse */
-}
-
-/* Contenedor para los enlaces adicionales */
-.registro-container .extra-links {
-    display: flex; /* Mostrar como flexbox */
-    justify-content: space-between; /* Distribuir equitativamente */
-    margin-top: 15px; /* Espaciado superior */
-}
-/* Contenedor para los enlaces adicionales */
-.container {
-    text-align: center; 
-    padding: 14px;
+input {
     width: 100%;
-    color: white; 
+    padding: 12px;
+    margin-bottom: 15px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    font-size: 14px;
+    background-color: #fff;
+    color: #000;
+    outline: none;
+    transition: border-color 0.3s ease;
 }
 
-/* =======================
-* LOADER 
-======================== */
+input:focus {
+    border-color: #000;
+}
+
+input.error {
+    border: 2px solid #e74c3c;
+    background-color: #fdecea;
+}
+
+button {
+    width: 100%;
+    padding: 12px;
+    background-color: #000;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background 0.3s;
+}
+
+button:hover {
+    background-color: #333;
+}
+
+a {
+    color: #000;
+    text-decoration: none;
+    font-size: 14px;
+}
+
+a:hover {
+    text-decoration: underline;
+}
+
+.extra-links {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 15px;
+}
+
+.container {
+    text-align: center;
+    padding: 10px;
+    color: #000;
+}
+
 .loader {
     position: fixed;
     top: 0;
@@ -118,19 +127,27 @@ body {
     width: 60px;
     height: 60px;
     border: 6px solid #fff;
-    border-top-color: #ff5733;
+    border-top-color: #000;
     border-radius: 50%;
     animation: spin 1s linear infinite;
 }
 
 @keyframes spin {
-    0% { transform: rotate(0deg); }
-    100% { transform: rotate(360deg); }
+    0% {
+        transform: rotate(0deg);
+    }
+
+    100% {
+        transform: rotate(360deg);
+    }
 }
 
-/* Ocultar loader cuando la página cargue */
 .hidden {
     opacity: 0;
     visibility: hidden;
     transition: opacity 0.5s ease, visibility 0.5s;
+}
+
+body.swal2-shown {
+    overflow: hidden !important;
 }
