@@ -103,5 +103,28 @@ public class FormController {
         }
     }
 //==================================================================================
+@PostMapping("/descontar-stock")
+public ResponseEntity<?> descontarStockPorSku(@RequestBody Formulario producto) {
+
+    String sku = producto.getSku();
+    int cantidad = producto.getStock(); // Interpretas stock como cantidad a descontar
+
+    Optional<Formulario> existenteOpt = FormRepository.findBySku(sku);
+
+    if (existenteOpt.isEmpty()) {
+        return ResponseEntity.badRequest().body("Producto no encontrado");
+    }
+
+    Formulario existente = existenteOpt.get();
+
+    if (existente.getStock() < cantidad) {
+        return ResponseEntity.badRequest().body("Stock insuficiente");
+    }
+
+    existente.setStock(existente.getStock() - cantidad);
+    FormRepository.save(existente);
+
+    return ResponseEntity.ok("Stock actualizado correctamente");
+}
 
 }

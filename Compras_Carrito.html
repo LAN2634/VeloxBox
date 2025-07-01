@@ -7,6 +7,7 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" />
   <link rel="icon" href="./SVGs/logoVelox.png" type="image/png">
   <link rel="stylesheet" href="./CSS/styles_carrito.css">
+
   <title>Carrito compras</title>
 </head>
 
@@ -66,14 +67,6 @@
     <div class="menu-section">
       <div class="menu-title">Configuración</div>
       <a href="#" class="menu-item">
-        <i class="fas fa-cog"></i>
-        <span class="menu-item-text">Ajustes</span>
-      </a>
-      <a href="#" class="menu-item">
-        <i class="fas fa-user"></i>
-        <span class="menu-item-text">Perfil</span>
-      </a>
-      <a href="#" class="menu-item">
         <i class="fas fa-sign-out-alt"></i>
         <span class="menu-item-text">Cerrar sesión</span>
       </a>
@@ -100,15 +93,17 @@
   </div>
 
   <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-  <script src="https://www.paypal.com/sdk/js?client-id=AZAAZYL5L3emroAmF-iLlJLPG7JK53LRSslgcrA_28CTc5B7_yCR5QoqyfnpFPitDe9e-JY3A54WRd13&currency=MXN"></script>
-  
-  <script>
+  <script
+    src="https://www.paypal.com/sdk/js?client-id=AZAAZYL5L3emroAmF-iLlJLPG7JK53LRSslgcrA_28CTc5B7_yCR5QoqyfnpFPitDe9e-JY3A54WRd13&currency=MXN">
+    </script>
+
+  <script>// ===== CONSTANTES Y CONFIGURACIÓN =====
     // ===== CONSTANTES Y CONFIGURACIÓN =====
     const CART_API_URL = 'http://localhost:9090/api/carrito';
-    const PAYPAL_API_URL = 'http://localhost:9090/api/paypal';  // Mismo puerto
+    const PAYPAL_API_URL = 'http://localhost:9090/api/paypal';
+    const PRODUCT_API_URL = 'http://localhost:8080/api/Productos';
     const CART_KEY = 'velox_boxing_cart';
 
-    // ===== ELEMENTOS DEL DOM =====
     const notification = document.getElementById("added-notification");
     const productGrid = document.querySelector(".product-grid");
     const checkoutTotal = document.getElementById("checkout-total");
@@ -119,8 +114,8 @@
 
     // ===== ESTADO GLOBAL =====
     let productos = [];
-2
-    // ===== FUNCIONES PRINCIPALES =====
+
+    // ===== FUNCIONES  =====
 
     // Cargar productos desde el backend
     async function loadProducts() {
@@ -143,22 +138,23 @@
         const subtotal = product.precio * cantidad;
 
         return `
-        <div class="card" 
-             data-id="${product.id}"
-             data-title="${product.nombre}"
-             data-price="${product.precio}"
-             data-image="${product.imagen || 'img/default.jpg'}"
-             data-cantidad="${cantidad}">
-          <div class="image" style="background-image: url('${product.imagen || 'img/default.jpg'}')"></div>
-          <div class="info">
-            <h2>${product.nombre}</h2>
-            <p>Precio unitario: $${product.precio.toFixed(2)} MXN</p>
-            <p>Cantidad: ${cantidad}</p>
-            <p>Subtotal: $${subtotal.toFixed(2)} MXN</p>
-            <button class="remove-from-cart">Eliminar</button>
-          </div>
+      <div class="card" 
+           data-id="${product.id}"
+           data-title="${product.nombre}"
+           data-price="${product.precio}"
+           data-image="${product.imagen || 'img/default.jpg'}"
+           data-cantidad="${cantidad}"
+           data-sku="${product.sku || ''}">
+        <div class="image" style="background-image: url('${product.imagen || 'img/default.jpg'}')"></div>
+        <div class="info">
+          <h2>${product.nombre}</h2>
+          <p>Precio unitario: $${product.precio.toFixed(2)} MXN</p>
+          <p>Cantidad: ${cantidad}</p>
+          <p>Subtotal: $${subtotal.toFixed(2)} MXN</p>
+          <button class="remove-from-cart">Eliminar</button>
         </div>
-      `;
+      </div>
+    `;
       }).join('');
 
       document.querySelectorAll('.remove-from-cart').forEach(btn => {
@@ -219,19 +215,19 @@
         async createOrder() {
           try {
             const total = calcularTotal();
-            const response = await fetch(`${PAYPAL_API_URL}/create-order`, {  // corregido a crear-orden
+            const response = await fetch(`${PAYPAL_API_URL}/create-order`, {
               method: "POST",
               headers: { "Content-Type": "application/json" },
               body: JSON.stringify({
-                monto: total,      // cambia a 'monto' para coincidir con backend
-                moneda: "MXN"
+                amount: total,
+                currency: "MXN"
               })
             });
 
             if (!response.ok) throw new Error(await response.text());
 
-            const { id } = await response.json();
-            return id;
+            const responseJson = await response.json();
+            return responseJson.id;
 
           } catch (error) {
             console.error("Error creando orden:", error);
@@ -243,7 +239,7 @@
         // Capturar pago
         async onApprove(data) {
           try {
-            const response = await fetch(`${PAYPAL_API_URL}/capture-order/${data.orderID}`, {  // corregido a capturar-orden/{orderId}
+            const response = await fetch(`${PAYPAL_API_URL}/capture-order/${data.orderID}`, {
               method: "POST"
             });
 
@@ -252,14 +248,21 @@
             if (result.status === "COMPLETED") {
               Swal.fire({
                 title: "¡Pago exitoso!",
-                text: `ID: ${result.id}`,
+                text: `ID de transacción: ${result.id}`,
                 icon: "success"
               });
+
+              // DESCONTAR STOCK
+              await descontarStock();
+
               // Vaciar carrito
               productos = [];
               renderProducts();
               calcularTotal();
+            } else {
+              Swal.fire("Pago no completado", "El pago no se pudo completar correctamente.", "warning");
             }
+
           } catch (error) {
             Swal.fire("Error", "No se pudo completar el pago", "error");
           }
@@ -271,6 +274,33 @@
         }
       }).render('#paypal-button-container');
     }
+
+    async function descontarStock() {
+      for (const product of productos) {
+        const sku = product.sku;
+        const cantidad = product.cantidad;
+
+        if (!sku || cantidad <= 0) continue;
+
+        try {
+          const response = await fetch(`${PRODUCT_API_URL}/descontar-stock`, {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({
+              sku: sku,
+              stock: cantidad
+            })
+          });
+
+          if (!response.ok) {
+            console.error(`Error al descontar stock para SKU ${sku}`);
+          }
+        } catch (error) {
+          console.error(`Error al conectar con el microservicio de productos para SKU ${sku}:`, error);
+        }
+      }
+    }
+
 
     // ===== EVENTOS =====
     hamburgerBtn.addEventListener('click', () => {
@@ -288,6 +318,7 @@
       loadProducts();
       initPayPalButton();
     });
+
   </script>
 
 </body>
