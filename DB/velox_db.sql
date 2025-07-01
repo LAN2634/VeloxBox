@@ -2,6 +2,12 @@ create database velox_db;
 
 USE velox_db;
 
+SELECT name 
+FROM sys.tables;
+
+DROP DATABASE velox_db;
+
+
 CREATE TABLE CarritoP(
     id BIGINT IDENTITY(1,1) PRIMARY KEY,
     nombre NVARCHAR(100) NOT NULL,

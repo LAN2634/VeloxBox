@@ -1,6 +1,10 @@
 CREATE DATABASE sitioWebLuis;
 ------------------------------------------------------------------
 USE sitioWebLuis;
+
+ALTER SERVER ROLE sysadmin ADD MEMBER [danuser];
+
+
 -----------------------------------------------------------------
 CREATE TABLE Usuario (
     id_usuario BIGINT IDENTITY(1,1) PRIMARY KEY,
@@ -22,7 +26,7 @@ CREATE TABLE Producto (
     color NVARCHAR(50),
 	sku NVARCHAR(50),
 	cuidados  NVARCHAR(200),
-	descuento  NVARCHAR(50);
+	descuento  NVARCHAR(50));
 
 	select * from Producto;
 ---------------------------------------------------------------------
@@ -47,20 +51,9 @@ CREATE TABLE Pedido (
     FOREIGN KEY (id_usuario) REFERENCES Usuario(id_usuario)
 );
 
-CREATE TABLE DetallePedido (
-    id_detalle BIGINT IDENTITY(1,1) PRIMARY KEY,
-    id_pedido BIGINT NOT NULL,
-    id_producto BIGINT NOT NULL,
-    cantidad INT NOT NULL,
-    subtotal FLOAT NOT NULL,
-    FOREIGN KEY (id_pedido) REFERENCES Pedido(id_pedido),
-    FOREIGN KEY (id_producto) REFERENCES Producto(id_producto)
-);
+ 
 
-CREATE TABLE Newsletter (
-    id_newsletter BIGINT IDENTITY(1,1) PRIMARY KEY,
-    email NVARCHAR(100) NOT NULL UNIQUE
-);
+ 
 
 CREATE TABLE Devolucion (
     id_devolucion BIGINT IDENTITY(1,1) PRIMARY KEY,
@@ -96,19 +89,7 @@ CREATE TABLE Productos (
 drop table Productos;
 
 
-
-CREATE TABLE producto_talla (
-    id INT IDENTITY(1,1) PRIMARY KEY,
-    id_producto INT NOT NULL,
-    talla NVARCHAR(20) NOT NULL,
-    cantidad INT NOT NULL DEFAULT 0,
-    -- Restricciones
-    CONSTRAINT FK_producto_talla_producto FOREIGN KEY (id_producto) REFERENCES Productos(id_producto) ON DELETE CASCADE,
-    CONSTRAINT UQ_producto_talla UNIQUE (id_producto, talla),
-    -- Auditoría
-    fecha_actualizacion DATETIME DEFAULT GETDATE()
-);
-
+ 
 CREATE TABLE Administrador(
     id INT IDENTITY(1,1) PRIMARY KEY,
     usuario VARCHAR(25) NOT NULL UNIQUE,
