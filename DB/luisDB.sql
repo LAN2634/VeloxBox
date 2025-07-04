@@ -9,7 +9,7 @@ CREATE TABLE Usuario (
     contraseña NVARCHAR(100) NOT NULL,
 );
 ---------------------------------------------------------------------
-CREATE TABLE Producto (
+CREATE TABLE Producto (                 
     id_producto BIGINT IDENTITY(1,1) PRIMARY KEY,
     nombre NVARCHAR(100) NOT NULL,
 	categoria NVARCHAR(100) NOT NULL,
@@ -22,7 +22,7 @@ CREATE TABLE Producto (
     color NVARCHAR(50),
 	sku NVARCHAR(50),
 	cuidados  NVARCHAR(200),
-	descuento  NVARCHAR(50);
+	descuento  NVARCHAR(50));
 
 	select * from Producto;
 ---------------------------------------------------------------------
@@ -124,3 +124,16 @@ SELECT * FROM Administrador WHERE usuario = 'luis' AND contrasena = 'luis123';
 
 "luis"
 "luis123"
+---------------------------------------------
+--Tabla de usuarios aqui-- Login de usuarios
+----------------------------------------------------------------------------
+CREATE TABLE usuarios (
+    id INT IDENTITY(1,1) PRIMARY KEY,
+    email VARCHAR(100) NOT NULL UNIQUE,
+    password_hash VARCHAR(255) NOT NULL,
+    fecha_registro DATETIME DEFAULT GETDATE(), 
+    ultimo_acceso DATETIME NULL,              
+    activo BIT DEFAULT 1                       
+);
+select * from usuarios;
+

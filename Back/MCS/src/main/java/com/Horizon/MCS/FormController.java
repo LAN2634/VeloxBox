@@ -59,7 +59,6 @@ public class FormController {
             producto.setTamanio(productoDetails.getTamanio());
             producto.setColor(productoDetails.getColor());
             producto.setCuidados(productoDetails.getCuidados());
-            producto.setPagodevolucion(productoDetails.getPagodevolucion());
             producto.setImagen(productoDetails.getImagen());
             Formulario updatedProducto = FormRepository.save(producto);
             return ResponseEntity.ok(updatedProducto);
