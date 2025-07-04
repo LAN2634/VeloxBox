@@ -1,4 +1,21 @@
-    * {
+
+.menu-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  margin-right: 10px;
+}
+
+
+.pestanaProducto {
+    flex: 1;
+    margin-top: 80px; /* Ajusta según tu header */
+    padding-bottom: 40px; /* Espacio antes del footer */
+}
+
+   
+   
+   * {
     box-sizing: border-box;
     margin: 0;
     padding: 0;
@@ -11,7 +28,9 @@ body {
     display: flex;
     flex-direction: column;
     min-height: 100vh;
+    
 }
+
 
 .contenedor-derecho{
     margin-top: 4rem;
@@ -221,109 +240,7 @@ input:hover {
     filter: drop-shadow(0 0 23px var(--animation-color));
 }
 
-/* FOOTER STYLES */
-.footer_Row {
-    display: flex;
-    justify-content: space-between;
-    padding-top: 40px;
-    padding-left: 100px;
-    padding-right: 100px;
-    padding-bottom: 40px;
-}
 
-.footer_Col ul {
-    list-style: none;
-}
-
-.footer_Col h4 {
-    color: #fff;
-    margin-bottom: 10px;
-    font-size: 20px;
-    font-weight: 700;
-}
-
-.footer_Col ul li {
-    padding: 5px 0;
-}
-
-.footer_Col ul li a {
-    color: #ffffff;
-    text-decoration: none;
-    font-size: 16px;
-    opacity: 0.7;
-    transition: 0.4s;
-}
-
-.footer_Col ul li a:hover {
-    opacity: 1;
-}
-
-.footer_Col input {
-    border: none;
-    width: 250px;
-    height: 35px;
-    display: block;
-    padding-left: 20px;
-    margin: 10px;
-}
-
-.footer_Col .inputSubmit {
-    background-color: #000000;
-    border: 1px solid;
-    color: #fff;
-    width: 250px;
-    height: 35px;
-    display: block;
-    margin: 10px;
-    cursor: pointer;
-    transition: all 0.3s ease;
-}
-
-.footer_Col .inputSubmit:hover {
-    background-color: #ff0055;
-    transform: scale(1.05);
-}
-
-hr {
-    border: none;
-    height: 1px;
-    background-color: #fff;
-    opacity: 0.7;
-}
-
-.footer_Bottom {
-    text-align: center;
-    font-size: 14px;
-    padding-top: 40px;
-    padding-bottom: 40px;
-    color: #fff;
-    background-color: #000;
-}
-
-.footer_Col .social_Icons {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    margin-top: 20px;
-}
-
-.footer_Col .social_Icons a {
-    display: inline-block;
-    color: #fff;
-    margin: 0 25px;
-    scale: 1.5;
-    transition: all 0.3s ease;
-}
-
-.footer_Col .social_Icons a:hover {
-    color: #ff0055;
-    transform: scale(1.2);
-}
-
-footer {
-    background-color: #000000;
-    color: #fff;
-}
 
 /* Responsive */
 @media (max-width: 768px) {

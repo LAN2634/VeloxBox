@@ -1,5 +1,15 @@
 //para abrir y cerrar ventanas
 function openVentana(id) {
+          document.querySelectorAll('.modal-link').forEach(link => {
+          link.addEventListener('click', function(e) {
+            e.preventDefault(); // Esto evita que la página se desplace
+            const modalId = this.getAttribute('href');
+            const modal = document.querySelector(modalId);
+            if (modal) {
+              modal.style.display = 'block';
+            }
+          });
+        });
         document.getElementById(id).style.display = 'block';
       }
   
@@ -16,3 +26,4 @@ function openVentana(id) {
           }
         });
       }
+      
