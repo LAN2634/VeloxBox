@@ -42,8 +42,6 @@ public class Formulario {
     @Column(name= "sku")
     private String sku;
 
-    @Column(name="pagodevolucion")
-    private String pagodevolucion;
 
     @Column(name="cuidados")
     private String cuidados;
@@ -146,12 +144,5 @@ public class Formulario {
         this.cuidados = cuidados;
     }
 
-    public String getPagodevolucion() {
-        return pagodevolucion;
-    }
-
-    public void setPagodevolucion(String pagodevolucion) {
-        this.pagodevolucion = pagodevolucion;
-    }
 }
 
