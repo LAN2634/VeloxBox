@@ -26,7 +26,7 @@
     
     <main>
           <header class="productos-header">
-    <button id="backButton" class="back-button">←</button>
+    <button id="backButton" class="back-button" onclick="window.location.href='Tabla_productos_agregados.html'">←</button>
     <h1>Historial de Pedidos</h1>
  
   </header>
@@ -55,9 +55,9 @@
       <thead>
         <tr>
           <th>ID de pedido</th>
-          <th>ID del cliente</th>
-          <th>Nombre del cliente</th>
-          <th>Fecha</th>
+          <th>Nombre del Usuario</th>
+          <th>Nombre del Producto</th>
+          <th>Fecha del Pedido</th>
           <th>Total</th>
           <th>Estado</th>
         </tr>
@@ -66,5 +66,52 @@
     </table>
   </div>
     </main>
+<script>
+const PEDIDOS_API_URL = 'http://localhost:8080/api/Productos/pedidos';  // Ajusta si tu endpoint es distinto
+
+document.addEventListener('DOMContentLoaded', () => {
+    loadPedidos();
+});
+
+async function loadPedidos() {
+    try {
+        const response = await fetch(PEDIDOS_API_URL);
+        if (!response.ok) throw new Error('Error al cargar pedidos');
+
+        const pedidos = await response.json();
+        renderPedidos(pedidos);
+    } catch (error) {
+        console.error('Error al cargar pedidos:', error);
+        document.getElementById('productosList').innerHTML = `
+            <tr><td colspan="6" style="text-align:center; color:red;">Error al cargar pedidos</td></tr>`;
+    }
+}
+
+function renderPedidos(pedidos) {
+    const tbody = document.getElementById('productosList');
+    if (pedidos.length === 0) {
+        tbody.innerHTML = `<tr><td colspan="6" style="text-align:center;">No hay pedidos registrados.</td></tr>`;
+        return;
+    }
+
+    tbody.innerHTML = pedidos.map(pedido => `
+        <tr>
+            <td>${pedido.id}</td>
+            <td>${pedido.username}</td>
+            <td>${pedido.nombre}</td>
+            <td>${pedido.fechaPedido ? formatFecha(pedido.fechaPedido) : '-'}</td>
+            <td>$${pedido.total.toFixed(2)} MXN</td>
+            <td>Pendiente</td>
+        </tr>
+    `).join('');
+}
+
+function formatFecha(fechaISO) {
+    const fecha = new Date(fechaISO);
+    return fecha.toLocaleString();
+}
+</script>
+
+
 </body>
 </html>

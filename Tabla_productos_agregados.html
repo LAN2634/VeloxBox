@@ -13,12 +13,15 @@
   <header class="productos-header">
     <button id="backButton" class="back-button">←</button>
     <h1>Productos</h1>
-    <button id="addProductBtn" class="add-product-btn">
-      Añadir Producto
-    </button>
-
+    <div class="header-buttons">
+      <button id="pedidosButton" class="add-product-btn" onclick="window.location.href='HistorialPedidos.html'">
+        <i class="fas fa-clipboard-list"></i> Pedidos
+      </button>
+      <button id="addProductBtn" class="add-product-btn">
+        <i class="fas fa-plus"></i> Añadir Producto
+      </button>
+    </div>
   </header>
-
   <div class="productos-container">
     <div class="productos-filtros">
       <button class="filter-btn active" data-filter="todos">
