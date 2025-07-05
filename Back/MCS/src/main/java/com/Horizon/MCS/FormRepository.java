@@ -12,4 +12,5 @@ public interface FormRepository extends JpaRepository<Formulario, Long> {
     List<Formulario> findByCategoria(String categoria);
     Optional<Formulario> findById(Long id);
     Optional<Formulario> findBySku(String sku);
+
 }

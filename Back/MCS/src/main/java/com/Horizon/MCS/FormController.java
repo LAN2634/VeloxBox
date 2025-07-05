@@ -1,5 +1,6 @@
 package com.Horizon.MCS;
 
+import java.time.LocalDateTime;
 import java.util.*;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,6 +18,10 @@ public class FormController {
 
     @Autowired
     private FormularioService formularioService;
+
+    @Autowired
+    private PedidoRepository pedidoRepository;
+
 //===================================================================================================
 
     // Obtener todos los productos
@@ -59,6 +64,7 @@ public class FormController {
             producto.setTamanio(productoDetails.getTamanio());
             producto.setColor(productoDetails.getColor());
             producto.setCuidados(productoDetails.getCuidados());
+            producto.setPagodevolucion(productoDetails.getPagodevolucion());
             producto.setImagen(productoDetails.getImagen());
             Formulario updatedProducto = FormRepository.save(producto);
             return ResponseEntity.ok(updatedProducto);
@@ -125,5 +131,25 @@ public ResponseEntity<?> descontarStockPorSku(@RequestBody Formulario producto) 
 
     return ResponseEntity.ok("Stock actualizado correctamente");
 }
+//==============Guardar pedidos===============
+@PostMapping("/guardar")
+public ResponseEntity<?> guardarPedido(@RequestBody Pedidos pedido) {
+    if (pedido.getCantidad() <= 0 || pedido.getTotal() <= 0) {
+        return ResponseEntity.badRequest().body("Cantidad o total inválido");
+    }
+
+    pedido.setFechaPedido(LocalDateTime.now());
+    pedidoRepository.save(pedido);
+
+    return ResponseEntity.ok("Pedido guardado correctamente");
+}
+//=====================================================================
+    //Obtener Pedidos
+@GetMapping("/pedidos")
+public ResponseEntity<List<Pedidos>> obtenerPedidos() {
+    List<Pedidos> listaPedidos = pedidoRepository.findAll();
+    return ResponseEntity.ok(listaPedidos);
+}
+//=========================================
 
 }
