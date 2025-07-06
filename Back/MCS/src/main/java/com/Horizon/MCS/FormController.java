@@ -151,5 +151,10 @@ public ResponseEntity<List<Pedidos>> obtenerPedidos() {
     return ResponseEntity.ok(listaPedidos);
 }
 //=========================================
+//Obtener Pedidos filtrado por usuario
+@GetMapping("/pedidos/usuario/{username}")
+public List<Pedidos> obtenerPedidosPorUsuario(@PathVariable String username) {
+    return pedidoRepository.findByUsername(username);
+}
 
 }

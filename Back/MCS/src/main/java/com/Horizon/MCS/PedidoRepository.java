@@ -7,7 +7,7 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 @Repository
 public interface PedidoRepository extends JpaRepository<Pedidos, Long> {
-
+List<Pedidos>findByUsername(String username);
 }
 
 
