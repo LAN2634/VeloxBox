@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Completa tu Perfil | Tienda</title>
+    <link rel="stylesheet" href="/css/register-info.css" />
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+  </head>
+  <body>
+    <div class="container">
+      <div class="card">
+        <button class="back-button" onclick="window.history.back()">
+          ← Volver
+        </button>
+        <h2>Completa tu información</h2>
+        <form id="infoForm">
+          <div class="form-group">
+            <label for="nombre">Nombre</label>
+            <input type="text" id="nombre" name="nombre" required />
+          </div>
+          <div class="form-group">
+            <label for="apellidoP">Apellido Paterno</label>
+            <input type="text" id="apellidoP" name="apellidoP" required />
+          </div>
+          <div class="form-group">
+            <label for="apellidoM">Apellido Materno</label>
+            <input type="text" id="apellidoM" name="apellidoM" />
+          </div>
+          <div class="form-group">
+            <label for="calle">Calle y Número</label>
+            <input type="text" id="calle" name="calle" required />
+          </div>
+          <div class="form-group">
+            <label for="municipio">Municipio / Alcaldía</label>
+            <input type="text" id="municipio" name="municipio" required />
+          </div>
+          <div class="form-group">
+            <label for="codigoPostal">Código Postal</label>
+            <input
+              type="text"
+              id="codigoPostal"
+              name="codigoPostal"
+              required
+              pattern="\d{5}"
+            />
+          </div>
+          <div class="form-group">
+            <label for="estado">Estado</label>
+            <input type="text" id="estado" name="estado" required />
+          </div>
+          <div class="form-group">
+            <label for="pais">País</label>
+            <input type="text" id="pais" name="pais" required />
+          </div>
+          <div class="button-group">
+            <button type="button" id="resetBtn" class="button secondary">
+              Reiniciar
+            </button>
+            <button type="submit" class="button primary">Guardar</button>
+          </div>
+        </form>
+      </div>
+    </div>
+    <script src="/js/register-info.js"></script>
+  </body>
+</html>
