@@ -172,11 +172,26 @@ function renderPedidos(pedidos) {
         <td>${nombres}</td>
         <td>${pedido.fechaPedido ? formatFecha(pedido.fechaPedido) : '-'}</td>
         <td>$${pedido.total.toFixed(2)} MXN</td>
-        <td>Pendiente</td>
+        <td>
+                <select class="estado-pedido" data-pedido-id="${pedido.id}">
+                <option value="pendiente" ${pedido.estado === 'pendiente' ? 'selected' : ''}>Pendiente</option>
+                <option value="cancelado" ${pedido.estado === 'cancelado' ? 'selected' : ''}>Cancelado</option>
+                <option value="en_camino" ${pedido.estado === 'en_camino' ? 'selected' : ''}>En camino</option>
+                <option value="entregado" ${pedido.estado === 'entregado' ? 'selected' : ''}>Entregado</option>
+                </select>
+
+          </td>
         <td><button class="add-product-btn" data-orderid="${pedido.orderId}">Detalles</button></td>
       </tr>
     `;
   }).join('');
+
+document.querySelectorAll('.estado-pedido').forEach(select => {
+    select.addEventListener('change', actualizarEstadoPedido);
+});
+
+
+  
 
   document.querySelectorAll('.add-product-btn').forEach(btn => {
     btn.addEventListener('click', () => {
