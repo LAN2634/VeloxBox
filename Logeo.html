@@ -2,123 +2,130 @@
 <html lang="es">
 
 <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Login - Unimix</title>
-    <link rel="stylesheet" href="./CSS/style_login.css">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Login - Unimix</title>
+  <link rel="stylesheet" href="./CSS/style_login.css">
 
 </head>
 
 <body>
-    <div class="loader">
-        <div class="spinner"></div>
-    </div>
+  <div class="loader">
+    <div class="spinner"></div>
+  </div>
 
-    <div class="container">
-        <h1>Iniciar Sesión</h1>
-        <form id="loginForm" novalidate>
-            <input type="email" id="correo" placeholder="Correo electrónico" />
-            <input type="password" id="contrasena" placeholder="Contraseña" />
-            <button href="Index.html" type="submit">Ingresar</button>
-        </form>
-        <a href="registro.html" id="registroLink">¿No tienes una cuenta? Regístrate aquí</a>
-    </div>
+  <div class="container">
+    <h1>Iniciar Sesión</h1>
+    <form id="loginForm" novalidate>
+      <input type="email" id="correo" placeholder="Correo electrónico" />
+      <input type="password" id="contrasena" placeholder="Contraseña" />
+      <button href="Index.html" type="submit">Ingresar</button>
+    </form>
+    <a href="registro.html" id="registroLink">¿No tienes una cuenta? Regístrate aquí</a>
+  </div>
 
-    <!-- SweetAlert2 -->
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-<script>
-  window.addEventListener("load", () => {
-    document.querySelector(".loader").classList.add("hidden");
-  });
+  <!-- SweetAlert2 -->
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+  <script>window.addEventListener("load", () => {
+      document.querySelector(".loader").classList.add("hidden");
+    });
 
-  function limpiarErrores() {
-    document.getElementById('correo').classList.remove('error');
-    document.getElementById('contrasena').classList.remove('error');
-  }
-
-  function marcarErrores() {
-    document.getElementById('correo').classList.add('error');
-    document.getElementById('contrasena').classList.add('error');
-  }
-
-  document.getElementById('loginForm').addEventListener('submit', function (e) {
-    e.preventDefault();
-    limpiarErrores();
-
-    const correo = document.getElementById("correo").value.trim();
-    const contrasena = document.getElementById("contrasena").value.trim();
-
-    if (!correo || !contrasena) {
-      if (!correo) document.getElementById('correo').classList.add('error');
-      if (!contrasena) document.getElementById('contrasena').classList.add('error');
-
-      Swal.fire({
-        icon: "warning",
-        title: "Campos incompletos",
-        text: "Por favor, completa ambos campos.",
-        confirmButtonColor: "#000000"
-      });
-      return;
+    function limpiarErrores() {
+      document.getElementById('correo').classList.remove('error');
+      document.getElementById('contrasena').classList.remove('error');
     }
 
-    if (contrasena.length < 6) {
+    function marcarErrores() {
+      document.getElementById('correo').classList.add('error');
       document.getElementById('contrasena').classList.add('error');
-      Swal.fire({
-        icon: "error",
-        title: "Contraseña inválida",
-        text: "La contraseña debe tener al menos 6 caracteres.",
-        confirmButtonColor: "#000000"
-      });
-      return;
     }
 
-    fetch("http://localhost:8080/usuarios/login", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json"
-      },
-      body: JSON.stringify({
-        email: correo,       // usa email para backend
-        password: contrasena // usa password para backend
-      })
-    })
-      .then(response => {
-        if (!response.ok) {
-          throw new Error("Credenciales incorrectas");
-        }
-        return response.json();
-      })
-      .then(data => {
+    document.getElementById('loginForm').addEventListener('submit', function (e) {
+      e.preventDefault();
+      limpiarErrores();
+
+      const correo = document.getElementById("correo").value.trim();
+      const contrasena = document.getElementById("contrasena").value.trim();
+
+      if (!correo || !contrasena) {
+        if (!correo) document.getElementById('correo').classList.add('error');
+        if (!contrasena) document.getElementById('contrasena').classList.add('error');
+
         Swal.fire({
-          icon: "success",
-          title: "¡Inicio de sesión exitoso!",
-          text: `Bienvenido, ${data.username}`,
-          timer: 1500,
-          showConfirmButton: false,
-          timerProgressBar: true,
-          didOpen: () => Swal.showLoading()
-        }).then(() => {
-          window.location.href = "index.html";
-        });
-      })
-      .catch(error => {
-        marcarErrores();
-        Swal.fire({
-          icon: "error",
-          title: "Error de inicio de sesión",
-          text: error.message.includes("Failed to fetch")
-            ? "No se pudo conectar al servidor."
-            : error.message,
+          icon: "warning",
+          title: "Campos incompletos",
+          text: "Por favor, completa ambos campos.",
           confirmButtonColor: "#000000"
         });
-      });
-  });
+        return;
+      }
 
-  document.getElementById('registroLink').addEventListener('click', function (e) {
-    e.preventDefault();
-    window.location.href = 'registro.html';
-  });
-</script>
+      if (contrasena.length < 6) {
+        document.getElementById('contrasena').classList.add('error');
+        Swal.fire({
+          icon: "error",
+          title: "Contraseña inválida",
+          text: "La contraseña debe tener al menos 6 caracteres.",
+          confirmButtonColor: "#000000"
+        });
+        return;
+      }
+
+      fetch("http://localhost:8080/usuarios/login", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+          email: correo,       // usa email para backend
+          password: contrasena // usa password para backend
+        })
+      })
+        .then(response => {
+          if (!response.ok) {
+            throw new Error("Credenciales incorrectas");
+          }
+          return response.json();
+        })
+        .then(data => {
+          console.log(data);
+
+          localStorage.setItem("usuarioLogueado", JSON.stringify({
+            username: data.username,
+
+          }));
+
+          Swal.fire({
+            icon: "success",
+            title: "¡Inicio de sesión exitoso!",
+            text: `Bienvenido, ${data.username}`,
+            timer: 1500,
+            showConfirmButton: false,
+            timerProgressBar: true,
+            didOpen: () => Swal.showLoading()
+          }).then(() => {
+            window.location.href = "index.html";
+          });
+        })
+        .catch(error => {
+          marcarErrores();
+          Swal.fire({
+            icon: "error",
+            title: "Error de inicio de sesión",
+            text: error.message.includes("Failed to fetch")
+              ? "No se pudo conectar al servidor."
+              : error.message,
+            confirmButtonColor: "#000000"
+          });
+        });
+    });
+
+    document.getElementById('registroLink').addEventListener('click', function (e) {
+      e.preventDefault();
+      window.location.href = 'registro.html';
+    });
+
+  </script>
 
 
 </body>

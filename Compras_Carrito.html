@@ -97,7 +97,7 @@
     src="https://www.paypal.com/sdk/js?client-id=AZAAZYL5L3emroAmF-iLlJLPG7JK53LRSslgcrA_28CTc5B7_yCR5QoqyfnpFPitDe9e-JY3A54WRd13&currency=MXN">
     </script>
 
-  <script>// ===== CONSTANTES Y CONFIGURACIÓN =====
+  <script>
     // ===== CONSTANTES Y CONFIGURACIÓN =====
     const CART_API_URL = 'http://localhost:9090/api/carrito';
     const PAYPAL_API_URL = 'http://localhost:9090/api/paypal';
@@ -115,7 +115,7 @@
     // ===== ESTADO GLOBAL =====
     let productos = [];
 
-    // ===== FUNCIONES  =====
+    // ===== FUNCIONES =====
 
     // Cargar productos desde el backend
     async function loadProducts() {
@@ -211,7 +211,6 @@
           label: "paypal"
         },
 
-        // Crear orden
         async createOrder() {
           try {
             const total = calcularTotal();
@@ -225,7 +224,6 @@
             });
 
             if (!response.ok) throw new Error(await response.text());
-
             const responseJson = await response.json();
             return responseJson.id;
 
@@ -236,7 +234,6 @@
           }
         },
 
-        // Capturar pago
         async onApprove(data) {
           try {
             const response = await fetch(`${PAYPAL_API_URL}/capture-order/${data.orderID}`, {
@@ -252,17 +249,35 @@
                 icon: "success"
               });
 
-              // DESCONTAR STOCK
-              await descontarStock();
+              for (const product of productos) {
+                const sku = product.sku;
+                const cantidad = product.cantidad;
 
-              // Vaciar carrito
+                if (!sku || cantidad <= 0) continue;
+
+                try {
+                  await fetch(`${PRODUCT_API_URL}/descontar-stock`, {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({
+                      sku: sku,
+                      stock: cantidad
+                    })
+                  });
+                } catch (error) {
+                  console.error(`Error al descontar stock para SKU ${sku}:`, error);
+                }
+
+                await guardarPedido(product, result.id);
+              }
+
               productos = [];
               renderProducts();
               calcularTotal();
+
             } else {
               Swal.fire("Pago no completado", "El pago no se pudo completar correctamente.", "warning");
             }
-
           } catch (error) {
             Swal.fire("Error", "No se pudo completar el pago", "error");
           }
@@ -272,35 +287,39 @@
           console.error("Error PayPal:", err);
           Swal.fire("Error", "Ocurrió un error con PayPal", "error");
         }
+
       }).render('#paypal-button-container');
     }
 
-    async function descontarStock() {
-      for (const product of productos) {
-        const sku = product.sku;
-        const cantidad = product.cantidad;
+    // Guardar pedido en el backend
+    async function guardarPedido(product, orderId) {
+      const usuario = JSON.parse(localStorage.getItem("usuarioLogueado")) || {};
 
-        if (!sku || cantidad <= 0) continue;
+      const pedido = {
+        sku: product.sku,
+        nombre: product.nombre,
+        imagen: product.imagen,
+        cantidad: product.cantidad,
+        precioUnitario: product.precio,
+        username: usuario.username || "Invitado",
+        total: product.precio * product.cantidad,
+        orderId: orderId
+      };
 
-        try {
-          const response = await fetch(`${PRODUCT_API_URL}/descontar-stock`, {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({
-              sku: sku,
-              stock: cantidad
-            })
-          });
+      try {
+        const response = await fetch(`${PRODUCT_API_URL}/guardar`, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(pedido)
+        });
 
-          if (!response.ok) {
-            console.error(`Error al descontar stock para SKU ${sku}`);
-          }
-        } catch (error) {
-          console.error(`Error al conectar con el microservicio de productos para SKU ${sku}:`, error);
+        if (!response.ok) {
+          console.error("Error al guardar pedido para SKU:", product.sku);
         }
+      } catch (error) {
+        console.error("Error al conectar con el microservicio de pedidos:", error);
       }
     }
-
 
     // ===== EVENTOS =====
     hamburgerBtn.addEventListener('click', () => {

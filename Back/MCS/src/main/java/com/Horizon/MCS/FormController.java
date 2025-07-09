@@ -1,5 +1,6 @@
 package com.Horizon.MCS;
 
+import java.time.LocalDateTime;
 import java.util.*;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,6 +18,10 @@ public class FormController {
 
     @Autowired
     private FormularioService formularioService;
+
+    @Autowired
+    private PedidoRepository pedidoRepository;
+
 //===================================================================================================
 
     // Obtener todos los productos
@@ -125,6 +130,31 @@ public ResponseEntity<?> descontarStockPorSku(@RequestBody Formulario producto) 
     FormRepository.save(existente);
 
     return ResponseEntity.ok("Stock actualizado correctamente");
+}
+//==============Guardar pedidos===============
+@PostMapping("/guardar")
+public ResponseEntity<?> guardarPedido(@RequestBody Pedidos pedido) {
+    if (pedido.getCantidad() <= 0 || pedido.getTotal() <= 0) {
+        return ResponseEntity.badRequest().body("Cantidad o total inválido");
+    }
+
+    pedido.setFechaPedido(LocalDateTime.now());
+    pedidoRepository.save(pedido);
+
+    return ResponseEntity.ok("Pedido guardado correctamente");
+}
+//=====================================================================
+    //Obtener Pedidos
+@GetMapping("/pedidos")
+public ResponseEntity<List<Pedidos>> obtenerPedidos() {
+    List<Pedidos> listaPedidos = pedidoRepository.findAll();
+    return ResponseEntity.ok(listaPedidos);
+}
+//=========================================
+//Obtener Pedidos filtrado por usuario
+@GetMapping("/pedidos/usuario/{username}")
+public List<Pedidos> obtenerPedidosPorUsuario(@PathVariable String username) {
+    return pedidoRepository.findByUsername(username);
 }
 
 }
