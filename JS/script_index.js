@@ -69,7 +69,7 @@ async function updateCartCount() {
 // Cargar productos destacados
 async function loadFeaturedProducts() {
     try {
-        const response = await fetch('http://localhost:8080/api/Productos/destacados');
+        const response = await fetch('http://localhost:8080/api/Productos');
         if (!response.ok) throw new Error("Error al cargar productos destacados");
         
         const productos = await response.json();
