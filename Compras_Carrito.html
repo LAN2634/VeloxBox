@@ -24,7 +24,7 @@
     </div>
   </header>
 
- <div class="menu-overlay" id="menuOverlay"></div>
+  <div class="menu-overlay" id="menuOverlay"></div>
 
   <div class="menu-container" id="menuContainer">
     <!-- Input de búsqueda dentro del menú -->
@@ -163,25 +163,25 @@
 
     // Cargar productos desde el backend
     async function loadProducts() {
-  try {
-    const usuario = JSON.parse(localStorage.getItem("usuarioLogueado")) || {};
-    const username = usuario.username || "Invitado";
+      try {
+        const usuario = JSON.parse(localStorage.getItem("usuarioLogueado")) || {};
+        const username = usuario.username || "Invitado";
 
-    const response = await fetch(CART_API_URL);
-    if (!response.ok) throw new Error('Error al cargar productos');
+        const response = await fetch(CART_API_URL);
+        if (!response.ok) throw new Error('Error al cargar productos');
 
-    let productosDelServidor = await response.json();
+        let productosDelServidor = await response.json();
 
-    // FILTRAR POR USUARIO LOGUEADO
-    productos = productosDelServidor.filter(product => product.username === username);
+        // FILTRAR POR USUARIO LOGUEADO
+        productos = productosDelServidor.filter(product => product.username === username);
 
-    renderProducts();
-    calcularTotal();
-  } catch (error) {
-    console.error('Error:', error);
-    productGrid.innerHTML = '<p class="error">Error al cargar los productos. Intente nuevamente.</p>';
-  }
-}
+        renderProducts();
+        calcularTotal();
+      } catch (error) {
+        console.error('Error:', error);
+        productGrid.innerHTML = '<p class="error">Error al cargar los productos. Intente nuevamente.</p>';
+      }
+    }
 
 
     function renderProducts() {
@@ -295,37 +295,53 @@
             const result = await response.json();
 
             if (result.status === "COMPLETED") {
-              Swal.fire({
-                title: "¡Pago exitoso!",
-                text: `ID de transacción: ${result.id}`,
-                icon: "success"
-              });
+              if (result.status === "COMPLETED") {
+                Swal.fire({
+                  title: "¡Pago exitoso!",
+                  text: `ID de transacción: ${result.id}`,
+                  icon: "success"
+                });
 
-              for (const product of productos) {
-                const sku = product.sku;
-                const cantidad = product.cantidad;
+                for (const product of productos) {
+                  const sku = product.sku;
+                  const cantidad = product.cantidad;
 
-                if (!sku || cantidad <= 0) continue;
+                  if (!sku || cantidad <= 0) continue;
 
-                try {
-                  await fetch(`${PRODUCT_API_URL}/descontar-stock`, {
-                    method: "POST",
-                    headers: { "Content-Type": "application/json" },
-                    body: JSON.stringify({
-                      sku: sku,
-                      stock: cantidad
-                    })
-                  });
-                } catch (error) {
-                  console.error(`Error al descontar stock para SKU ${sku}:`, error);
+                  try {
+                    await fetch(`${PRODUCT_API_URL}/descontar-stock`, {
+                      method: "POST",
+                      headers: { "Content-Type": "application/json" },
+                      body: JSON.stringify({
+                        sku: sku,
+                        stock: cantidad
+                      })
+                    });
+                  } catch (error) {
+                    console.error(`Error al descontar stock para SKU ${sku}:`, error);
+                  }
+
+                  await guardarPedido(product, result.id);
                 }
 
-                await guardarPedido(product, result.id);
-              }
+                // 🔥 ELIMINAR CARRITO DEL BACKEND
+                const usuario = JSON.parse(localStorage.getItem("usuarioLogueado")) || {};
+                const username = usuario.username || "Invitado";
 
-              productos = [];
-              renderProducts();
-              calcularTotal();
+                try {
+                  await fetch(`${CART_API_URL}/eliminar-todo/${encodeURIComponent(username)}`, {
+                    method: "DELETE"
+                  });
+                  console.log("Carrito eliminado en backend");
+                } catch (error) {
+                  console.error("Error al eliminar carrito del backend:", error);
+                }
+
+                // Limpiar frontend
+                productos = [];
+                renderProducts();
+                calcularTotal();
+              }
 
             } else {
               Swal.fire("Pago no completado", "El pago no se pudo completar correctamente.", "warning");
