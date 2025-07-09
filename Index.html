@@ -11,7 +11,6 @@
   <link rel="stylesheet" href="./CSS/style_index.css" />
   <link rel="stylesheet" href="CSS/styleSlider.css" />
   <link rel="stylesheet" href="./CSS/estilosFooter.css" />
-  <link rel="stylesheet" href="./CSS/style_product.css" />
 
  
 
@@ -43,8 +42,7 @@
     <!--estos dos, el de arriba y el de abajo son para el logo animado-->
     <div class="cart-icon-container">
       <a href="#" id="cart-toggle" class="menu-item" style="color: white; text-decoration: none; font-size: 1.2rem;">
-        <i class="fas fa-shopping-cart"></i>
-        <span id="cart-count">0</span>
+        
       </a>
     </div>
   </header>
@@ -176,7 +174,7 @@
     </h4>
   </section>
 
-   <!-- SECCIÓN PRODUCTOS DESTACADOS -->
+  <!--==================SECCION PRODUCTOS DESTACADOS=============================-->
   <section class="card-sephora">
     <div class="div10">
       <div class="div11"></div>
@@ -198,6 +196,15 @@
     </div>
   </section>
 
+  <!-- Modal para detalles del producto -->
+  <div id="productoModal" class="producto-modal">
+    <div class="modal-content">
+      <span class="close-modal">&times;</span>
+      <div class="producto-detalles" id="producto-detalles">
+        <!-- Los detalles del producto se cargarán aquí -->
+      </div>
+    </div>
+  </div>
 
   <!--================SECCION DE PRESENTACION======================-->
   <section class="sectionIDK">
@@ -536,107 +543,145 @@
   <script src="./JS/script_footer.js"></script>
 
 
-   <script>
+  <script>
     const API_BASE_URL = 'http://localhost:8080/api/Productos';
+
+    const modal = document.getElementById("productoModal");
+    const closeModal = document.querySelector(".close-modal");
+    const productoDetalles = document.getElementById("producto-detalles");
+
+    // Función para abrir el modal con los detalles del producto
+    function abrirModal(producto) {
+      productoDetalles.innerHTML = `
+        <div class="producto-imagen">
+          <img src="${producto.imagen || 'https://via.placeholder.com/500'}" alt="${producto.nombre}">
+        </div>
+        <div class="producto-info">
+          <h2>${producto.nombre || 'Producto'}</h2>
+          <p class="precio">$${producto.precio || '0'}</p>
+          <p class="descripcion">${producto.descripcion || 'Descripción no disponible'}</p>
+          <button class="btn-comprar">Añadir al carrito</button>
+        </div>
+      `;
+      modal.style.display = "block";
+    }
+
+    // Función para cerrar el modal
+    function cerrarModal() {
+      modal.style.display = "none";
+    }
+
+    // Event listeners para el modal
+    closeModal.addEventListener('click', cerrarModal);
+    window.addEventListener('click', (event) => {
+      if (event.target === modal) {
+        cerrarModal();
+      }
+    });
 
     // Función para renderizar los productos
     function renderizarProductos(productos) {
       const container = document.getElementById('productos-container');
-      container.innerHTML = '';
+      container.innerHTML = ''; // Limpiar contenedor antes de agregar nuevos productos
+
+      if (productos.length === 0) {
+        container.innerHTML = `
+          <div class="error-message">
+            <p>No hay productos disponibles en este momento.</p>
+          </div>
+        `;
+        return;
+      }
 
       productos.forEach(producto => {
-          const cardHTML = `
-            <div class="swiper-slide">
-              <div class="card">
-                <a href="Detalle_Productos.html?id=${producto.id}" class="card-link" style="text-decoration: none; color: inherit;">
-                  <div class="image-content">
-                    <span class="overlay"></span>
-                    <div class="card-image">
-                      <img src="${producto.imagen?.[0] || 'img/placeholder.jpg'}" 
-                          alt="${producto.nombre}" 
-                          class="card-img"
-                          onerror="this.src='img/placeholder.jpg'">
-                    </div>
-                  </div>
-                  <div class="card-content">
-                    <h3 class="name" style="margin: 0;">${producto.nombre || 'Producto'}</h3>
-                    <p class="description">$${producto.precio?.toFixed(2) || '0.00'} MXN</p>
-                  </div>
-                </a>
-                <a href="Detalle_Productos.html?id=${producto.id}" 
-                  class="cardButton" 
-                  style="display: flex; justify-content: center; align-items: center; text-align: center;">
-                  VER MÁS
-                </a>
-              </div>
-            </div>
-          `; 
-          container.innerHTML += cardHTML;
-      });}
+        const cardHTML = `
+  <div class="swiper-slide">
+    <div class="card">
+      <div class="image-content">
+        <span class="overlay"></span>
+        <div class="card-image">
+          <img src="${producto.imagen?.[0] || 'https://via.placeholder.com/300'}" alt="${producto.nombre}" class="card-img" 
+               onerror="this.src='https://via.placeholder.com/300'"/>
+        </div>
+      </div>
+      <div class="card-content">
+        <h3 class="name">${producto.nombre || 'Producto'}</h3>
+        <p class="description">$${producto.precio || '0'}</p>
+        <button class="cardButton" data-id="${producto.id}">VER MÁS</button>
+      </div>
+    </div>
+  </div>
+`;
 
-
-   function inicializarSwiper() {
-        // Verifica si Swiper está disponible
-        if (typeof Swiper === 'function') {
-          const swiper = new Swiper(".mySwiper", {
-            // tu configuración
-          });
-          return swiper;
-        } else {
-          console.warn('Swiper no está disponible');
-          // Puedes cargar Swiper dinámicamente aquí si es necesario
-          return null;
-        }
-      }
-
-      // Llamada segura
-      document.addEventListener('DOMContentLoaded', function() {
-        const mySwiper = inicializarSwiper();
-        
-        // Si Swiper no se cargó, puedes intentar cargarlo manualmente
-        if (!mySwiper) {
-          loadSwiper();
-        }
+        container.innerHTML += cardHTML;
       });
 
-      function loadSwiper() {
-        const script = document.createElement('script');
-        script.src = 'https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js';
-        script.onload = function() {
-          inicializarSwiper();
-        };
-        document.head.appendChild(script);
-      }
+      // Agregar event listeners a los botones
+      document.querySelectorAll('.cardButton').forEach(button => {
+        button.addEventListener('click', (e) => {
+          const productId = e.target.getAttribute('data-id');
+          mostrarDetallesProducto(productId, productos);
+        });
+      });
 
-          // Función para inicializar Swiper (igual que antes)
-          function inicializarSwiper() {
-            new Swiper(".mySwiper", {
-              slidesPerView: 1,
-              spaceBetween: 10,
-              pagination: {
-                el: ".swiper-pagination",
-                clickable: true,
-              },
-              navigation: {
-                nextEl: ".swiper-button-next",
-                prevEl: ".swiper-button-prev",
-              },
-              breakpoints: {
-                640: {
-                  slidesPerView: 2,
-                  spaceBetween: 20,
-                },
-                768: {
-                  slidesPerView: 3,
-                  spaceBetween: 30,
-                },
-                1024: {
-                  slidesPerView: 4,
-                  spaceBetween: 40,
-                },
-              },
-            });
+      // Inicializar Swiper después de cargar los productos
+      inicializarSwiper();
+    }
+
+    // Función para inicializar Swiper
+    function inicializarSwiper() {
+      new Swiper(".mySwiper", {
+        slidesPerView: 1,
+        spaceBetween: 10,
+        pagination: {
+          el: ".swiper-pagination",
+          clickable: true,
+        },
+        navigation: {
+          nextEl: ".swiper-button-next",
+          prevEl: ".swiper-button-prev",
+        },
+        breakpoints: {
+          640: {
+            slidesPerView: 2,
+            spaceBetween: 20,
+          },
+          768: {
+            slidesPerView: 3,
+            spaceBetween: 30,
+          },
+          1024: {
+            slidesPerView: 4,
+            spaceBetween: 40,
+          },
+        },
+      });
+    }
+
+    // Función para mostrar detalles del producto
+    async function mostrarDetallesProducto(id, productos) {
+      try {
+        // Buscar el producto en la lista ya cargada
+        const producto = productos.find(p => p.id == id);
+
+        if (producto) {
+          abrirModal(producto);
+        } else {
+          // Si no está en la lista, hacer una petición individual
+          const response = await fetch(`${API_BASE_URL}/${id}`);
+
+          if (!response.ok) {
+            throw new Error(`Error HTTP: ${response.status}`);
           }
+
+          const productoIndividual = await response.json();
+          abrirModal(productoIndividual);
+        }
+      } catch (error) {
+        console.error('Error al obtener detalles del producto:', error);
+        alert('No se pudieron cargar los detalles del producto');
+      }
+    }
 
     // Obtener productos desde tu endpoint Spring Boot
     async function obtenerProductos() {
@@ -649,6 +694,7 @@
 
         const productos = await response.json();
 
+        // Verificar que la respuesta sea un array
         if (!Array.isArray(productos)) {
           throw new Error('La respuesta no es un array de productos');
         }
@@ -656,10 +702,13 @@
         renderizarProductos(productos);
       } catch (error) {
         console.error('Error al obtener productos:', error);
+
+        // Mostrar mensaje de error al usuario
         const container = document.getElementById('productos-container');
         container.innerHTML = `
           <div class="error-message">
             <p>No se pudieron cargar los productos. Por favor intenta más tarde.</p>
+            <p>${error.message}</p>
           </div>
         `;
       }

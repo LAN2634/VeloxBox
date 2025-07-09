@@ -38,7 +38,7 @@
       <a href="Compras_Carrito.html" id="cart-toggle" class="menu-item"
         style="color: white; text-decoration: none; font-size: 1.2rem;">
         <i class="fas fa-shopping-cart"></i>
-        <span id="cart-count">0</span>
+        
       </a>
     </div>
   </header>
@@ -639,6 +639,7 @@
     // ================ AÑADIR AL CARRITO ================
 
     async function addToCart(e) {
+      const usuario = JSON.parse(localStorage.getItem("usuarioLogueado")) || {};
       const button = e.currentTarget;
       const producto = {
         id: button.getAttribute('data-id'),
@@ -646,6 +647,7 @@
         precio: parseFloat(button.getAttribute('data-price')),
         sku: button.getAttribute('data-sku'),
         imagen: [button.getAttribute('data-img')],
+        username: usuario.username || "Invitado",
         cantidad: 1
       };
 
@@ -687,18 +689,25 @@
 
     async function loadCartItems() {
       try {
+        const usuario = JSON.parse(localStorage.getItem("usuarioLogueado")) || {};
+        const username = usuario.username || "Invitado";
+
         const response = await fetch('http://localhost:9090/api/carrito');
         if (!response.ok) throw new Error("Error al cargar el carrito");
 
-        const cartProducts = await response.json();
+        let cartProducts = await response.json();
+
+        // Filtrar por username:
+        cartProducts = cartProducts.filter(item => item.username === username);
+
         renderCartItems(cartProducts);
       } catch (error) {
         console.error("Error:", error);
         document.getElementById('cartItems').innerHTML = `
-            <div class="error">
-                <p>Error al cargar el carrito</p>
-                <small>${error.message}</small>
-            </div>`;
+      <div class="error">
+        <p>Error al cargar el carrito</p>
+        <small>${error.message}</small>
+      </div>`;
       }
     }
 
