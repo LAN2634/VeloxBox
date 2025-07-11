@@ -90,9 +90,12 @@
         .then(data => {
           console.log(data);
 
-          localStorage.setItem("usuarioLogueado", JSON.stringify({
-            username: data.username,
+          // Limpiar cualquier sesión anterior
+          localStorage.removeItem("usuarioLogueado");
 
+          // Guardar nuevo usuario logueado
+          localStorage.setItem("usuarioLogueado", JSON.stringify({
+            username: data.username
           }));
 
           Swal.fire({
@@ -107,6 +110,7 @@
             window.location.href = "index.html";
           });
         })
+
         .catch(error => {
           marcarErrores();
           Swal.fire({

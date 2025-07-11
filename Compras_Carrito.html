@@ -294,7 +294,6 @@
 
             const result = await response.json();
 
-            if (result.status === "COMPLETED") {
               if (result.status === "COMPLETED") {
                 Swal.fire({
                   title: "¡Pago exitoso!",
@@ -341,7 +340,7 @@
                 productos = [];
                 renderProducts();
                 calcularTotal();
-              }
+              
 
             } else {
               Swal.fire("Pago no completado", "El pago no se pudo completar correctamente.", "warning");

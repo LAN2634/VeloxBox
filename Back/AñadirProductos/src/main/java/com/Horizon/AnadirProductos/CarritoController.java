@@ -6,6 +6,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.RestTemplate;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -17,8 +18,8 @@ import java.util.Optional;
 //==================================================================================================
     @Autowired
     private CarritoRepository carritoRepository;
+
 //==================================================================================================
-//Aumentar el contador por medio del sku del producto
 @PostMapping("/agregar")
 public ResponseEntity<?> agregarProducto(@RequestBody Producto producto) {
     try {
@@ -35,7 +36,8 @@ public ResponseEntity<?> agregarProducto(@RequestBody Producto producto) {
         int stockDisponible = (int) respuestaStock.get("stock");
 
         // 2. Buscar si ya está en el carrito
-        Optional<Producto> productoExistenteOpt = carritoRepository.findBySku(producto.getSku());
+        Optional<Producto> productoExistenteOpt = carritoRepository.findBySkuAndUsername(producto.getSku(), producto.getUsername());
+
 
         int nuevaCantidad = producto.getCantidad() != null ? producto.getCantidad() : 1;
 
@@ -150,5 +152,13 @@ public ResponseEntity<Producto> obtenerProductoCarrito(@PathVariable Long id) {
     return productoOpt.map(ResponseEntity::ok)
             .orElseGet(() -> ResponseEntity.notFound().build());
 }
+//===============================================================================
+@DeleteMapping("/eliminar-todo/{username}")
+public ResponseEntity<Void> eliminarProductosPorUsuario(@PathVariable String username) {
+    carritoRepository.deleteByUsername(username);
+    return ResponseEntity.ok().build();
+}
+//=============================================
+
 
 }
