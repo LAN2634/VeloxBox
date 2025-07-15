@@ -36,7 +36,7 @@
             <a href="Compras_Carrito.html" id="cart-toggle" class="menu-item"
                 style="color: white; text-decoration: none; font-size: 1.2rem;">
                 <i class="fas fa-shopping-cart"></i>
-                
+
             </a>
         </div>
     </header>
@@ -642,8 +642,10 @@
         // ==================== FUNCIONALIDADES DEL CARRITO ====================
 
         async function addToCart(e) {
+            const token = localStorage.getItem('token');
             const usuario = JSON.parse(localStorage.getItem("usuarioLogueado")) || {};
             const button = e.currentTarget;
+
             const producto = {
                 id: button.getAttribute('data-id'),
                 nombre: button.getAttribute('data-name'),
@@ -654,24 +656,22 @@
                 cantidad: 1
             };
 
-
             try {
-                // 1. Consultar stock actual
                 const stockResponse = await fetch(`http://localhost:8080/api/Productos/${producto.id}/stock`);
-
                 if (!stockResponse.ok) throw new Error("Error al consultar stock");
                 const stockData = await stockResponse.json();
 
-                // 2. Verificar si hay stock disponible
                 if (stockData.stock < 1) {
-                    showError('Lo sentimos, este producto está agotado.');
+                    showError('Lo sentimos, esta playera está agotada.');
                     return;
                 }
 
-                // 3. Agregar al carrito solo si hay stock
                 const response = await fetch('http://localhost:9090/api/carrito/agregar', {
                     method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${token}`   // Aquí el token es obligatorio
+                    },
                     body: JSON.stringify(producto)
                 });
 
@@ -681,7 +681,7 @@
                 updateCartCount();
                 animateCartIcon();
 
-                const cartPanel = document.getElementById('cart');
+                const cartPanel = document.getElementById('cartPanel');
                 if (cartPanel && !cartPanel.classList.contains('hidden')) {
                     await loadCartItems();
                 }
@@ -690,7 +690,6 @@
                 showError('Producto agotado ( ˘︹˘ )');
             }
         }
-
 
         async function loadCartItems() {
             try {

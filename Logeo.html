@@ -26,7 +26,8 @@
 
   <!-- SweetAlert2 -->
   <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-  <script>window.addEventListener("load", () => {
+  <script>
+    window.addEventListener("load", () => {
       document.querySelector(".loader").classList.add("hidden");
     });
 
@@ -71,16 +72,17 @@
         return;
       }
 
-      fetch("http://localhost:8080/usuarios/login", {
+      fetch("http://localhost:8080/usuarios/loginu", {
         method: "POST",
         headers: {
           "Content-Type": "application/json"
         },
         body: JSON.stringify({
-          email: correo,       // usa email para backend
-          password: contrasena // usa password para backend
+          email: correo,
+          password: contrasena
         })
       })
+
         .then(response => {
           if (!response.ok) {
             throw new Error("Credenciales incorrectas");
@@ -88,15 +90,9 @@
           return response.json();
         })
         .then(data => {
-          console.log(data);
-
-          // Limpiar cualquier sesión anterior
-          localStorage.removeItem("usuarioLogueado");
-
-          // Guardar nuevo usuario logueado
-          localStorage.setItem("usuarioLogueado", JSON.stringify({
-            username: data.username
-          }));
+          // ✅ Guardar el token y el usuario en localStorage
+          localStorage.setItem("token", data.token); // 🔐 token JWT
+          localStorage.setItem("username", data.username); // nombre del usuario
 
           Swal.fire({
             icon: "success",
@@ -128,8 +124,8 @@
       e.preventDefault();
       window.location.href = 'registro.html';
     });
-
   </script>
+
 
 
 </body>

@@ -37,7 +37,7 @@
     <div class="cart-icon-container">
       <a href="#" id="cart-toggle" class="menu-item" style="color: white; text-decoration: none; font-size: 1.2rem;">
         <i class="fas fa-shopping-cart"></i>
-       
+
       </a>
     </div>
   </header>
@@ -622,10 +622,11 @@
       });
     }
 
-    // ================ AÑADIR AL CARRITO ================
     async function addToCart(e) {
+      const token = localStorage.getItem('token'); 
       const usuario = JSON.parse(localStorage.getItem("usuarioLogueado")) || {};
       const button = e.currentTarget;
+
       const producto = {
         id: button.getAttribute('data-id'),
         nombre: button.getAttribute('data-name'),
@@ -637,21 +638,21 @@
       };
 
       try {
-        // 1. Consultar stock actual
         const stockResponse = await fetch(`http://localhost:8080/api/Productos/${producto.id}/stock`);
         if (!stockResponse.ok) throw new Error("Error al consultar stock");
         const stockData = await stockResponse.json();
 
-        // 2. Verificar si hay stock disponible
         if (stockData.stock < 1) {
           showError('Lo sentimos, esta playera está agotada.');
           return;
         }
 
-        // 3. Agregar al carrito solo si hay stock
         const response = await fetch('http://localhost:9090/api/carrito/agregar', {
           method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${token}`   // Aquí el token es obligatorio
+          },
           body: JSON.stringify(producto)
         });
 
@@ -672,29 +673,29 @@
     }
 
     // ================ CARGAR ITEMS DEL CARRITO ================
-   async function loadCartItems() {
-  try {
-    const usuario = JSON.parse(localStorage.getItem("usuarioLogueado")) || {};
-    const username = usuario.username || "Invitado";
+    async function loadCartItems() {
+      try {
+        const usuario = JSON.parse(localStorage.getItem("usuarioLogueado")) || {};
+        const username = usuario.username || "Invitado";
 
-    const response = await fetch('http://localhost:9090/api/carrito');
-    if (!response.ok) throw new Error("Error al cargar el carrito");
+        const response = await fetch('http://localhost:9090/api/carrito');
+        if (!response.ok) throw new Error("Error al cargar el carrito");
 
-    let cartProducts = await response.json();
+        let cartProducts = await response.json();
 
-    // Filtrar por username:
-    cartProducts = cartProducts.filter(item => item.username === username);
+        // Filtrar por username:
+        cartProducts = cartProducts.filter(item => item.username === username);
 
-    renderCartItems(cartProducts);
-  } catch (error) {
-    console.error("Error:", error);
-    document.getElementById('cartItems').innerHTML = `
+        renderCartItems(cartProducts);
+      } catch (error) {
+        console.error("Error:", error);
+        document.getElementById('cartItems').innerHTML = `
       <div class="error">
         <p>Error al cargar el carrito</p>
         <small>${error.message}</small>
       </div>`;
-  }
-}
+      }
+    }
 
 
     // ================ RENDERIZAR ITEMS DEL CARRITO ================
