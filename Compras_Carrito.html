@@ -24,7 +24,7 @@
     </div>
   </header>
 
-  <div class="menu-overlay" id="menuOverlay"></div>
+<div class="menu-overlay" id="menuOverlay"></div>
 
   <div class="menu-container" id="menuContainer">
     <!-- Input de búsqueda dentro del menú -->
@@ -98,24 +98,24 @@
 
         <span class="menu-item-text">Cascos de Box</span>
       </a>
-
-    </div>
-    <div class="menu-title">Historial Pedidos</div>
-    <!-- Icono de Listado -->
-    <a href="Pedido_usuario.html" class="menu-item">
+      <a href="Pedido_usuario.html" class="menu-item">
       <i class="fas fa-list"></i>
       <span class="menu-item-text">Mi Pedido</span>
     </a>
-    <div class="menu-section">
-      <div class="menu-title">Configuración</div>
-      <a href="#" class="menu-item">
+
+    </div>
+    <div class="menu-title">Configuración</div>
+      <a href="#" class="menu-item" id="logoutBtn">
         <i class="fas fa-sign-out-alt"></i>
         <span class="menu-item-text">Cerrar sesión</span>
       </a>
+    <div class="menu-section">
+      
     </div>
 
 
   </div>
+
 
   <div class="added-notification" id="added-notification">
     Producto eliminado del carrito
@@ -164,8 +164,7 @@
     // Cargar productos desde el backend
     async function loadProducts() {
       try {
-        const usuario = JSON.parse(localStorage.getItem("usuarioLogueado")) || {};
-        const username = usuario.username || "Invitado";
+       const username = localStorage.getItem("username") || "Invitado";
 
         const response = await fetch(CART_API_URL);
         if (!response.ok) throw new Error('Error al cargar productos');
@@ -294,53 +293,52 @@
 
             const result = await response.json();
 
-              if (result.status === "COMPLETED") {
-                Swal.fire({
-                  title: "¡Pago exitoso!",
-                  text: `ID de transacción: ${result.id}`,
-                  icon: "success"
-                });
+            if (result.status === "COMPLETED") {
+              Swal.fire({
+                title: "¡Pago exitoso!",
+                text: `ID de transacción: ${result.id}`,
+                icon: "success"
+              });
 
-                for (const product of productos) {
-                  const sku = product.sku;
-                  const cantidad = product.cantidad;
+              for (const product of productos) {
+                const sku = product.sku;
+                const cantidad = product.cantidad;
 
-                  if (!sku || cantidad <= 0) continue;
-
-                  try {
-                    await fetch(`${PRODUCT_API_URL}/descontar-stock`, {
-                      method: "POST",
-                      headers: { "Content-Type": "application/json" },
-                      body: JSON.stringify({
-                        sku: sku,
-                        stock: cantidad
-                      })
-                    });
-                  } catch (error) {
-                    console.error(`Error al descontar stock para SKU ${sku}:`, error);
-                  }
-
-                  await guardarPedido(product, result.id);
-                }
-
-                // 🔥 ELIMINAR CARRITO DEL BACKEND
-                const usuario = JSON.parse(localStorage.getItem("usuarioLogueado")) || {};
-                const username = usuario.username || "Invitado";
+                if (!sku || cantidad <= 0) continue;
 
                 try {
-                  await fetch(`${CART_API_URL}/eliminar-todo/${encodeURIComponent(username)}`, {
-                    method: "DELETE"
+                  await fetch(`${PRODUCT_API_URL}/descontar-stock`, {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({
+                      sku: sku,
+                      stock: cantidad
+                    })
                   });
-                  console.log("Carrito eliminado en backend");
                 } catch (error) {
-                  console.error("Error al eliminar carrito del backend:", error);
+                  console.error(`Error al descontar stock para SKU ${sku}:`, error);
                 }
 
-                // Limpiar frontend
-                productos = [];
-                renderProducts();
-                calcularTotal();
-              
+                await guardarPedido(product, result.id);
+              }
+
+              // 🔥 ELIMINAR CARRITO DEL BACKEND
+             const username = localStorage.getItem("username") || "Invitado";
+
+             
+              try {
+                await fetch(`${CART_API_URL}/eliminar-todo/${encodeURIComponent(username)}`, {
+                  method: "DELETE"
+                });
+                console.log("Carrito eliminado en backend");
+              } catch (error) {
+                console.error("Error al eliminar carrito del backend:", error);
+              }
+
+              // Limpiar frontend
+              productos = [];
+              renderProducts();
+              calcularTotal();
 
             } else {
               Swal.fire("Pago no completado", "El pago no se pudo completar correctamente.", "warning");
@@ -360,7 +358,7 @@
 
     // Guardar pedido en el backend
     async function guardarPedido(product, orderId) {
-      const usuario = JSON.parse(localStorage.getItem("usuarioLogueado")) || {};
+      const username = localStorage.getItem("username") || "Invitado";
 
       const pedido = {
         sku: product.sku,
@@ -368,7 +366,7 @@
         imagen: product.imagen,
         cantidad: product.cantidad,
         precioUnitario: product.precio,
-        username: usuario.username || "Invitado",
+        username: username,
         total: product.precio * product.cantidad,
         orderId: orderId
       };
@@ -388,6 +386,7 @@
       }
     }
 
+
     // ===== EVENTOS =====
     hamburgerBtn.addEventListener('click', () => {
       menuContainer.classList.toggle('active');
@@ -398,13 +397,57 @@
       menuContainer.classList.remove('active');
       menuOverlay.classList.remove('active');
     });
+ function checkLogin() {
+  const token = localStorage.getItem('token');
+  const username = localStorage.getItem('username');
+
+  if (!token || !username || username === "Invitado") {
+    Swal.fire({
+      title: "Inicia sesión",
+      text: "Debes iniciar sesión para acceder a esta página.",
+      icon: "warning",
+      confirmButtonText: "Ir al login"
+    }).then(() => {
+      window.location.href = "Logeo.html";
+    });
+    return false;
+  }
+  return true;
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+  if (!checkLogin()) return;  // Si no está logueado, redirige y no continúa
 
     // ===== INICIALIZACIÓN =====
-    document.addEventListener('DOMContentLoaded', () => {
+   
       loadProducts();
       initPayPalButton();
     });
+   //==========Cerrar sesion================================
+    document.getElementById("logoutBtn").addEventListener("click", (e) => {
+    e.preventDefault();
 
+    Swal.fire({
+      title: "¿Deseas cerrar sesión?",
+      text: "Tu sesión se cerrará y serás redirigido al inicio de sesión.",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonText: "Sí, cerrar sesión",
+      cancelButtonText: "Cancelar",
+      confirmButtonColor: "#d33",
+      cancelButtonColor: "#3085d6"
+    }).then((result) => {
+      if (result.isConfirmed) {
+        // Limpiar datos del localStorage
+        localStorage.removeItem("token");
+        localStorage.removeItem("username");
+        localStorage.removeItem("usuarioLogueado");
+
+        // Redirigir al login
+        window.location.href = "Logeo.html";
+      }
+    });
+  });
   </script>
 
 </body>

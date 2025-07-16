@@ -41,8 +41,8 @@
       </a>
     </div>
   </header>
-
-  <div class="menu-overlay" id="menuOverlay"></div>
+  
+<div class="menu-overlay" id="menuOverlay"></div>
 
   <div class="menu-container" id="menuContainer">
     <!-- Input de búsqueda dentro del menú -->
@@ -116,20 +116,19 @@
 
         <span class="menu-item-text">Cascos de Box</span>
       </a>
-
-    </div>
-    <div class="menu-title">Historial Pedidos</div>
-    <!-- Icono de Listado -->
-    <a href="Pedido_usuario.html" class="menu-item">
+      <a href="Pedido_usuario.html" class="menu-item">
       <i class="fas fa-list"></i>
       <span class="menu-item-text">Mi Pedido</span>
     </a>
-    <div class="menu-section">
-      <div class="menu-title">Configuración</div>
-      <a href="#" class="menu-item">
+
+    </div>
+    <div class="menu-title">Configuración</div>
+      <a href="#" class="menu-item" id="logoutBtn">
         <i class="fas fa-sign-out-alt"></i>
         <span class="menu-item-text">Cerrar sesión</span>
       </a>
+    <div class="menu-section">
+      
     </div>
 
 
@@ -507,7 +506,27 @@
   </footer>
 
   <script>
-    document.addEventListener('DOMContentLoaded', () => {
+    function checkLogin() {
+  const token = localStorage.getItem('token');
+  const username = localStorage.getItem('username');
+
+  if (!token || !username || username === "Invitado") {
+    Swal.fire({
+      title: "Inicia sesión",
+      text: "Debes iniciar sesión para acceder a esta página.",
+      icon: "warning",
+      confirmButtonText: "Ir al login"
+    }).then(() => {
+      window.location.href = "Logeo.html";
+    });
+    return false;
+  }
+  return true;
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+  if (!checkLogin()) return;  // Si no está logueado, redirige y no continúa
+
       // Inicializar la página
       window.scrollTo(0, 0);
 
@@ -621,10 +640,10 @@
         btn.addEventListener('click', addToCart);
       });
     }
-
+    
     async function addToCart(e) {
       const token = localStorage.getItem('token'); 
-      const usuario = JSON.parse(localStorage.getItem("usuarioLogueado")) || {};
+      const username = localStorage.getItem("username") || "Invitado";
       const button = e.currentTarget;
 
       const producto = {
@@ -633,7 +652,7 @@
         precio: parseFloat(button.getAttribute('data-price')),
         sku: button.getAttribute('data-sku'),
         imagen: [button.getAttribute('data-img')],
-        username: usuario.username || "Invitado",
+        username: username || "Invitado",
         cantidad: 1
       };
 
@@ -675,8 +694,7 @@
     // ================ CARGAR ITEMS DEL CARRITO ================
     async function loadCartItems() {
       try {
-        const usuario = JSON.parse(localStorage.getItem("usuarioLogueado")) || {};
-        const username = usuario.username || "Invitado";
+       const username = localStorage.getItem("username") || "Invitado";
 
         const response = await fetch('http://localhost:9090/api/carrito');
         if (!response.ok) throw new Error("Error al cargar el carrito");
@@ -886,6 +904,31 @@
         text: message
       });
     }
+    //==========Cerrar sesion================================
+    document.getElementById("logoutBtn").addEventListener("click", (e) => {
+    e.preventDefault();
+
+    Swal.fire({
+      title: "¿Deseas cerrar sesión?",
+      text: "Tu sesión se cerrará y serás redirigido al inicio de sesión.",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonText: "Sí, cerrar sesión",
+      cancelButtonText: "Cancelar",
+      confirmButtonColor: "#d33",
+      cancelButtonColor: "#3085d6"
+    }).then((result) => {
+      if (result.isConfirmed) {
+        // Limpiar datos del localStorage
+        localStorage.removeItem("token");
+        localStorage.removeItem("username");
+        localStorage.removeItem("usuarioLogueado");
+
+        // Redirigir al login
+        window.location.href = "Logeo.html";
+      }
+    });
+  });
   </script>
   <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
   <script src="./JS/script_footer.js"></script>
