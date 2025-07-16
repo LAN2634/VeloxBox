@@ -2,6 +2,7 @@ package com.Horizon.MCS;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.*;
@@ -13,6 +14,8 @@ public class UsuarioController {
 
     @Autowired
     private UsuarioRepository usuarioRepository;
+    @Autowired private BCryptPasswordEncoder passwordEncoder;
+
 
     // Registro de usuario
     @PostMapping("/registrar")
@@ -38,9 +41,9 @@ public class UsuarioController {
             response.put("error", "El nombre de usuario ya está en uso");
             return ResponseEntity.badRequest().body(response);
         }
+        String passwordHasheado = passwordEncoder.encode(password);
+        usuario.setPasswordHash(passwordHasheado);
 
-        // Para pruebas, guardamos contraseña sin hash
-        usuario.setPasswordHash(password);
 
         usuarioRepository.save(usuario);
 
@@ -48,7 +51,7 @@ public class UsuarioController {
         response.put("username", username);
         return ResponseEntity.ok().body(response);
     }
-
+/*
     // Login de usuario
     @PostMapping("/login")
     public ResponseEntity<?> login(@RequestBody Map<String, String> loginData) {
@@ -67,5 +70,6 @@ public class UsuarioController {
         response.put("username", usuarioOptional.get().getUsername());
 
         return ResponseEntity.ok(response);
-    }
+    }*/
+
 }

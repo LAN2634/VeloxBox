@@ -588,6 +588,7 @@ input:hover {
     padding: 10px 14px;
 }
 
+
 .image-content {
     position: relative;
     row-gap: 5px;
@@ -618,6 +619,7 @@ input:hover {
 .cardButton {
     border: none;
     border-radius: 25px;
+    justify-content: center;
     width: 250px;
     height: 35px;
     display: block;
@@ -626,6 +628,8 @@ input:hover {
     color: #fff;
     transition: all 0.3s ease;
 }
+
+
 
 .cardButton:hover {
     color: #ad013a;
@@ -704,6 +708,7 @@ input:hover {
     text-align: center;
     padding-bottom: 20PX;
 }
+
 
 /* Responsive */
 @media (max-width: 768px) {

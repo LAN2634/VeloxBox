@@ -1,50 +1,82 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>No se el titulo xd</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-    <link rel="stylesheet" href="./CSS/style.pedidos.css">
-    <link rel="stylesheet" href="./CSS/estilosFooter.css">
-    <link rel="stylesheet" href="./CSS/style.css">
-    <style>
-        /* Estilos adicionales para alinear correctamente */
-        .productos-filtros {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            flex-wrap: wrap;
-        }
-        
-        .buscarPedidos {
-            margin-left: auto; /* Esto empuja la barra de búsqueda a la derecha */
-        }
-    </style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Historial de Pedidos</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <link rel="stylesheet" href="./CSS/style.pedidos.css">
+  <link rel="stylesheet" href="./CSS/estilosFooter.css">
+  <link rel="stylesheet" href="./CSS/style.css">
+  <style>
+    .productos-filtros {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+    .buscarPedidos {
+      margin-left: auto;
+    }
+    .add-product-btn {
+      background-color: black;
+      color: white;
+      border: none;
+      padding: 6px 12px;
+      border-radius: 8px;
+      cursor: pointer;
+    }
+    .modal-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.6);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      z-index: 1000;
+    }
+    .modal-content {
+      background: white;
+      padding: 20px;
+      border-radius: 10px;
+      width: 90%;
+      max-width: 500px;
+      max-height: 80vh;
+      overflow-y: auto;
+      box-shadow: 0 0 15px rgba(0,0,0,0.3);
+      text-align: center;
+    }
+    .modal-content table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 10px;
+    }
+    .modal-content th, .modal-content td {
+      padding: 8px;
+      border: 1px solid #ccc;
+    }
+    .hidden {
+      display: none;
+    }
+  </style>
 </head>
 <body>
-    
-    <main>
-          <header class="productos-header">
+
+<main>
+  <header class="productos-header">
     <button id="backButton" class="back-button" onclick="window.location.href='Tabla_productos_agregados.html'">←</button>
     <h1>Historial de Pedidos</h1>
- 
   </header>
 
   <div class="productos-container">
     <div class="productos-filtros">
-      <button class="filter-btn active" data-filter="todos">
-        <h3>Todos</h3>
-      </button>
-      <button class="filter-btn" data-filter="entregado">
-        <h3>Entregado</h3>
-      </button>
-      <button class="filter-btn" data-filter="pendiente">
-        <h3>Pendiente</h3>
-      </button>
-      <button class="filter-btn" data-filter="cancelado">
-        <h3>Cancelado</h3>
-      </button>
+      <button class="filter-btn active" data-filter="todos"><h3>Todos</h3></button>
+      <button class="filter-btn" data-filter="entregado"><h3>Entregado</h3></button>
+      <button class="filter-btn" data-filter="pendiente"><h3>Pendiente</h3></button>
+      <button class="filter-btn" data-filter="cancelado"><h3>Cancelado</h3></button>
       <div class="buscarPedidos">
         <input placeholder="Buscar Pedido..." type="text">
         <button type="submit">Ir</button>
@@ -60,58 +92,125 @@
           <th>Fecha del Pedido</th>
           <th>Total</th>
           <th>Estado</th>
+          <th>Detalles</th>
         </tr>
       </thead>
       <tbody id="productosList"></tbody>
     </table>
   </div>
-    </main>
+</main>
+
+<!-- Modal para detalles -->
+<div id="modalDetalles" class="modal-overlay hidden">
+  <div class="modal-content">
+    <h2>Detalles del Pedido</h2>
+    <table>
+      <thead>
+        <tr>
+          <th>SKU</th>
+          <th>Producto</th>
+          <th>Cantidad</th>
+          <th>Precio</th>
+        </tr>
+      </thead>
+      <tbody id="productosPedido"></tbody>
+    </table>
+    <button onclick="cerrarModal()">Cerrar</button>
+  </div>
+</div>
+
 <script>
-const PEDIDOS_API_URL = 'http://localhost:8080/api/Productos/pedidos';  // Ajusta si tu endpoint es distinto
+const PEDIDOS_API_URL = 'http://localhost:8080/api/Productos/pedidos';
 
 document.addEventListener('DOMContentLoaded', () => {
-    loadPedidos();
+  loadPedidos();
 });
 
 async function loadPedidos() {
-    try {
-        const response = await fetch(PEDIDOS_API_URL);
-        if (!response.ok) throw new Error('Error al cargar pedidos');
+  try {
+    const response = await fetch(PEDIDOS_API_URL);
+    if (!response.ok) throw new Error('Error al cargar pedidos');
 
-        const pedidos = await response.json();
-        renderPedidos(pedidos);
-    } catch (error) {
-        console.error('Error al cargar pedidos:', error);
-        document.getElementById('productosList').innerHTML = `
-            <tr><td colspan="6" style="text-align:center; color:red;">Error al cargar pedidos</td></tr>`;
-    }
+    const pedidos = await response.json();
+    renderPedidos(pedidos);
+  } catch (error) {
+    console.error('Error al cargar pedidos:', error);
+    document.getElementById('productosList').innerHTML = `
+      <tr><td colspan="7" style="text-align:center; color:red;">Error al cargar pedidos</td></tr>`;
+  }
 }
 
 function renderPedidos(pedidos) {
-    const tbody = document.getElementById('productosList');
-    if (pedidos.length === 0) {
-        tbody.innerHTML = `<tr><td colspan="6" style="text-align:center;">No hay pedidos registrados.</td></tr>`;
-        return;
-    }
+  const tbody = document.getElementById('productosList');
+  if (pedidos.length === 0) {
+    tbody.innerHTML = `<tr><td colspan="7" style="text-align:center;">No hay pedidos registrados.</td></tr>`;
+    return;
+  }
 
-    tbody.innerHTML = pedidos.map(pedido => `
-        <tr>
-            <td>${pedido.id}</td>
-            <td>${pedido.username}</td>
-            <td>${pedido.nombre}</td>
-            <td>${pedido.fechaPedido ? formatFecha(pedido.fechaPedido) : '-'}</td>
-            <td>$${pedido.total.toFixed(2)} MXN</td>
-            <td>Pendiente</td>
-        </tr>
-    `).join('');
+  const agrupados = {};
+
+  pedidos.forEach(p => {
+    if (!agrupados[p.orderId]) {
+      agrupados[p.orderId] = {
+        orderId: p.orderId,
+        usuario: p.username,
+        fechaPedido: p.fechaPedido,
+        total: 0,
+        productos: []
+      };
+    }
+    agrupados[p.orderId].total += p.total;
+    agrupados[p.orderId].productos.push(p);
+  });
+
+  tbody.innerHTML = Object.values(agrupados).map(pedido => {
+    const nombres = pedido.productos.map(p => p.nombre).join(', ');
+    return `
+      <tr>
+        <td>${pedido.orderId}</td>
+        <td>${pedido.usuario}</td>
+        <td>${nombres}</td>
+        <td>${pedido.fechaPedido ? formatFecha(pedido.fechaPedido) : '-'}</td>
+        <td>$${pedido.total.toFixed(2)} MXN</td>
+        <td>Pendiente</td>
+        <td><button class="add-product-btn" data-orderid="${pedido.orderId}">Detalles</button></td>
+      </tr>
+    `;
+  }).join('');
+
+  document.querySelectorAll('.add-product-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const orderId = btn.getAttribute('data-orderid');
+      mostrarDetalles(agrupados[orderId].productos);
+    });
+  });
+}
+
+function mostrarDetalles(productos) {
+  const modal = document.getElementById('modalDetalles');
+  const tbody = document.getElementById('productosPedido');
+
+  tbody.innerHTML = productos.map(p => `
+    <tr>
+      <td>${p.sku}</td>
+      <td>${p.nombre}</td>
+      <td>${p.cantidad}</td>
+      <td>$${p.total.toFixed(2)}</td>
+    </tr>
+  `).join('');
+
+  modal.classList.remove('hidden');
+}
+
+function cerrarModal() {
+  document.getElementById('modalDetalles').classList.add('hidden');
 }
 
 function formatFecha(fechaISO) {
-    const fecha = new Date(fechaISO);
-    return fecha.toLocaleString();
+  const fecha = new Date(fechaISO);
+  return fecha.toLocaleString();
 }
 </script>
-
 
 </body>
 </html>

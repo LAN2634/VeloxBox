@@ -5,6 +5,8 @@ USE velox_db;
 SELECT name 
 FROM sys.tables;
 
+SP_COLUMNS CarritoP
+
 DROP DATABASE velox_db;
 
 
@@ -15,6 +17,11 @@ CREATE TABLE CarritoP(
     precio FLOAT,
     imagen VARBINARY(MAX)	 
 );
+
+ALTER TABLE CarritoP 
+	DROP COLUMN categoria ;
+
+
 DROP TABLE CarritoP;
 select * from CarritoP;
 delete from CarritoP;
@@ -33,5 +40,10 @@ ADD
 ALTER TABLE CarritoP
 add sku NVARCHAR(50) NOT NULL;
 
+
 ALTER TABLE CarritoP
 DROP COLUMN sku;
+
+SELECT COLUMN_NAME, DATA_TYPE, IS_NULLABLE, CHARACTER_MAXIMUM_LENGTH
+FROM INFORMATION_SCHEMA.COLUMNS
+WHERE TABLE_NAME = 'CarritoP';

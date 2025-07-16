@@ -20,7 +20,7 @@ public class Usuario {
     @Column(name = "fecha_registro", updatable = false)
     private LocalDateTime fechaRegistro;
 
-    @Column(unique = true, length = 50)
+    @Column(name = "username")
     private String username;
 
     // Constructor vacío

@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/api/Productos")
-@CrossOrigin("*")
+//@CrossOrigin("*")
 public class FormController {
 
     @Autowired
@@ -94,6 +94,8 @@ public class FormController {
             return ResponseEntity.notFound().build();
         }
     }
+
+
     //==============================================================================================================
     @GetMapping("/stock")
     public ResponseEntity<Map<String, Integer>> obtenerStock(@RequestParam Long id) {
@@ -156,5 +158,7 @@ public ResponseEntity<List<Pedidos>> obtenerPedidos() {
 public List<Pedidos> obtenerPedidosPorUsuario(@PathVariable String username) {
     return pedidoRepository.findByUsername(username);
 }
+//=========================================================
+
 
 }
