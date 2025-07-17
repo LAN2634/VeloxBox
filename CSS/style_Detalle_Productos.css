@@ -515,32 +515,111 @@ input:hover {
 }
 
 /* Productos similares */
+/* PRODUCTOS SIMILARES - ESTILOS COMBINADOS */
 .similares {
     grid-column: 1 / -1;
-    padding: 2rem;
+    padding: 2rem 6rem;
+    margin-top: 2rem;
+    background-color: #f8f8f8;
 }
 
-.productosSimilares {
-    grid-column: 2 / 11;
+.similares h3 {
+    font-size: 1.8rem;
+    margin-bottom: 2rem;
+    text-align: center;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: #333;
 }
 
 .product-grid {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
-    gap: 1.5rem;
-    padding-left: 2rem;
-    padding-right: 2rem;
+    gap: 2rem;
+    padding: 0 2rem;
 }
 
-.card:hover {
+.product-card {
+    background: white;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    transition: all 0.3s ease;
+    display: flex;
+    flex-direction: column;
+}
+
+.product-card:hover {
     transform: translateY(-5px);
+    box-shadow: 0 5px 15px rgba(0,0,0,0.15);
 }
 
-.info {
+.product-img {
+    height: 250px;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #f8f8f8;
     padding: 1rem;
+}
+
+.product-img img {
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: contain;
+    transition: transform 0.3s ease;
+}
+
+.product-card:hover .product-img img {
+    transform: scale(1.05);
+}
+
+.product-info {
+    padding: 1.5rem;
+    text-align: center;
     flex-grow: 1;
     display: flex;
     flex-direction: column;
+}
+
+.product-name {
+    font-size: 1rem;
+    margin-bottom: 0.5rem;
+    color: #333;
+    font-weight: 600;
+}
+
+.product-price {
+    font-size: 1.1rem;
+    color: #e63946;
+    font-weight: bold;
+    margin-bottom: 1rem;
+}
+
+.add-to-cart {
+    background: #000;
+    color: white;
+    border: none;
+    padding: 0.8rem;
+    width: 100%;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-size: 13px;
+    letter-spacing: 1px;
+    margin-top: auto;
+    border-radius: 3px;
+    font-weight: bold;
+
+}
+
+.add-to-cart:hover {
+    background: #333;
+}
+
+/* Estilos específicos que querías integrar */
+.productosSimilares {
+    grid-column: 1 / -1; /* Modificado para ocupar todo el ancho */
 }
 
 .info h2 {
@@ -552,24 +631,40 @@ input:hover {
     margin-bottom: 1rem;
 }
 
-.add-to-cart:hover {
-    background: #333;
+/* Responsive Design */
+@media (max-width: 1200px) {
+    .product-grid {
+        grid-template-columns: repeat(3, 1fr);
+    }
 }
 
-
-/* Enlaces */
-a {
-    color: black;
-    padding: 25px;
-    margin-top: 5px;
-    margin-left: 40px;
+@media (max-width: 900px) {
+    .similares {
+        padding: 2rem;
+    }
 }
 
-/* Precio */
-h5 {
-    font-size: 25px;
-    margin-top: 35px;
-    font-weight: normal;
+@media (max-width: 768px) {
+    .product-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 1.5rem;
+        padding-left: 2rem;
+        padding-right: 2rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .product-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .similares {
+        padding: 1.5rem;
+    }
+    
+    .product-img {
+        height: 200px;
+    }
 }
 
 /*Responsive*/
@@ -608,57 +703,7 @@ h5 {
     }
 }
 
-/* Productos similares */
-.similares {
-    grid-column: 1 / -1;
-    padding: 2rem;
-    margin-top: 2rem;
-    border-top: 1px solid #eee;
-}
 
-.similares h3 {
-    font-size: 1.5rem;
-    margin-bottom: 1.5rem;
-    text-align: center;
-    text-transform: uppercase;
-    letter-spacing: 1px;
-}
-
-.product-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-    gap: 2rem;
-    padding: 0 2rem;
-}
-
-.product-card {
-    background: white;
-    border-radius: 8px;
-    overflow: hidden;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
-}
-
-.product-card:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
-}
-
-.product-img {
-    height: 250px;
-    overflow: hidden;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background: #f8f8f8;
-}
-
-.product-img img {
-    max-width: 100%;
-    max-height: 100%;
-    object-fit: contain;
-    transition: transform 0.3s ease;
-}
 
 .product-card:hover .product-img img {
     transform: scale(1.05);

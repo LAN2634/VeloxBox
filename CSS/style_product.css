@@ -529,7 +529,7 @@ input:hover {
 .buy-btn {
   width: 100%;
   padding: 12px;
-  background-color: #2a2a2a;
+  background-color: #000000;
   color: white;
   border: none;
   border-radius: 4px;
@@ -540,7 +540,7 @@ input:hover {
 }
 
 .buy-btn:hover {
-  background-color: #000;
+  background-color: #2a2a2a;
 }
 
 .menu-icon {
