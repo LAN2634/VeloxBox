@@ -12,65 +12,6 @@
     <link rel="stylesheet" href="./CSS/estilosFooter.css">
 
     <title>Detalle del producto</title>
-        <style>
-            .similares {
-                grid-column: 1 / -1;
-                padding: 2rem;
-            }
-
-            .productosSimilares {
-                grid-column: 2 / 11;
-            }
-
-            .product-grid {
-                display: grid;
-                grid-template-columns: repeat(4, 1fr);
-                gap: 1.5rem;
-                padding-left: 2rem;
-                padding-right: 2rem;
-            }
-
-            .card:hover {
-                transform: translateY(-5px);
-            }
-
-            .info {
-                padding: 1rem;
-                flex-grow: 1;
-                display: flex;
-                flex-direction: column;
-            }
-
-            .info h2 {
-                font-size: 1rem;
-                margin-bottom: 0.25rem;
-            }
-
-            .info p {
-                margin-bottom: 1rem;
-            }
-
-            .add-to-cart:hover {
-                background: #333;
-            }
-
-
-            /* Enlaces */
-            a {
-                color: black;
-                padding: 25px;
-                margin-top: 5px;
-                margin-left: 40px;
-            }
-
-            /* Precio */
-            h5 {
-                font-size: 25px;
-                margin-top: 35px;
-                font-weight: normal;
-            }
-        </style>
-
 </head>
 
 <body>
@@ -704,27 +645,7 @@
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
     <script>
-        function checkLogin() {
-            const token = localStorage.getItem('token');
-            const username = localStorage.getItem('username');
-
-            if (!token || !username || username === "Invitado") {
-                Swal.fire({
-                    title: "Inicia sesión",
-                    text: "Debes iniciar sesión para acceder a esta página.",
-                    icon: "warning",
-                    confirmButtonText: "Ir al login"
-                }).then(() => {
-                    window.location.href = "Logeo.html";
-                });
-                return false;
-            }
-            return true;
-        }
-
-        document.addEventListener('DOMContentLoaded', () => {
-            if (!checkLogin()) return;  // Si no está logueado, redirige y no continúa
-
+        document.addEventListener("DOMContentLoaded", () => {
             // Modal de Guía de Tallas
 
             const enlaceGuia = document.querySelector('.guia-tallas');
@@ -951,53 +872,66 @@
         }
 
         // ==================== AGREGAR AL CARRITO CON TOKEN ====================
-        async function addToCart(producto) {
-            const token = localStorage.getItem('token');
-            const username = localStorage.getItem("username") || "Invitado";
+      async function addToCart(producto) {
+  // 🔐 Validación directa dentro de la función
+  const token = localStorage.getItem('token');
+  const username = localStorage.getItem('username');
 
-            // Asegurarnos de que el producto tenga el username
-            producto.username = username;
+  if (!token || !username || username === "Invitado") {
+    Swal.fire({
+      title: "Inicia sesión",
+      text: "Debes iniciar sesión para agregar productos al carrito.",
+      icon: "warning",
+      confirmButtonText: "Ir al login"
+    }).then(() => {
+      window.location.href = "Logeo.html";
+    });
+    return;
+  }
 
-            try {
-                // 1. Consultar stock actual
-                const stockResponse = await fetch(`http://localhost:8080/api/Productos/${producto.id}/stock`);
-                if (!stockResponse.ok) throw new Error("Error al consultar stock");
+  // 👤 Asociar usuario al producto
+  producto.username = username;
 
-                const stockData = await stockResponse.json();
+  try {
+    // 1. Consultar stock actual
+    const stockResponse = await fetch(`http://localhost:8080/api/Productos/${producto.id}/stock`);
+    if (!stockResponse.ok) throw new Error("Error al consultar stock");
 
-                // 2. Verificar si hay stock disponible
-                if (stockData.stock < 1) {
-                    showError('Lo sentimos, este producto está agotado.');
-                    return;
-                }
+    const stockData = await stockResponse.json();
 
-                // 3. Enviar producto con token
-                const response = await fetch('http://localhost:9090/api/carrito/agregar', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                        'Authorization': `Bearer ${token}` // Aquí enviamos el token
-                    },
-                    body: JSON.stringify(producto)
-                });
+    // 2. Verificar si hay stock disponible
+    if (stockData.stock < 1) {
+      showError('Lo sentimos, este producto está agotado.');
+      return;
+    }
 
-                if (!response.ok) throw new Error("Error al agregar al carrito");
+    // 3. Enviar producto con token
+    const response = await fetch('http://localhost:9090/api/carrito/agregar', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${token}`
+      },
+      body: JSON.stringify(producto)
+    });
 
-                showSuccess(`${producto.nombre} añadido al carrito`);
-                updateCartCount();
-                animateCartIcon();
+    if (!response.ok) throw new Error("Error al agregar al carrito");
 
-                // Actualizar panel del carrito si está visible
-                const cartPanel = document.getElementById('cartPanel');
-                if (cartPanel && !cartPanel.classList.contains('hidden')) {
-                    await loadCartItems();
-                }
+    // 4. Mostrar éxito y actualizar carrito
+    showSuccess(`${producto.nombre} añadido al carrito`);
+    updateCartCount();
+    animateCartIcon();
 
-            } catch (error) {
-                console.error("Error:", error);
-                showError('No se pudo agregar al carrito');
-            }
-        }
+    const cartPanel = document.getElementById('cartPanel');
+    if (cartPanel && !cartPanel.classList.contains('hidden')) {
+      await loadCartItems();
+    }
+
+  } catch (error) {
+    console.error("Error:", error);
+    showError('No se pudo agregar al carrito');
+  }
+}
 
 
         // ==================== CARGAR ITEMS DEL CARRITO CON FILTRO ====================
