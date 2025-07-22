@@ -1,8 +1,9 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Historial de Pedidos</title>
   <link rel="icon" href="./SVGs/logoVelox.png" type="image/png">
 
@@ -23,9 +24,11 @@
       gap: 10px;
       flex-wrap: wrap;
     }
+
     .buscarPedidos {
       margin-left: auto;
     }
+
     .add-product-btn {
       background-color: black;
       color: white;
@@ -34,6 +37,7 @@
       border-radius: 8px;
       cursor: pointer;
     }
+
     .modal-overlay {
       position: fixed;
       top: 0;
@@ -46,6 +50,7 @@
       align-items: center;
       z-index: 1000;
     }
+
     .modal-content {
       background: white;
       padding: 20px;
@@ -54,61 +59,79 @@
       max-width: 500px;
       max-height: 80vh;
       overflow-y: auto;
-      box-shadow: 0 0 15px rgba(0,0,0,0.3);
+      box-shadow: 0 0 15px rgba(0, 0, 0, 0.3);
       text-align: center;
     }
+
     .modal-content table {
       width: 100%;
       border-collapse: collapse;
       margin-top: 10px;
     }
-    .modal-content th, .modal-content td {
+
+    .modal-content th,
+    .modal-content td {
       padding: 8px;
       border: 1px solid #ccc;
     }
+
     .hidden {
       display: none;
 
-    }  
-    /* HEADER STYLES */
-    .productos-header{
-        background: #000;
-        color: white;
-        padding: 1rem 2rem;
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        position: fixed;
-        top: 0;
-        width: 100%;
-        z-index: 100;
     }
-.back-button {
-        background: transparent;
-        border: none;
-        color: white;
-        font-size: 1.5rem;
-        cursor: pointer;
+
+    /* HEADER STYLES */
+    .productos-header {
+      background: #000;
+      color: white;
+      padding: 1rem 2rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      position: fixed;
+      top: 0;
+      width: 100%;
+      z-index: 100;
+    }
+
+    .back-button {
+      background: transparent;
+      border: none;
+      color: white;
+      font-size: 1.5rem;
+      cursor: pointer;
     }
 
     .contenedor-central {
-      max-width: 1000px; 
+      max-width: 1000px;
       margin: 0 auto;
       padding: 1rem;
     }
 
-    main{
+    main {
       padding-top: 4rem;
+    }
+
+    .add-product-btn {
+      background-color: #000;
+      color: white;
+      border: none;
+      padding: 10px 20px;
+      border-radius: 8px;
+      cursor: pointer;
+      margin-top: 20px;
     }
   </style>
 </head>
+
 <body>
   <header>
     <div class="header-left">
       <button class="hamburger-btn" id="hamburgerBtn">
         <i class="fas fa-bars"></i>
       </button>
-    <button id="backButton" class="back-button" onclick="window.location.href='Tabla_productos_agregados.html'">←</button>
+      <button id="backButton" class="back-button"
+        onclick="window.location.href='Tabla_productos_agregados.html'">←</button>
       <h1 class="titulo-header">Historial de Pedidos</h1>
     </div>
     <!--estos dos, el de arriba y el de abajo son para el logo animado-->
@@ -209,15 +232,23 @@
 
 
   </div>
-<main>
-<div class="contenedor-central">
+  <main>
+    <div class="contenedor-central">
 
       <div class="productos-container">
         <div class="productos-filtros">
-          <button class="filter-btn active" data-filter="todos"><h3>Todos</h3></button>
-          <button class="filter-btn" data-filter="entregado"><h3>Entregado</h3></button>
-          <button class="filter-btn" data-filter="pendiente"><h3>Pendiente</h3></button>
-          <button class="filter-btn" data-filter="cancelado"><h3>Cancelado</h3></button>
+          <button class="filter-btn active" data-filter="todos">
+            <h3>Todos</h3>
+          </button>
+          <button class="filter-btn" data-filter="entregado">
+            <h3>Entregado</h3>
+          </button>
+          <button class="filter-btn" data-filter="pendiente">
+            <h3>Pendiente</h3>
+          </button>
+          <button class="filter-btn" data-filter="cancelado">
+            <h3>Cancelado</h3>
+          </button>
           <div class="buscarPedidos">
             <input placeholder="Buscar Pedido..." type="text">
             <button type="submit">Ir</button>
@@ -239,76 +270,98 @@
           <tbody id="productosList"></tbody>
         </table>
       </div>
-     </div> 
-</main>
+    </div>
+  </main>
 
-<!-- Modal para detalles -->
-<div id="modalDetalles" class="modal-overlay hidden">
-  <div class="modal-content">
-    <h2>Detalles del Pedido</h2>
-    <table>
-      <thead>
-        <tr>
-          <th>SKU</th>
-          <th>Producto</th>
-          <th>Cantidad</th>
-          <th>Precio</th>
-        </tr>
-      </thead>
-      <tbody id="productosPedido"></tbody>
-    </table>
-    <button onclick="cerrarModal()">Cerrar</button>
+  <!-- Modal para detalles -->
+  <div id="modalDetalles" class="modal-overlay hidden">
+    <div class="modal-content">
+      <h2>Detalles del Pedido</h2>
+      <table>
+        <thead>
+          <tr>
+            <th>SKU</th>
+            <th>Producto</th>
+            <th>Cantidad</th>
+            <th>Precio</th>
+          </tr>
+        </thead>
+        <tbody id="productosPedido"></tbody>
+      </table>
+      <button onclick="cerrarModal()" , class="add-product-btn">Cerrar</button>
+    </div>
   </div>
-</div>
-<script src="./JS/script_index.js"></script>
+  <script src="./JS/script_index.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+  <script>
 
-<script>
-const PEDIDOS_API_URL = 'http://localhost:8080/api/Productos/pedidos';
+    const PEDIDOS_API_URL = 'http://localhost:8080/api/Productos/pedidos';
+    function checkLogin() {
+  const token = localStorage.getItem('token');
+  const username = localStorage.getItem('username');
+  const rol = localStorage.getItem('rol');
 
-document.addEventListener('DOMContentLoaded', () => {
-  loadPedidos();
-});
-
-async function loadPedidos() {
-  try {
-    const response = await fetch(PEDIDOS_API_URL);
-    if (!response.ok) throw new Error('Error al cargar pedidos');
-
-    const pedidos = await response.json();
-    renderPedidos(pedidos);
-  } catch (error) {
-    console.error('Error al cargar pedidos:', error);
-    document.getElementById('productosList').innerHTML = `
-      <tr><td colspan="7" style="text-align:center; color:red;">Error al cargar pedidos</td></tr>`;
+  if (!token || !username || rol !== 'admin') {
+    Swal.fire({
+      title: "Acceso restringido",
+      text: "Debes iniciar sesión como administrador para acceder a esta página.",
+      icon: "warning",
+      confirmButtonText: "Ir al login"
+    }).then(() => {
+      window.location.href = "Logeomaster.html"; // o tu ruta de login admin
+    });
+    return false;
   }
+  return true;
 }
 
-function renderPedidos(pedidos) {
-  const tbody = document.getElementById('productosList');
-  if (pedidos.length === 0) {
-    tbody.innerHTML = `<tr><td colspan="7" style="text-align:center;">No hay pedidos registrados.</td></tr>`;
-    return;
-  }
+document.addEventListener('DOMContentLoaded', () => {
+  if (!checkLogin()) return;
+  
 
-  const agrupados = {};
+      loadPedidos();
+    });
 
-  pedidos.forEach(p => {
-    if (!agrupados[p.orderId]) {
-      agrupados[p.orderId] = {
-        orderId: p.orderId,
-        usuario: p.username,
-        fechaPedido: p.fechaPedido,
-        total: 0,
-        productos: []
-      };
+    async function loadPedidos() {
+      try {
+        const response = await fetch(PEDIDOS_API_URL);
+        if (!response.ok) throw new Error('Error al cargar pedidos');
+
+        const pedidos = await response.json();
+        renderPedidos(pedidos);
+      } catch (error) {
+        console.error('Error al cargar pedidos:', error);
+        document.getElementById('productosList').innerHTML = `
+      <tr><td colspan="7" style="text-align:center; color:red;">Error al cargar pedidos</td></tr>`;
+      }
     }
-    agrupados[p.orderId].total += p.total;
-    agrupados[p.orderId].productos.push(p);
-  });
 
-  tbody.innerHTML = Object.values(agrupados).map(pedido => {
-    const nombres = pedido.productos.map(p => p.nombre).join(', ');
-    return `
+    function renderPedidos(pedidos) {
+      const tbody = document.getElementById('productosList');
+      if (pedidos.length === 0) {
+        tbody.innerHTML = `<tr><td colspan="7" style="text-align:center;">No hay pedidos registrados.</td></tr>`;
+        return;
+      }
+
+      const agrupados = {};
+
+      pedidos.forEach(p => {
+        if (!agrupados[p.orderId]) {
+          agrupados[p.orderId] = {
+            orderId: p.orderId,
+            usuario: p.username,
+            fechaPedido: p.fechaPedido,
+            total: 0,
+            productos: []
+          };
+        }
+        agrupados[p.orderId].total += p.total;
+        agrupados[p.orderId].productos.push(p);
+      });
+
+      tbody.innerHTML = Object.values(agrupados).map(pedido => {
+        const nombres = pedido.productos.map(p => p.nombre).join(', ');
+        return `
       <tr>
         <td>${pedido.orderId}</td>
         <td>${pedido.usuario}</td>
@@ -319,21 +372,21 @@ function renderPedidos(pedidos) {
         <td><button class="add-product-btn" data-orderid="${pedido.orderId}">Detalles</button></td>
       </tr>
     `;
-  }).join('');
+      }).join('');
 
-  document.querySelectorAll('.add-product-btn').forEach(btn => {
-    btn.addEventListener('click', () => {
-      const orderId = btn.getAttribute('data-orderid');
-      mostrarDetalles(agrupados[orderId].productos);
-    });
-  });
-}
+      document.querySelectorAll('.add-product-btn').forEach(btn => {
+        btn.addEventListener('click', () => {
+          const orderId = btn.getAttribute('data-orderid');
+          mostrarDetalles(agrupados[orderId].productos);
+        });
+      });
+    }
 
-function mostrarDetalles(productos) {
-  const modal = document.getElementById('modalDetalles');
-  const tbody = document.getElementById('productosPedido');
+    function mostrarDetalles(productos) {
+      const modal = document.getElementById('modalDetalles');
+      const tbody = document.getElementById('productosPedido');
 
-  tbody.innerHTML = productos.map(p => `
+      tbody.innerHTML = productos.map(p => `
     <tr>
       <td>${p.sku}</td>
       <td>${p.nombre}</td>
@@ -342,18 +395,19 @@ function mostrarDetalles(productos) {
     </tr>
   `).join('');
 
-  modal.classList.remove('hidden');
-}
+      modal.classList.remove('hidden');
+    }
 
-function cerrarModal() {
-  document.getElementById('modalDetalles').classList.add('hidden');
-}
+    function cerrarModal() {
+      document.getElementById('modalDetalles').classList.add('hidden');
+    }
 
-function formatFecha(fechaISO) {
-  const fecha = new Date(fechaISO);
-  return fecha.toLocaleString();
-}
-</script>
+    function formatFecha(fechaISO) {
+      const fecha = new Date(fechaISO);
+      return fecha.toLocaleString();
+    }
+  </script>
 
 </body>
+
 </html>

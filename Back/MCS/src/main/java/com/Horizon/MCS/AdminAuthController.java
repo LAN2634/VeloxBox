@@ -13,7 +13,7 @@ import org.springframework.http.*;
  */
 @RestController
 @RequestMapping("/admin")
-@CrossOrigin(origins = "*")
+
 public class AdminAuthController {
 
     @Autowired
@@ -26,12 +26,18 @@ public class AdminAuthController {
 
         return adminAuthRepo
                 .findByUsuarioAndContrasena(user, pass)
-                .map(admin -> ResponseEntity.ok(Map.of(
-                        "username", admin.getUsuario(),
-                        "mensaje",  "Login de administrador exitoso"
-                )))
+                .map(admin -> {
+                    // ✅ Generar el token JWT con el nombre de usuario
+                    String token = JwtUtil.generateToken(admin.getUsuario());
+
+                    return ResponseEntity.ok(Map.of(
+                            "username", admin.getUsuario(),
+                            "mensaje", "Login de administrador exitoso",
+                            "token", token
+                    ));
+                })
                 .orElseGet(() -> ResponseEntity
                         .status(HttpStatus.UNAUTHORIZED)
-                        .body(Map.of("mensaje","Credenciales incorrectas")));
+                        .body(Map.of("mensaje", "Credenciales incorrectas")));
     }
 }

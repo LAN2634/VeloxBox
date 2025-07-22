@@ -57,21 +57,69 @@
       <tbody id="productosList"></tbody>
     </table>
   </div>
-  <script>document.addEventListener('DOMContentLoaded', () => {
-      // Botón "Atrás"
+  <script>
+    function checkLogin() {
+      const token = localStorage.getItem('token');
+      const username = localStorage.getItem('username');
+      const rol = localStorage.getItem('rol');
+
+      if (!token || !username || rol !== 'admin') {
+        Swal.fire({
+          title: "Acceso restringido",
+          text: "Debes iniciar sesión como administrador para acceder a esta página.",
+          icon: "warning",
+          confirmButtonText: "Ir al login"
+        }).then(() => {
+          window.location.href = "Logeomaster.html";
+        });
+        return false;
+      }
+      return true;
+    }
+
+    // ==================== FUNCIÓN authFetch ====================
+    function authFetch(url, options = {}) {
+      const token = localStorage.getItem('token');
+      const username = localStorage.getItem('username');
+      const rol = localStorage.getItem('rol');
+
+      if (!token || !username || rol !== 'admin') {
+        Swal.fire({
+          title: "Acceso denegado",
+          text: "Debes iniciar sesión como administrador para realizar esta acción.",
+          icon: "warning",
+          confirmButtonText: "Ir al login"
+        }).then(() => {
+          localStorage.clear();
+          window.location.href = "Logeomaster.html";
+        });
+        return Promise.reject("No autorizado");
+      }
+
+      const headers = options.headers || {};
+      return fetch(url, {
+        ...options,
+        headers: {
+          ...headers,
+          'Authorization': `Bearer ${token}`,
+          'Content-Type': 'application/json',
+        }
+      });
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+      if (!checkLogin()) return;
+
       document.getElementById('backButton').addEventListener('click', () => {
         window.history.back();
       });
 
-      // Botón "Añadir Producto"
       document.getElementById('addProductBtn').addEventListener('click', () => {
         window.location.href = 'Formulario_Agregar_Productos.html';
       });
 
-      // Cargar productos al iniciar
       loadAndRenderProducts();
 
-      // Filtros
       document.querySelectorAll('.filter-btn').forEach(btn => {
         btn.addEventListener('click', () => {
           document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
@@ -81,13 +129,9 @@
         });
       });
 
-      // Eliminar productos seleccionados
       document.getElementById('deleteProductBtn').addEventListener('click', deleteSelectedProducts);
-
-      // Actualizar productos seleccionados
       document.getElementById('updateProductBtn').addEventListener('click', updateSelectedProducts);
 
-      // Seleccionar/deseleccionar todos
       document.getElementById('selectAll').addEventListener('change', (e) => {
         document.querySelectorAll('.product-checkbox').forEach(cb => {
           cb.checked = e.target.checked;
@@ -100,7 +144,7 @@
 
     async function loadAndRenderProducts(filter = 'todos') {
       try {
-        const response = await fetch('http://localhost:8080/api/Productos');
+        const response = await authFetch('http://localhost:8080/api/Productos');
         if (!response.ok) throw new Error('Error al cargar productos');
 
         const productos = await response.json();
@@ -120,7 +164,6 @@
       const tbody = document.getElementById('productosList');
       tbody.innerHTML = '';
 
-      // Filtrar productos según el botón seleccionado
       const filteredProducts = filter === 'todos'
         ? productos
         : productos.filter(p => p.status === filter);
@@ -130,35 +173,30 @@
         return;
       }
 
-      // Renderizar cada producto
       filteredProducts.forEach(producto => {
         const tr = document.createElement('tr');
         tr.dataset.id = producto.id;
         tr.innerHTML = `
         <td><input type="checkbox" class="product-checkbox"></td>
         <td>
-            <img src="${producto.imagen?.[0] || 'img/placeholder.png'}" class="miniatura-tabla">
-            ${producto.nombre}
+          <img src="${producto.imagen?.[0] || 'img/placeholder.png'}" class="miniatura-tabla">
+          ${producto.nombre}
         </td>
-        <td>
-            ${producto.sku}
-        </td>
+        <td>${producto.sku}</td>
         <td>${producto.stock}</td>
         <td>${producto.categoria}</td>
-    `;
+      `;
         tbody.appendChild(tr);
       });
 
-      // Evento para cambiar estado al hacer clic
       tbody.querySelectorAll('.estado').forEach(span => {
         span.addEventListener('click', async () => {
           const id = span.closest('tr').dataset.id;
           const newStatus = span.textContent === 'Activo' ? 'Pausa' : 'Activo';
 
           try {
-            const response = await fetch(`http://localhost:8080/api/Productos/${id}`, {
+            const response = await authFetch(`http://localhost:8080/api/Productos/${id}`, {
               method: 'PATCH',
-              headers: { 'Content-Type': 'application/json' },
               body: JSON.stringify({ status: newStatus })
             });
 
@@ -177,7 +215,6 @@
         });
       });
 
-      // Evento para checkboxes
       document.querySelectorAll('.product-checkbox').forEach(cb => {
         cb.addEventListener('change', updateButtonsState);
       });
@@ -189,16 +226,16 @@
       const anyChecked = document.querySelectorAll('.product-checkbox:checked').length > 0;
       const singleChecked = document.querySelectorAll('.product-checkbox:checked').length === 1;
 
-      // Actualizar botón eliminar
       deleteBtn.disabled = !anyChecked;
       deleteBtn.classList.toggle('active', anyChecked);
 
-      // Actualizar botón actualizar (solo activo cuando hay exactamente 1 seleccionado)
       updateBtn.disabled = !singleChecked;
       updateBtn.classList.toggle('active', singleChecked);
     }
 
     async function deleteSelectedProducts() {
+      const token = localStorage.getItem('token');
+      const rol = localStorage.getItem('rol');
       const selectedIds = Array.from(document.querySelectorAll('.product-checkbox:checked'))
         .map(cb => cb.closest('tr').dataset.id);
 
@@ -216,9 +253,8 @@
       if (!isConfirmed) return;
 
       try {
-        // Eliminar cada producto seleccionado
         const deletePromises = selectedIds.map(id =>
-          fetch(`http://localhost:8080/api/Productos/${id}`, { method: 'DELETE' })
+          authFetch(`http://localhost:8080/api/Productos/${id}`, { method: 'DELETE' })
         );
 
         await Promise.all(deletePromises);
@@ -230,7 +266,6 @@
           timer: 1500
         });
 
-        // Recargar la tabla
         const activeFilter = document.querySelector('.filter-btn.active').dataset.filter;
         loadAndRenderProducts(activeFilter);
       } catch (error) {
@@ -244,12 +279,13 @@
     }
 
     async function updateSelectedProducts() {
+      const token = localStorage.getItem('token');
+      const rol = localStorage.getItem('rol');
       const selectedIds = Array.from(document.querySelectorAll('.product-checkbox:checked'))
         .map(cb => cb.closest('tr').dataset.id);
 
       if (selectedIds.length === 0) return;
 
-      // Solo permitir actualizar un producto a la vez
       if (selectedIds.length > 1) {
         Swal.fire({
           icon: 'warning',
@@ -260,11 +296,11 @@
         return;
       }
 
-      // Redirigir a la página de actualización con el ID del producto
       const productId = selectedIds[0];
       window.location.href = `ActualizarProductos.html?id=${productId}`;
     }
   </script>
+
   <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </body>
 

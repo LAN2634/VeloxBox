@@ -141,8 +141,29 @@
 
   <script src="https://cdn.jsdelivr.net/npm/quill@2.0.0/dist/quill.min.js"></script>
   <script>
+    function checkLogin() {
+  const token = localStorage.getItem('token');
+  const username = localStorage.getItem('username');
+  const rol = localStorage.getItem('rol');
 
-    document.addEventListener('DOMContentLoaded', () => {
+  if (!token || !username || rol !== 'admin') {
+    Swal.fire({
+      title: "Acceso restringido",
+      text: "Debes iniciar sesión como administrador para acceder a esta página.",
+      icon: "warning",
+      confirmButtonText: "Ir al login"
+    }).then(() => {
+      window.location.href = "Logeomaster.html"; // o tu ruta de login admin
+    });
+    return false;
+  }
+  return true;
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+  if (!checkLogin()) return;
+  
+  
       // Editor Quill (para descripción enriquecida)
       const quill = new Quill('#editor', {
         theme: 'snow',
