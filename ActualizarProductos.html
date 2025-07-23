@@ -209,8 +209,9 @@
 
                 // Establecer la categoría del producto
                 if (producto.categoria) {
-                    document.getElementById('category').value = producto.categoria;
+                    localStorage.setItem('productoCategoria', producto.categoria);
                 }
+
 
                 updateDiscountPrice();
 
@@ -318,38 +319,24 @@
                 const categorySelect = document.getElementById('category');
                 const deleteSelect = document.getElementById('deleteCategory');
 
-                // Guardar la selección actual
-                const currentCategory = categorySelect.value;
-                const currentDelete = deleteSelect.value;
-
-                // Agregar categorías predeterminadas si no están ya incluidas
                 const defaultCategories = ["Playeras", "Pantalones", "Tenis", "Accesorios", "Sudaderas"];
                 const allCategories = [...new Set([...defaultCategories, ...categories])];
 
-                // Actualizar el select de categoría (sin borrar el valor actual)
-                const currentValue = categorySelect.value;
-                const optionsHtml = allCategories.map(cat =>
-                    `<option value="${cat}">${cat}</option>`
-                ).join('');
-
-                // Solo actualizar el innerHTML si es necesario
-                if (categorySelect.querySelectorAll('option').length !== allCategories.length + 1) {
-                    categorySelect.innerHTML = `<option value="">Selecciona una categoría</option>${optionsHtml}`;
+                const currentValue = localStorage.getItem('productoCategoria');
+                if (currentValue && !allCategories.includes(currentValue)) {
+                    allCategories.push(currentValue);
                 }
 
-                // Restaurar el valor actual
-                if (currentValue && allCategories.includes(currentValue)) {
-                    categorySelect.value = currentValue;
-                }
-
-                // Actualizar el select para eliminar categorías
-                deleteSelect.innerHTML = '<option value="">Selecciona para eliminar</option>' +
+                categorySelect.innerHTML = '<option value="">Selecciona una categoría</option>' +
                     allCategories.map(cat => `<option value="${cat}">${cat}</option>`).join('');
 
-                // Restaurar selección si existe
-                if (currentDelete && allCategories.includes(currentDelete)) {
-                    deleteSelect.value = currentDelete;
+                if (currentValue) {
+                    categorySelect.value = currentValue;
+                    categorySelect.disabled = true; // ← Desactiva el campo para que no pueda editarse
                 }
+
+                deleteSelect.innerHTML = '<option value="">Selecciona para eliminar</option>' +
+                    allCategories.map(cat => `<option value="${cat}">${cat}</option>`).join('');
             }
 
             function addCategory() {
