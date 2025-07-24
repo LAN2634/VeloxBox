@@ -11,32 +11,35 @@ public class UsuarioInfo {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "nombre", nullable = false)
+    @Column(name = "nombre")
     private String firstName;
 
-    @Column(name = "apellido_paterno", nullable = false)
+    @Column(name = "apellido_paterno")
     private String lastNamePaternal;
 
-    @Column(name = "apellido_materno", nullable = false)
+    @Column(name = "apellido_materno")
     private String lastNameMaternal;
 
-    @Column(name = "calle", nullable = false)
+    @Column(name = "calle")
     private String street;
 
-    @Column(name = "numero", nullable = false)
+    @Column(name = "numero")
     private String houseNumber;
 
-    @Column(name = "codigo_postal", nullable = false)
+    @Column(name = "codigo_postal")
     private String postalCode;
 
-    @Column(nullable = false)
+    @Column( name = "city")
     private String city;
 
-    @Column(nullable = false)
+    @Column(name  = "state")
     private String state;
 
-    @Column(nullable = false)
+    @Column(name = "country")
     private String country;
+
+    @Column(name = "username")
+    private String username;
 
     // Getters & Setters
 
@@ -69,4 +72,7 @@ public class UsuarioInfo {
 
     public String getCountry() { return country; }
     public void setCountry(String country) { this.country = country; }
+
+    public String getUsername() { return username;}
+    public void setUsername(String username) { this.username = username; }
 }

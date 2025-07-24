@@ -2,6 +2,9 @@ package com.Horizon.MCS;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 
+import java.util.Optional;
+
 public interface UsuarioInfoRepository extends JpaRepository<UsuarioInfo, Long> {
-    // No hace falta nada más: JpaRepository ya te da findAll(), save(), existsById(), etc.
+    Optional<UsuarioInfo> findByUsername(String username);
+
 }

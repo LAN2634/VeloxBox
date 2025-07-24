@@ -8,7 +8,6 @@ import java.util.Optional;
 
 @RestController
 @RequestMapping("/usuario/info")
-@CrossOrigin(origins = "*")
 public class UsuarioInfoController {
 
     @Autowired
@@ -18,25 +17,22 @@ public class UsuarioInfoController {
      * GET  /usuario/info
      * Devuelve el primer registro si existe, o 204 No Content si no hay ninguno aún.
      */
-    @GetMapping
-    public ResponseEntity<UsuarioInfo> getInfo() {
-        Optional<UsuarioInfo> opt = infoRepo.findAll().stream().findFirst();
-        return opt
+    @GetMapping("/{username}")
+    public ResponseEntity<UsuarioInfo> getInfo(@PathVariable String username) {
+        return infoRepo.findByUsername(username)
                 .map(ResponseEntity::ok)
                 .orElseGet(() -> ResponseEntity.noContent().build());
     }
 
-    /**
-     * POST /usuario/info
-     * Crea un nuevo registro con los datos del JSON.
-     */
     @PostMapping
     public ResponseEntity<UsuarioInfo> createInfo(@RequestBody UsuarioInfo info) {
+        if (infoRepo.findByUsername(info.getUsername()).isPresent()) {
+            return ResponseEntity.status(HttpStatus.CONFLICT).build();
+        }
         UsuarioInfo saved = infoRepo.save(info);
-        return ResponseEntity
-                .status(HttpStatus.CREATED)
-                .body(saved);
+        return ResponseEntity.status(HttpStatus.CREATED).body(saved);
     }
+
 
     /**
      * PUT /usuario/info

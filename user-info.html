@@ -1,25 +1,27 @@
 <!DOCTYPE html>
 <html lang="es">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Información de Envío</title>
-    <!-- CSS local -->
-    <link rel="stylesheet" href="CSS/user-info.css" />
-    <!-- SweetAlert2 desde CDN -->
-         <link rel="stylesheet" href="CSS/estilosFooter.css" />
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Información de Envío</title>
+  <!-- CSS local -->
+  <link rel="stylesheet" href="CSS/user-info.css" />
+  <!-- SweetAlert2 desde CDN -->
+  <link rel="stylesheet" href="CSS/estilosFooter.css" />
 
 
-    
+
 
   <!--Font awesome, para las figuritas en el menu etc...-->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
     integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg=="
     crossorigin="anonymous" referrerpolicy="no-referrer" />
 
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-  </head>
-  <body>
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+</head>
+
+<body>
 
   <!--===========HEADER==============-->
   <header>
@@ -133,468 +135,441 @@
 
   </div>
 
-    <div class="container">
-      <button id="backButton" class="back-button">←</button>
-      <button id="editButton" class="edit-button">Editar Información</button>
-      <div class="card">
-        <h2>Información de Envío</h2>
-        <form id="userInfoForm">
-          <div class="row">
-            <div class="field-group">
-              <label for="firstName">Nombre</label>
-              <input
-                type="text"
-                id="firstName"
-                name="firstName"
-                disabled
-                required
-              />
-            </div>
-            <div class="field-group">
-              <label for="lastNamePaternal">Apellido Paterno</label>
-              <input
-                type="text"
-                id="lastNamePaternal"
-                name="lastNamePaternal"
-                disabled
-                required
-              />
-            </div>
-            <div class="field-group">
-              <label for="lastNameMaternal">Apellido Materno</label>
-              <input
-                type="text"
-                id="lastNameMaternal"
-                name="lastNameMaternal"
-                disabled
-                required
-              />
-            </div>
+  <div class="container">
+    <button id="backButton" class="back-button">←</button>
+    <button id="editButton" class="edit-button">Editar Información</button>
+    <div class="card">
+      <h2>Información de Envío</h2>
+      <form id="userInfoForm">
+        <div class="row">
+          <div class="field-group">
+            <label for="firstName">Nombre</label>
+            <input type="text" id="firstName" name="firstName" disabled required />
           </div>
-          <div class="row">
-            <div class="field-group">
-              <label for="street">Calle</label>
-              <input type="text" id="street" name="street" disabled required />
-            </div>
-            <div class="field-group">
-              <label for="houseNumber">Número</label>
-              <input
-                type="text"
-                id="houseNumber"
-                name="houseNumber"
-                disabled
-                required
-              />
-            </div>
-            <div class="field-group">
-              <label for="postalCode">Código Postal</label>
-              <input
-                type="text"
-                id="postalCode"
-                name="postalCode"
-                disabled
-                required
-              />
-            </div>
+          <div class="field-group">
+            <label for="lastNamePaternal">Apellido Paterno</label>
+            <input type="text" id="lastNamePaternal" name="lastNamePaternal" disabled required />
           </div>
-          <div class="row">
-            <div class="field-group">
-              <label for="city">Ciudad</label>
-              <input type="text" id="city" name="city" disabled required />
-            </div>
-            <div class="field-group">
-              <label for="state">Estado</label>
-              <input type="text" id="state" name="state" disabled required />
-            </div>
-            <div class="field-group">
-              <label for="country">País</label>
-              <input
-                type="text"
-                id="country"
-                name="country"
-                disabled
-                required
-              />
-            </div>
-          </div>
-          <div class="button-row">
-            <button
-              type="button"
-              id="cancelButton"
-              class="cancel-button"
-              disabled
-            >
-              Cancelar
-            </button>
-            <button type="submit" id="saveButton" class="save-button" disabled>
-              Guardar
-            </button>
-          </div>
-        </form>
-      </div>
-    </div>
-
-      <footer>
-    <div class="footerContainer">
-      <div class="footer_Row">
-        <!-- Primera columna -->
-        <div class="footer_Col">
-          <h4>¿Necesitas ayuda?</h4>
-          <ul>
-            <li><a href="javascript:void(0)" onclick="openVentana('ventanaContacto')">Contáctanos</a></li>
-            <li><a href="javascript:void(0)" onclick="openVentana('ventanaMasVendidos')">Más Vendidos</a></li>
-            <li><a href="javascript:void(0)" onclick="openVentana('ventanaNovedad')">Novedades</a></li>
-          </ul>
-        </div>
-
-        <!-- Segunda columna -->
-        <div class="footer_Col">
-          <h4>Atención al cliente</h4>
-          <ul>
-            <li><a href="javascript:void(0)" onclick="openVentana('ventanaPreguntas')">Preguntas Frecuentes</a></li>
-            <li><a href="javascript:void(0)" onclick="openVentana('ventanaEntregas')">Entregas</a></li>
-            <li><a href="javascript:void(0)" onclick="openVentana('ventanaFpago')">Formas de pago</a></li>
-          </ul>
-        </div>
-
-        <!-- Tercera columna -->
-        <div class="footer_Col">
-          <h4>Acerca de nosotros</h4>
-          <ul>
-
-            <li><a href="javascript:void(0)" onclick="openVentana('ventanaVelox')">Acerca de Velox</a></li>
-            <li><a href="javascript:void(0)" onclick="openVentana('ventanaPrivacidad')">Aviso de Privacidad</a></li>
-            <li><a href="javascript:void(0)" onclick="openVentana('ventanaTerminos')">Términos y condiciones</a></li>
-          </ul>
-        </div>
-
-        <!-- Cuarta columna -->
-        <div class="footer_Col">
-          <h4>Newsletter</h4>
-          <input type="text" placeholder="Ingrese su nombre" class="inputNombre" />
-          <input type="text" placeholder="Ingrese su correo" class="inputCorreo" />
-          <input type="submit" value="Regístrame" class="inputSubmit" />
-          <div class="social_Icons">
-            <a href="https://www.tiktok.com/@velox_boxing" target="_blank" rel="noopener noreferrer"><i
-                class="fab fa-tiktok"></i></a>
-            <a href="https://www.instagram.com/velox_boxing/" target="_blank" rel="noopener noreferrer"><i
-                class="fab fa-instagram"></i></a>
+          <div class="field-group">
+            <label for="lastNameMaternal">Apellido Materno</label>
+            <input type="text" id="lastNameMaternal" name="lastNameMaternal" disabled required />
           </div>
         </div>
-      </div>
-      <hr />
-      <div class="footer_Bottom">
-        <div class="footer_Col">
-          <p>&#169;2025, Velox Boxing. Todos los derechos reservados.</p>
-        </div>
-      </div>
-    </div>
-
-
-    <div id="ventanaContacto" class="ventana">
-      <div class="ventana-content">
-        <span class="close" onclick="closeVentana('ventanaContacto')">&times;</span>
-        <div class="texto-legal">
-          <h1>Contacto</h1>
-          <h2>¡Estamos aquí para ayudarte!</h2>
-          <p>Si tienes dudas, comentarios o necesitas más información sobre nuestros servicios, no dudes en escribirnos.
-            Nuestro equipo responderá lo más pronto posible.</p>
-
-          <ul>
-            <li><strong> Correo:</strong> w5794759@gmail.com</li>
-
-            <li><strong> Dirección:</strong> Tlalnepantla , MEX, 54020, México</li>
-          </ul>
-
-          <p>También puedes encontrarnos en nuestras redes sociales:</p>
-          <div class="social_Icons">
-            <a href="https://www.facebook.com/" target="_blank"><i class="fa-brands fa-facebook"></i></a>
-            <a href="https://www.instagram.com/velox_boxing/" target="_blank"><i class="fa-brands fa-instagram"></i></a>
-            <a href="#" target="_blank"><i class="fa-brands fa-x-twitter"></i></a>
-            <a href="#" target="_blank"><i class="fa-brands fa-youtube"></i></a>
+        <div class="row">
+          <div class="field-group">
+            <label for="street">Calle</label>
+            <input type="text" id="street" name="street" disabled required />
+          </div>
+          <div class="field-group">
+            <label for="houseNumber">Número</label>
+            <input type="text" id="houseNumber" name="houseNumber" disabled required />
+          </div>
+          <div class="field-group">
+            <label for="postalCode">Código Postal</label>
+            <input type="text" id="postalCode" name="postalCode" disabled required />
           </div>
         </div>
-      </div>
-    </div>
-
-
-    <div id="ventanaMasVendidos" class="ventana">
-      <div class="ventana-content">
-        <span class="close" onclick="closeVentana('ventanaMasVendidos')">&times;</span>
-        <div class="texto-legal">
-          <h1>Productos mas vendidos</h1>
-          <p>aqui van productos mas vendidos</p>
+        <div class="row">
+          <div class="field-group">
+            <label for="city">Ciudad</label>
+            <input type="text" id="city" name="city" disabled required />
+          </div>
+          <div class="field-group">
+            <label for="state">Estado</label>
+            <input type="text" id="state" name="state" disabled required />
+          </div>
+          <div class="field-group">
+            <label for="country">País</label>
+            <input type="text" id="country" name="country" disabled required />
+          </div>
         </div>
-      </div>
-    </div>
-
-
-    <div id="ventanaNovedad" class="ventana">
-      <div class="ventana-content">
-        <span class="close" onclick="closeVentana('ventanaNovedad')">&times;</span>
-        <div class="texto-legal">
-          <h1>Novedades</h1>
-          <h2>¡Entérate de nuestras últimas novedades!</h2>
-          <p>Te mantenemos al día con todo lo nuevo en Velox Boxing: nuevos horarios, eventos especiales, promociones y
-            más.</p>
-          <p>¡No te pierdas ninguna actualización y forma parte de nuestra comunidad activa y en constante movimiento!
-          </p>
-
+        <div class="button-row">
+          <button type="button" id="cancelButton" class="cancel-button" disabled>
+            Cancelar
+          </button>
+          <button type="submit" id="saveButton" class="save-button" disabled>
+            Guardar
+          </button>
         </div>
-      </div>
+      </form>
     </div>
+  </div>
 
+   <footer>
+        <div class="footerContainer">
+            <div class="footer_Row">
+                <!-- Primera columna -->
+                <div class="footer_Col">
+                    <h4>¿Necesitas ayuda?</h4>
+                    <ul>
+                        <li><a href="javascript:void(0)" onclick="openVentana('ventanaContacto')">Contáctanos</a></li>
+                        <li><a href="javascript:void(0)" onclick="openVentana('ventanaMasVendidos')">Más Vendidos</a>
+                        </li>
+                        <li><a href="javascript:void(0)" onclick="openVentana('ventanaNovedad')">Novedades</a></li>
+                    </ul>
+                </div>
 
-    <div id="ventanaPreguntas" class="ventana">
-      <div class="ventana-content">
-        <span class="close" onclick="closeVentana('ventanaPreguntas')">&times;</span>
-        <div class="texto-legal">
-          <h1>Preguntas Frecuentes</h1>
+                <!-- Segunda columna -->
+                <div class="footer_Col">
+                    <h4>Atención al cliente</h4>
+                    <ul>
+                        <li><a href="javascript:void(0)" onclick="openVentana('ventanaPreguntas')">Preguntas
+                                Frecuentes</a></li>
+                        <li><a href="javascript:void(0)" onclick="openVentana('ventanaEntregas')">Entregas</a></li>
+                        <li><a href="javascript:void(0)" onclick="openVentana('ventanaFpago')">Formas de pago</a></li>
+                    </ul>
+                </div>
 
+                <!-- Tercera columna -->
+                <div class="footer_Col">
+                    <h4>Acerca de nosotros</h4>
+                    <ul>
 
+                        <li><a href="javascript:void(0)" onclick="openVentana('ventanaVelox')">Acerca de Velox</a></li>
+                        <li><a href="javascript:void(0)" onclick="openVentana('ventanaPrivacidad')">Aviso de
+                                Privacidad</a></li>
+                        <li><a href="javascript:void(0)" onclick="openVentana('ventanaTerminos')">Términos y
+                                condiciones</a></li>
+                    </ul>
+                </div>
 
-          <h4>¿Qué productos ofrece Velox Boxing?</h4>
-          <p>Ofrecemos ropa deportiva, accesorios para entrenamiento y artículos inspirados en el mundo del boxeo y
-            fitness.</p>
-
-          <h4>¿Hacen envíos a todo México?</h4>
-          <p>Sí, realizamos envíos a toda la República Mexicana con tiempos de entrega estimados de 3 a 7 días hábiles.
-          </p>
-
-          <h4>¿Cómo puedo rastrear mi pedido?</h4>
-          <p>Una vez enviado tu pedido, recibirás un correo con el número de rastreo y el enlace para monitorear tu
-            paquete.</p>
-
-          <h4>¿Puedo hacer cambios o devoluciones?</h4>
-          <p>Sí, puedes solicitar cambios o devoluciones dentro de los primeros 7 días naturales tras recibir tu pedido.
-            El producto debe estar en perfectas condiciones y sin uso.</p>
-
-          <h4>¿Qué métodos de pago aceptan?</h4>
-          <p>Aceptamos tarjetas de crédito, débito, transferencias, PayPal, MercadoPago y otros métodos disponibles
-            según tu ubicación.</p>
-
-          <h4>¿Es seguro comprar en su sitio web?</h4>
-          <p>Sí, contamos con certificados de seguridad y trabajamos con plataformas de pago confiables. No almacenamos
-            datos de tarjetas.</p>
-
-          <h4>¿Puedo modificar mi pedido después de haberlo realizado?</h4>
-          <p>Si tu pedido aún no ha sido enviado, podemos ayudarte a modificarlo. Escríbenos lo antes posible a <a
-              href="mailto:w5794759@gmail.com">w5794759@gmail.com</a>.</p>
-
-          <h4>¿Venden productos al por mayor?</h4>
-          <p>Sí, contáctanos para cotizaciones personalizadas en compras al mayoreo.</p>
-
-          <h4>¿Cómo puedo contactar a Velox Boxing?</h4>
-          <p>Escríbenos a <a href="mailto:w5794759@gmail.com">w5794759@gmail.com</a> o utiliza el formulario de contacto
-            en nuestro sitio web.</p>
+                <!-- Cuarta columna -->
+                <div class="footer_Col">
+                    <h4>Newsletter</h4>
+                    <input type="text" placeholder="Ingrese su nombre" class="inputNombre" />
+                    <input type="text" placeholder="Ingrese su correo" class="inputCorreo" />
+                    <input type="submit" value="Regístrame" class="inputSubmit" />
+                    <div class="social_Icons">
+                        <a href="https://www.tiktok.com/@velox_boxing" target="_blank" rel="noopener noreferrer"><i
+                                class="fab fa-tiktok"></i></a>
+                        <a href="https://www.instagram.com/velox_boxing/" target="_blank" rel="noopener noreferrer"><i
+                                class="fab fa-instagram"></i></a>
+                    </div>
+                </div>
+            </div>
+            <hr />
+            <div class="footer_Bottom">
+                <div class="footer_Col">
+                    <p>&#169;2025, Velox Boxing. Todos los derechos reservados.</p>
+                </div>
+            </div>
         </div>
-      </div>
-    </div>
 
 
-    <div id="ventanaEntregas" class="ventana">
-      <div class="ventana-content">
-        <span class="close" onclick="closeVentana('ventanaEntregas')">&times;</span>
-        <div class="texto-legal">
-          <h1>Entregas</h1>
+        <div id="ventanaContacto" class="ventana">
+            <div class="ventana-content">
+                <span class="close" onclick="closeVentana('ventanaContacto')">&times;</span>
+                <div class="texto-legal">
+                    <h1>Contacto</h1>
+                    <h2>¡Estamos aquí para ayudarte!</h2>
+                    <p>Si tienes dudas, comentarios o necesitas más información sobre nuestros servicios, no dudes en
+                        escribirnos. Nuestro equipo responderá lo más pronto posible.</p>
 
-          <p>Realizamos entregas rápidas y seguras en toda la ciudad. Nuestro tiempo estimado de entrega es de 1 a 3
-            días hábiles, dependiendo de tu ubicación.</p>
-          <p>Ofrecemos servicio a domicilio con seguimiento en tiempo real y confirmación vía WhatsApp o correo
-            electrónico.</p>
-          <p>¿Tienes una duda sobre tu pedido? ¡Contáctanos y con gusto te ayudamos!</p>
+                    <ul>
+                        <li><strong> Correo:</strong> w5794759@gmail.com</li>
+
+                        <li><strong> Dirección:</strong> Tlalnepantla , MEX, 54020, México</li>
+                    </ul>
+
+                    <p>También puedes encontrarnos en nuestras redes sociales:</p>
+                    <div class="social_Icons">
+                        <a href="https://www.facebook.com/" target="_blank"><i class="fa-brands fa-facebook"></i></a>
+                        <a href="https://www.instagram.com/velox_boxing/" target="_blank"><i
+                                class="fa-brands fa-instagram"></i></a>
+                        <a href="#" target="_blank"><i class="fa-brands fa-x-twitter"></i></a>
+                        <a href="#" target="_blank"><i class="fa-brands fa-youtube"></i></a>
+                    </div>
+                </div>
+            </div>
         </div>
-      </div>
-    </div>
 
 
-    <div id="ventanaFpago" class="ventana">
-      <div class="ventana-content">
-        <span class="close" onclick="closeVentana('ventanaFpago')">&times;</span>
-        <div class="texto-legal">
-          <h1>Formas de Pago</h1>
-          <p>En <strong>Velox Boxing</strong> ofrecemos varias opciones seguras y confiables para que puedas realizar
-            tus compras con tranquilidad:</p>
-
-          <h4>1. Tarjetas de crédito y débito</h4>
-          <p>Aceptamos pagos con tarjetas Visa, MasterCard y American Express. Todas las transacciones están protegidas
-            mediante cifrado SSL.</p>
-
-          <h4>2. PayPal</h4>
-          <p>Realiza tus pagos de manera rápida y segura a través de tu cuenta de PayPal, sin compartir tus datos
-            financieros.</p>
-
-          <h4>3. Transferencia bancaria</h4>
-          <p>También puedes hacer tu pago mediante transferencia o depósito bancario. Una vez realizado, envíanos el
-            comprobante por correo a <a href="mailto:w5794759@gmail.com">w5794759@gmail.com</a> para procesar tu pedido.
-          </p>
-
-          <h4>4. Pagos en efectivo (OXXO)</h4>
-          <p>Con Shopify Payments, puedes generar una orden para pagar en tiendas OXXO. El pedido se procesará una vez
-            confirmado el pago.</p>
-
-          <p>Si tienes dudas o necesitas ayuda con el proceso de pago, contáctanos y con gusto te ayudaremos.</p>
+        <div id="ventanaMasVendidos" class="ventana">
+            <div class="ventana-content">
+                <span class="close" onclick="closeVentana('ventanaMasVendidos')">&times;</span>
+                <div class="texto-legal">
+                    <h1>Productos mas vendidos</h1>
+                    <p>aqui van productos mas vendidos</p>
+                </div>
+            </div>
         </div>
-      </div>
-    </div>
 
-    <div id="ventanaVelox" class="ventana">
-      <div class="ventana-content">
-        <span class="close" onclick="closeVentana('ventanaVelox')">&times;</span>
-        <div class="texto-legal">
-          <h1>Nosotros - Velox Boxing</h1>
 
-          <h4>En Velox Boxing, no solo vendemos ropa. Forjamos una Mentalidad.</h4>
+        <div id="ventanaNovedad" class="ventana">
+            <div class="ventana-content">
+                <span class="close" onclick="closeVentana('ventanaNovedad')">&times;</span>
+                <div class="texto-legal">
+                    <h1>Novedades</h1>
+                    <h2>¡Entérate de nuestras últimas novedades!</h2>
+                    <p>Te mantenemos al día con todo lo nuevo en Velox Boxing: nuevos horarios, eventos especiales,
+                        promociones y más.</p>
+                    <p>¡No te pierdas ninguna actualización y forma parte de nuestra comunidad activa y en constante
+                        movimiento!</p>
 
-          <p>El boxeo y las artes marciales no son solo un deporte; son una prueba constante de carácter, sacrificio y
-            determinación. Cada golpe, cada caída y cada levantada forjan no solo al peleador, sino al guerrero que vive
-            dentro de él.</p>
-
-          <p>Sabemos lo que es entregarlo todo en el ring, sentir el dolor y seguir adelante. Porque es sangre, sudor y
-            lágrimas.</p>
-
-          <p>Cada prenda de Velox Boxing está diseñada para reflejar la esencia del peleador. No es solo lo que llevas,
-            es lo que representas. Queremos que, al vestir nuestra marca, sientas la misma energía que sientes cuando
-            entras al ring: firmeza, seguridad, poder.</p>
-
-          <h2>Porque en el ring y en la vida, solo hay un camino: avanzar, resistir y conquistar.</h4>
-
-            <h4>Velox Boxing es para aquellos que no retroceden, que entienden que la verdadera lucha comienza en la
-              mente y termina con la victoria.</h4>
+                </div>
+            </div>
         </div>
-      </div>
-    </div>
 
-    <div id="ventanaPrivacidad" class="ventana">
-      <div class="ventana-content">
-        <span class="close" onclick="closeVentana('ventanaPrivacidad')">&times;</span>
-        <div class="texto-legal">
-          <h1>Aviso de Privacidad</h1>
-          <p>Esta Política de privacidad describe cómo se recopila, utiliza y comparte su información personal cuando
-            visita o hace una compra en <a href="https://www.veloxboxing.shop/"
-              target="_blank">https://www.veloxboxing.shop/</a> (denominado en lo sucesivo el “Sitio”).</p>
 
-          <h3>INFORMACIÓN PERSONAL QUE RECOPILAMOS</h3>
-          <p>Cuando visita el Sitio, recopilamos automáticamente cierta información sobre su dispositivo, como el
-            navegador web, dirección IP, zona horaria y cookies instaladas. También recopilamos información sobre las
-            páginas vistas, productos consultados, y términos de búsqueda.</p>
+        <div id="ventanaPreguntas" class="ventana">
+            <div class="ventana-content">
+                <span class="close" onclick="closeVentana('ventanaPreguntas')">&times;</span>
+                <div class="texto-legal">
+                    <h1>Preguntas Frecuentes</h1>
 
-          <h4>Cookies que usamos:</h4>
-          <ul>
-            <li><strong>_session_id:</strong> Almacena información de sesión.</li>
-            <li><strong>_shopify_visit:</strong> Persistente por 30 minutos. Registra número de visitas.</li>
-            <li><strong>_shopify_uniq:</strong> Expira a la medianoche. Cuenta visitas únicas.</li>
-            <li><strong>cart:</strong> Persistente por 2 semanas. Guarda contenido del carrito.</li>
-            <li><strong>storefront_digest:</strong> Determina acceso si hay contraseña.</li>
-          </ul>
 
-          <p>También usamos archivos de registro, balizas web, etiquetas y píxeles para rastrear navegación.</p>
 
-          <h3>Información del pedido</h3>
-          <p>Cuando realiza una compra, recopilamos nombre, dirección de envío, información de pago, correo electrónico
-            y teléfono.</p>
+                    <h4>¿Qué productos ofrece Velox Boxing?</h4>
+                    <p>Ofrecemos ropa deportiva, accesorios para entrenamiento y artículos inspirados en el mundo del
+                        boxeo y fitness.</p>
 
-          <h3>¿Cómo usamos su información?</h3>
-          <ul>
-            <li>Procesar pedidos y pagos.</li>
-            <li>Enviar confirmaciones y facturas.</li>
-            <li>Detectar fraudes.</li>
-            <li>Ofrecer publicidad o promociones según sus preferencias.</li>
-          </ul>
+                    <h4>¿Hacen envíos a todo México?</h4>
+                    <p>Sí, realizamos envíos a toda la República Mexicana con tiempos de entrega estimados de 3 a 7 días
+                        hábiles.</p>
 
-          <h3>Compartir su información</h3>
-          <p>Compartimos su información con terceros como Shopify y Google Analytics. Más información:</p>
-          <ul>
-            <li><a href="https://www.shopify.com/legal/privacy" target="_blank">Política de Shopify</a></li>
-            <li><a href="https://www.google.com/intl/es/policies/privacy/" target="_blank">Política de Google</a></li>
-          </ul>
+                    <h4>¿Cómo puedo rastrear mi pedido?</h4>
+                    <p>Una vez enviado tu pedido, recibirás un correo con el número de rastreo y el enlace para
+                        monitorear tu paquete.</p>
 
-          <h3>Publicidad dirigida</h3>
-          <p>Utilizamos su información para ofrecer anuncios personalizados.</p>
-          <p>Puede darse de baja en:</p>
-          <ul>
-            <li><a href="https://www.facebook.com/settings/?tab=ads" target="_blank">Facebook</a></li>
-            <li><a href="https://adssettings.google.com/authenticated?hl=es" target="_blank">Google</a></li>
-            <li><a href="https://about.ads.microsoft.com/es-es/recursos/directivas/anuncios-personalizados"
-                target="_blank">Bing</a></li>
-            <li><a href="http://optout.aboutads.info/" target="_blank">DAA Opt-Out</a></li>
-          </ul>
+                    <h4>¿Puedo hacer cambios o devoluciones?</h4>
+                    <p>Sí, puedes solicitar cambios o devoluciones dentro de los primeros 7 días naturales tras recibir
+                        tu pedido. El producto debe estar en perfectas condiciones y sin uso.</p>
 
-          <h3>No rastrear</h3>
-          <p>No modificamos nuestras prácticas cuando vemos señales de “No rastrear” desde su navegador.</p>
+                    <h4>¿Qué métodos de pago aceptan?</h4>
+                    <p>Aceptamos tarjetas de crédito, débito, transferencias, PayPal, MercadoPago y otros métodos
+                        disponibles según tu ubicación.</p>
 
-          <h3>Sus derechos</h3>
-          <p>Si es residente europeo, puede solicitar acceso, corrección o eliminación de su información personal.</p>
+                    <h4>¿Es seguro comprar en su sitio web?</h4>
+                    <p>Sí, contamos con certificados de seguridad y trabajamos con plataformas de pago confiables. No
+                        almacenamos datos de tarjetas.</p>
 
-          <h3>Retención de datos</h3>
-          <p>Conservamos su información mientras no solicite su eliminación.</p>
+                    <h4>¿Puedo modificar mi pedido después de haberlo realizado?</h4>
+                    <p>Si tu pedido aún no ha sido enviado, podemos ayudarte a modificarlo. Escríbenos lo antes posible
+                        a <a href="mailto:w5794759@gmail.com">w5794759@gmail.com</a>.</p>
 
-          <h3>Menores</h3>
-          <p>El sitio no está destinado a menores de 18 años.</p>
+                    <h4>¿Venden productos al por mayor?</h4>
+                    <p>Sí, contáctanos para cotizaciones personalizadas en compras al mayoreo.</p>
 
-          <h3>Cambios</h3>
-          <p>Podemos actualizar esta política por motivos legales u operativos.</p>
-          </p>
+                    <h4>¿Cómo puedo contactar a Velox Boxing?</h4>
+                    <p>Escríbenos a <a href="mailto:w5794759@gmail.com">w5794759@gmail.com</a> o utiliza el formulario
+                        de contacto en nuestro sitio web.</p>
+                </div>
+            </div>
         </div>
-      </div>
-    </div>
 
-    <div id="ventanaTerminos" class="ventana">
-      <div class="ventana-content">
-        <span class="close" onclick="closeVentana('ventanaTerminos')">&times;</span>
-        <div class="texto-legal">
-          <h1>Términos y Condiciones</h1>
 
-          <p>Bienvenido a <strong>Velox Boxing</strong>. Al acceder y utilizar nuestro sitio web <a
-              href="https://www.veloxboxing.shop" target="_blank">https://www.veloxboxing.shop</a>, aceptas cumplir con
-            los siguientes Términos y Condiciones. Si no estás de acuerdo con alguno de estos términos, te recomendamos
-            no utilizar nuestro sitio.</p>
+        <div id="ventanaEntregas" class="ventana">
+            <div class="ventana-content">
+                <span class="close" onclick="closeVentana('ventanaEntregas')">&times;</span>
+                <div class="texto-legal">
+                    <h1>Entregas</h1>
 
-          <h3>1. Información general</h3>
-          <p>Este sitio es operado por Velox Boxing. En todo el sitio, los términos “nosotros”, “nos” y “nuestro” se
-            refieren a Velox Boxing. Al visitar nuestro sitio y/o comprar algún producto, participas en nuestro
-            “Servicio” y aceptas los términos descritos a continuación.</p>
-
-          <h3>2. Condiciones de la tienda online</h3>
-          <ul>
-            <li>Debes tener al menos 18 años o contar con el permiso de un adulto para realizar compras.</li>
-            <li>No puedes utilizar nuestros productos con fines ilegales o no autorizados.</li>
-            <li>No debes transmitir virus o cualquier código de naturaleza destructiva.</li>
-          </ul>
-
-          <h3>3. Productos y precios</h3>
-          <p>Nos reservamos el derecho de modificar los precios de nuestros productos sin previo aviso. Todos los
-            productos están sujetos a disponibilidad y pueden ser retirados del sitio en cualquier momento.</p>
-
-          <h3>4. Pagos</h3>
-          <p>Los pagos se realizan de forma segura a través de nuestros proveedores autorizados (como Shopify y
-            pasarelas de pago asociadas). No almacenamos información confidencial de tarjetas de crédito.</p>
-
-          <h3>5. Envíos y devoluciones</h3>
-          <p>Consulta nuestras políticas de <a href="#politica-envios">envíos</a> y <a
-              href="#politica-devoluciones">devoluciones</a> para más detalles. Velox Boxing no se hace responsable por
-            retrasos atribuibles a servicios de mensajería externa.</p>
-
-          <h3>6. Propiedad intelectual</h3>
-          <p>Todo el contenido del sitio (diseños, logotipos, textos, imágenes) es propiedad de Velox Boxing y está
-            protegido por derechos de autor. No está permitido el uso sin autorización previa por escrito.</p>
-
-          <h3>7. Cambios en los términos</h3>
-          <p>Nos reservamos el derecho de modificar estos Términos y Condiciones en cualquier momento. Es
-            responsabilidad del usuario revisar periódicamente esta sección.</p>
-
-          <h3>8. Contacto</h3>
-          <p>Para cualquier duda o aclaración, puedes contactarnos al correo <a
-              href="mailto:w5794759@gmail.com">w5794759@gmail.com</a> o por escrito a: Tlalnepantla, MEX, 54020, México.
-          </p>
+                    <p>Realizamos entregas rápidas y seguras en toda la ciudad. Nuestro tiempo estimado de entrega es de
+                        1 a 3 días hábiles, dependiendo de tu ubicación.</p>
+                    <p>Ofrecemos servicio a domicilio con seguimiento en tiempo real y confirmación vía WhatsApp o
+                        correo electrónico.</p>
+                    <p>¿Tienes una duda sobre tu pedido? ¡Contáctanos y con gusto te ayudamos!</p>
+                </div>
+            </div>
         </div>
-      </div>
-    </div>
-  </footer>
 
-    <!-- JS local -->
-    <script src="JS/user-info.js"></script>
-     <script src="./JS/script_index.js"></script>
+
+        <div id="ventanaFpago" class="ventana">
+            <div class="ventana-content">
+                <span class="close" onclick="closeVentana('ventanaFpago')">&times;</span>
+                <div class="texto-legal">
+                    <h1>Formas de Pago</h1>
+                    <p>En <strong>Velox Boxing</strong> ofrecemos varias opciones seguras y confiables para que puedas
+                        realizar tus compras con tranquilidad:</p>
+
+                    <h4>1. Tarjetas de crédito y débito</h4>
+                    <p>Aceptamos pagos con tarjetas Visa, MasterCard y American Express. Todas las transacciones están
+                        protegidas mediante cifrado SSL.</p>
+
+                    <h4>2. PayPal</h4>
+                    <p>Realiza tus pagos de manera rápida y segura a través de tu cuenta de PayPal, sin compartir tus
+                        datos financieros.</p>
+
+                    <h4>3. Transferencia bancaria</h4>
+                    <p>También puedes hacer tu pago mediante transferencia o depósito bancario. Una vez realizado,
+                        envíanos el comprobante por correo a <a href="mailto:w5794759@gmail.com">w5794759@gmail.com</a>
+                        para procesar tu pedido.</p>
+
+                    <h4>4. Pagos en efectivo (OXXO)</h4>
+                    <p>Con Shopify Payments, puedes generar una orden para pagar en tiendas OXXO. El pedido se procesará
+                        una vez confirmado el pago.</p>
+
+                    <p>Si tienes dudas o necesitas ayuda con el proceso de pago, contáctanos y con gusto te ayudaremos.
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <div id="ventanaVelox" class="ventana">
+            <div class="ventana-content">
+                <span class="close" onclick="closeVentana('ventanaVelox')">&times;</span>
+                <div class="texto-legal">
+                    <h1>Nosotros - Velox Boxing</h1>
+
+                    <h4>En Velox Boxing, no solo vendemos ropa. Forjamos una Mentalidad.</h4>
+
+                    <p>El boxeo y las artes marciales no son solo un deporte; son una prueba constante de carácter,
+                        sacrificio y determinación. Cada golpe, cada caída y cada levantada forjan no solo al peleador,
+                        sino al guerrero que vive dentro de él.</p>
+
+                    <p>Sabemos lo que es entregarlo todo en el ring, sentir el dolor y seguir adelante. Porque es
+                        sangre, sudor y lágrimas.</p>
+
+                    <p>Cada prenda de Velox Boxing está diseñada para reflejar la esencia del peleador. No es solo lo
+                        que llevas, es lo que representas. Queremos que, al vestir nuestra marca, sientas la misma
+                        energía que sientes cuando entras al ring: firmeza, seguridad, poder.</p>
+
+                    <h2>Porque en el ring y en la vida, solo hay un camino: avanzar, resistir y conquistar.</h4>
+
+                        <h4>Velox Boxing es para aquellos que no retroceden, que entienden que la verdadera lucha
+                            comienza en la mente y termina con la victoria.</h4>
+                </div>
+            </div>
+        </div>
+
+        <div id="ventanaPrivacidad" class="ventana">
+            <div class="ventana-content">
+                <span class="close" onclick="closeVentana('ventanaPrivacidad')">&times;</span>
+                <div class="texto-legal">
+                    <h1>Aviso de Privacidad</h1>
+                    <p>Esta Política de privacidad describe cómo se recopila, utiliza y comparte su información personal
+                        cuando visita o hace una compra en <a href="https://www.veloxboxing.shop/"
+                            target="_blank">https://www.veloxboxing.shop/</a> (denominado en lo sucesivo el “Sitio”).
+                    </p>
+
+                    <h3>INFORMACIÓN PERSONAL QUE RECOPILAMOS</h3>
+                    <p>Cuando visita el Sitio, recopilamos automáticamente cierta información sobre su dispositivo, como
+                        el navegador web, dirección IP, zona horaria y cookies instaladas. También recopilamos
+                        información sobre las páginas vistas, productos consultados, y términos de búsqueda.</p>
+
+                    <h4>Cookies que usamos:</h4>
+                    <ul>
+                        <li><strong>_session_id:</strong> Almacena información de sesión.</li>
+                        <li><strong>_shopify_visit:</strong> Persistente por 30 minutos. Registra número de visitas.
+                        </li>
+                        <li><strong>_shopify_uniq:</strong> Expira a la medianoche. Cuenta visitas únicas.</li>
+                        <li><strong>cart:</strong> Persistente por 2 semanas. Guarda contenido del carrito.</li>
+                        <li><strong>storefront_digest:</strong> Determina acceso si hay contraseña.</li>
+                    </ul>
+
+                    <p>También usamos archivos de registro, balizas web, etiquetas y píxeles para rastrear navegación.
+                    </p>
+
+                    <h3>Información del pedido</h3>
+                    <p>Cuando realiza una compra, recopilamos nombre, dirección de envío, información de pago, correo
+                        electrónico y teléfono.</p>
+
+                    <h3>¿Cómo usamos su información?</h3>
+                    <ul>
+                        <li>Procesar pedidos y pagos.</li>
+                        <li>Enviar confirmaciones y facturas.</li>
+                        <li>Detectar fraudes.</li>
+                        <li>Ofrecer publicidad o promociones según sus preferencias.</li>
+                    </ul>
+
+                    <h3>Compartir su información</h3>
+                    <p>Compartimos su información con terceros como Shopify y Google Analytics. Más información:</p>
+                    <ul>
+                        <li><a href="https://www.shopify.com/legal/privacy" target="_blank">Política de Shopify</a></li>
+                        <li><a href="https://www.google.com/intl/es/policies/privacy/" target="_blank">Política de
+                                Google</a></li>
+                    </ul>
+
+                    <h3>Publicidad dirigida</h3>
+                    <p>Utilizamos su información para ofrecer anuncios personalizados.</p>
+                    <p>Puede darse de baja en:</p>
+                    <ul>
+                        <li><a href="https://www.facebook.com/settings/?tab=ads" target="_blank">Facebook</a></li>
+                        <li><a href="https://adssettings.google.com/authenticated?hl=es" target="_blank">Google</a></li>
+                        <li><a href="https://about.ads.microsoft.com/es-es/recursos/directivas/anuncios-personalizados"
+                                target="_blank">Bing</a></li>
+                        <li><a href="http://optout.aboutads.info/" target="_blank">DAA Opt-Out</a></li>
+                    </ul>
+
+                    <h3>No rastrear</h3>
+                    <p>No modificamos nuestras prácticas cuando vemos señales de “No rastrear” desde su navegador.</p>
+
+                    <h3>Sus derechos</h3>
+                    <p>Si es residente europeo, puede solicitar acceso, corrección o eliminación de su información
+                        personal.</p>
+
+                    <h3>Retención de datos</h3>
+                    <p>Conservamos su información mientras no solicite su eliminación.</p>
+
+                    <h3>Menores</h3>
+                    <p>El sitio no está destinado a menores de 18 años.</p>
+
+                    <h3>Cambios</h3>
+                    <p>Podemos actualizar esta política por motivos legales u operativos.</p>
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <div id="ventanaTerminos" class="ventana">
+            <div class="ventana-content">
+                <span class="close" onclick="closeVentana('ventanaTerminos')">&times;</span>
+                <div class="texto-legal">
+                    <h1>Términos y Condiciones</h1>
+
+                    <p>Bienvenido a <strong>Velox Boxing</strong>. Al acceder y utilizar nuestro sitio web <a
+                            href="https://www.veloxboxing.shop" target="_blank">https://www.veloxboxing.shop</a>,
+                        aceptas cumplir con los siguientes Términos y Condiciones. Si no estás de acuerdo con alguno de
+                        estos términos, te recomendamos no utilizar nuestro sitio.</p>
+
+                    <h3>1. Información general</h3>
+                    <p>Este sitio es operado por Velox Boxing. En todo el sitio, los términos “nosotros”, “nos” y
+                        “nuestro” se refieren a Velox Boxing. Al visitar nuestro sitio y/o comprar algún producto,
+                        participas en nuestro “Servicio” y aceptas los términos descritos a continuación.</p>
+
+                    <h3>2. Condiciones de la tienda online</h3>
+                    <ul>
+                        <li>Debes tener al menos 18 años o contar con el permiso de un adulto para realizar compras.
+                        </li>
+                        <li>No puedes utilizar nuestros productos con fines ilegales o no autorizados.</li>
+                        <li>No debes transmitir virus o cualquier código de naturaleza destructiva.</li>
+                    </ul>
+
+                    <h3>3. Productos y precios</h3>
+                    <p>Nos reservamos el derecho de modificar los precios de nuestros productos sin previo aviso. Todos
+                        los productos están sujetos a disponibilidad y pueden ser retirados del sitio en cualquier
+                        momento.</p>
+
+                    <h3>4. Pagos</h3>
+                    <p>Los pagos se realizan de forma segura a través de nuestros proveedores autorizados (como Shopify
+                        y pasarelas de pago asociadas). No almacenamos información confidencial de tarjetas de crédito.
+                    </p>
+
+                    <h3>5. Envíos y devoluciones</h3>
+                    <p>Consulta nuestras políticas de <a href="#politica-envios">envíos</a> y <a
+                            href="#politica-devoluciones">devoluciones</a> para más detalles. Velox Boxing no se hace
+                        responsable por retrasos atribuibles a servicios de mensajería externa.</p>
+
+                    <h3>6. Propiedad intelectual</h3>
+                    <p>Todo el contenido del sitio (diseños, logotipos, textos, imágenes) es propiedad de Velox Boxing y
+                        está protegido por derechos de autor. No está permitido el uso sin autorización previa por
+                        escrito.</p>
+
+                    <h3>7. Cambios en los términos</h3>
+                    <p>Nos reservamos el derecho de modificar estos Términos y Condiciones en cualquier momento. Es
+                        responsabilidad del usuario revisar periódicamente esta sección.</p>
+
+                    <h3>8. Contacto</h3>
+                    <p>Para cualquier duda o aclaración, puedes contactarnos al correo <a
+                            href="mailto:w5794759@gmail.com">w5794759@gmail.com</a> o por escrito a: Tlalnepantla, MEX,
+                        54020, México.</p>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+  <!-- JS local -->
+  <script src="./JS/script_index.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
     integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
     crossorigin="anonymous"></script>
@@ -604,5 +579,124 @@
   <script src="./JS/script_footer.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
-  </body>
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+  const username = localStorage.getItem('username');
+  const API_BASE_GET = `http://localhost:8080/usuario/info/${username}`;
+  const API_BASE_POST_PUT = 'http://localhost:8080/usuario/info';
+
+  const form = document.getElementById('userInfoForm');
+  const editBtn = document.getElementById('editButton');
+  const cancelBtn = document.getElementById('cancelButton');
+  const saveBtn = document.getElementById('saveButton');
+  const backBtn = document.getElementById('backButton');
+  let originalData = {};
+
+  function toggleFields(enabled) {
+    form.querySelectorAll('input').forEach(i => i.disabled = !enabled);
+    cancelBtn.disabled = !enabled;
+    saveBtn.disabled = !enabled;
+  }
+
+  async function loadData() {
+    try {
+      const response = await fetch(API_BASE_GET);
+
+      if (response.status === 204) {
+        // Usuario nuevo → no mostrar alerta de error
+        originalData = {}; 
+        form.reset(); 
+        toggleFields(true); // permitir edición
+        return;
+      }
+
+      if (!response.ok) throw new Error(`Error ${response.status}`);
+
+      const data = await response.json();
+      originalData = data;
+
+      // Poblar formulario
+      Object.entries(data).forEach(([key, val]) => {
+        if (form.elements[key] !== undefined) {
+          form.elements[key].value = val;
+        }
+      });
+
+      toggleFields(false); // bloquear campos hasta editar
+    } catch (error) {
+      console.error(error);
+      Swal.fire('Error', 'No se pudo conectar con el servidor', 'error');
+      toggleFields(true);
+    }
+  }
+
+  function resetForm() {
+    Object.entries(originalData).forEach(([key, val]) => {
+      if (form.elements[key] !== undefined) {
+        form.elements[key].value = val;
+      }
+    });
+    toggleFields(false);
+  }
+
+  // --- Evento único de submit ---
+  form.addEventListener('submit', async (e) => {
+    e.preventDefault();
+
+    const payload = Array.from(form.elements)
+      .filter(el => el.name)
+      .reduce((obj, el) => {
+        obj[el.name] = el.value.trim();
+        return obj;
+      }, {});
+
+    payload.username = username;
+    if (originalData.id) payload.id = originalData.id;
+
+    // Validar campos vacíos
+    if (Object.values(payload).some(v => v === '')) {
+      return Swal.fire('Error', 'Todos los campos son obligatorios', 'error');
+    }
+
+    const method = originalData.id ? 'PUT' : 'POST';
+
+    try {
+      const response = await fetch(API_BASE_POST_PUT, {
+        method,
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload)
+      });
+
+      if (response.status === 409) {
+        return Swal.fire('Advertencia', 'El usuario ya tiene información registrada', 'warning');
+      }
+
+      if (response.status === 201 || response.status === 200) {
+        const saved = await response.json();
+        originalData = saved;
+        toggleFields(false);
+        return Swal.fire('Listo', 'Información guardada exitosamente', 'success');
+      }
+
+      throw new Error(`Error ${response.status}`);
+    } catch (error) {
+      console.error(error);
+      Swal.fire('Error', 'Ocurrió un error al guardar la información', 'error');
+    }
+  });
+
+  // Botones
+  editBtn.addEventListener('click', () => toggleFields(true));
+  cancelBtn.addEventListener('click', resetForm);
+  backBtn.addEventListener('click', () => history.back());
+
+  // Cargar datos al inicio
+  loadData();
+});
+</script>
+
+
+
+</body>
+
 </html>
