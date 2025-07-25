@@ -204,7 +204,7 @@
     }
 
     // Enviar al backend
-    fetch("http://localhost:8080/admin/login", {
+    fetch("https://resourceful-fascination-production.up.railway.app/admin/login", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ usuario, contrasena }),

@@ -622,7 +622,7 @@
 
         // ========== Cargar pedidos ==========
         async function loadPedidos(username) {
-            const url = `http://localhost:8080/api/Productos/pedidos/usuario/${username}`;
+            const url = `https://resourceful-fascination-production.up.railway.app/api/Productos/pedidos/usuario/${username}`;
 
             try {
                 const response = await fetch(url);

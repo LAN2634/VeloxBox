@@ -189,7 +189,7 @@
             let existingProductImages = []; // Variable para almacenar las imágenes originales
 
             try {
-                const response = await fetch(`http://localhost:8080/api/Productos/${productId}`);
+                const response = await fetch(`https://resourceful-fascination-production.up.railway.app/api/Productos/${productId}`);
                 if (!response.ok) throw new Error('Producto no encontrado');
 
                 const producto = await response.json();
@@ -473,7 +473,7 @@
                     };
 
                     // Enviar actualización al backend
-                    const response = await fetch(`http://localhost:8080/api/Productos/${productId}`, {
+                    const response = await fetch(`https://resourceful-fascination-production.up.railway.app/api/Productos/${productId}`, {
                         method: 'PUT',
                         headers: { 'Content-Type': 'application/json' },
                         body: JSON.stringify(productoData)

@@ -598,7 +598,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // ================ CARGAR PLAYERAS ================
     async function loadPlayeras() {
       try {
-        const response = await fetch('http://localhost:8080/api/Productos/filtrar?categoria=Playeras');
+        const response = await fetch('https://resourceful-fascination-production.up.railway.app/api/Productos/filtrar?categoria=Playeras');
         if (!response.ok) throw new Error("Error al cargar playeras");
 
         const playeras = await response.json();
@@ -660,7 +660,7 @@ document.addEventListener('DOMContentLoaded', () => {
       };
 
       try {
-        const stockResponse = await fetch(`http://localhost:8080/api/Productos/${producto.id}/stock`);
+        const stockResponse = await fetch(`https://resourceful-fascination-production.up.railway.app/api/Productos/${producto.id}/stock`);
         if (!stockResponse.ok) throw new Error("Error al consultar stock");
         const stockData = await stockResponse.json();
 
@@ -669,7 +669,7 @@ document.addEventListener('DOMContentLoaded', () => {
           return;
         }
 
-        const response = await fetch('http://localhost:9090/api/carrito/agregar', {
+        const response = await fetch('https://a-adirproductos-production.up.railway.app/api/carrito/agregar', {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
@@ -699,7 +699,7 @@ document.addEventListener('DOMContentLoaded', () => {
       try {
        const username = localStorage.getItem("username") || "Invitado";
 
-        const response = await fetch('http://localhost:9090/api/carrito');
+        const response = await fetch('https://a-adirproductos-production.up.railway.app/api/carrito');
         if (!response.ok) throw new Error("Error al cargar el carrito");
 
         let cartProducts = await response.json();
@@ -785,7 +785,7 @@ document.addEventListener('DOMContentLoaded', () => {
     async function cambiarCantidad(id, accion) {
       try {
 
-        const url = `http://localhost:9090/api/carrito/${accion}/${id}`;
+        const url = `https://a-adirproductos-production.up.railway.app/api/carrito/${accion}/${id}`;
         const response = await fetch(url, { method: 'PUT' });
         if (!response.ok) throw new Error('Error al cambiar cantidad');
 
@@ -802,7 +802,7 @@ document.addEventListener('DOMContentLoaded', () => {
       const productId = e.currentTarget.getAttribute('data-id');
 
       try {
-        const response = await fetch(`http://localhost:9090/api/carrito/eliminar/${productId}`, {
+        const response = await fetch(`https://a-adirproductos-production.up.railway.app/api/carrito/eliminar/${productId}`, {
           method: 'DELETE'
         });
 
@@ -845,7 +845,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // ================ ACTUALIZAR CONTADOR DEL CARRITO ================
     async function updateCartCount() {
       try {
-        const response = await fetch('http://localhost:9090/api/carrito/cantidad');
+        const response = await fetch('https://a-adirproductos-production.up.railway.app/api/carrito/cantidad');
         if (!response.ok) throw new Error("Error al obtener cantidad");
 
         const cantidad = await response.json();

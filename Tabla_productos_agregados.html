@@ -161,7 +161,7 @@
 
     async function loadAndRenderProducts(filter = 'todos') {
       try {
-        const response = await authFetch('http://localhost:8080/api/Productos');
+        const response = await authFetch('https://resourceful-fascination-production.up.railway.app/api/Productos');
         if (!response.ok) throw new Error('Error al cargar productos');
 
         const productos = await response.json();
@@ -212,7 +212,7 @@
           const newStatus = span.textContent === 'Activo' ? 'Pausa' : 'Activo';
 
           try {
-            const response = await authFetch(`http://localhost:8080/api/Productos/${id}`, {
+            const response = await authFetch(`https://resourceful-fascination-production.up.railway.app/api/Productos/${id}`, {
               method: 'PATCH',
               body: JSON.stringify({ status: newStatus })
             });
