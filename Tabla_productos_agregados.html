@@ -6,36 +6,54 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Productos</title>
   <link rel="stylesheet" href="./CSS/style.css" />
+  <link rel="stylesheet" href="./CSS/style_index.css" />
+
+    <!--Font awesome, para las figuritas en el menu etc...-->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
+    integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg=="
+    crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+
 
 </head>
 
 <body>
   <header class="productos-header">
-    <button id="backButton" class="back-button">←</button>
-    <h1>Productos</h1>
-    <div class="header-buttons">
-      <button id="pedidosButton" class="add-product-btn" onclick="window.location.href='HistorialPedidos.html'">
-        <i class="fas fa-clipboard-list"></i> Pedidos
+        <button class="hamburger-btn" id="hamburgerBtn">
+        <i class="fas fa-bars"></i>
       </button>
+
+
+    <h1 class="titulo-header">Productos</h1>
+
       <button id="addProductBtn" class="add-product-btn">
         <i class="fas fa-plus"></i> Añadir Producto
       </button>
+      
     </div>
   </header>
+  <div class="menu-overlay" id="menuOverlay"></div>
+
+  <div class="menu-container" id="menuContainer">
+     <div class="menu-section">
+      <a href="Tabla_productos_agregados.html" class="menu-item">
+        <i class="fas fa-tshirt"></i>
+        <span class="menu-item-text">Tabla de Productos</span>
+      </a>
+      <a href="HistorialPedidos.html" class="menu-item">
+        <i class="fas fa-list"></i>
+        <span class="menu-item-text">Historial de Pedidos</span>
+      </a>
+
+    </div>
+  </div>  
+
+  
+
+  
   <div class="productos-container">
     <div class="productos-filtros">
-      <button class="filter-btn active" data-filter="todos">
-        <h3>Todos</h3>
-      </button>
-      <button class="filter-btn" data-filter="Activo">
-        <h3>Activo</h3>
-      </button>
-      <button class="filter-btn" data-filter="Pausa">
-        <h3>En Pausa</h3>
-      </button>
-      <button class="filter-btn" data-filter="agotado">
-        <h3>Agotado</h3>
-      </button>
+    
       <button id="updateProductBtn" class="update-product-btn" disabled>
         Actualizar
       </button>
@@ -57,6 +75,8 @@
       <tbody id="productosList"></tbody>
     </table>
   </div>
+    <script src="./JS/script_index.js"></script>
+
   <script>
     function checkLogin() {
       const token = localStorage.getItem('token');
@@ -110,9 +130,6 @@
     document.addEventListener('DOMContentLoaded', () => {
       if (!checkLogin()) return;
 
-      document.getElementById('backButton').addEventListener('click', () => {
-        window.history.back();
-      });
 
       document.getElementById('addProductBtn').addEventListener('click', () => {
         window.location.href = 'Formulario_Agregar_Productos.html';
