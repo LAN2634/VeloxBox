@@ -57,17 +57,7 @@
         <button type="button" id="resetBtnMiniatura">Reiniciar</button>
       </section>
 
-      <section class="card">
-        <label>Elementos multimedia</label>
-        <div class="upload-area" id="uploadArea">
-          <p>Agrega imágenes o videos aquí</p>
-          <button type="button" id="uploadBtn">Haz click aquí</button>
-          <input type="file" id="fileInput" multiple hidden accept="image/*,video/*" required />
-          <div id="previewArea"></div>
-        </div>
-        <div class="error-message" id="error-media"></div>
-        <button type="button" id="resetBtn">Reiniciar</button>
-      </section>
+      
 
 
       <!--Aqui termina el selector multimedia, ambos-->
@@ -357,7 +347,7 @@ document.addEventListener('DOMContentLoaded', () => {
             descripcion: quill.root.innerHTML,
             precio: parseFloat(document.getElementById('priceDiscount').value),
             stock: parseInt(document.getElementById('inventory').value),
-            imagen: miniaturaBase64 ? [miniaturaBase64, ...imagenesBase64] : imagenesBase64,
+            imagen: miniaturaBase64 || imagenesBase64[0],
             materiales: document.getElementById('materiales').value,
             tamanio: document.getElementById('size').value,
             color: document.getElementById('color').value,

@@ -271,7 +271,7 @@
 
       try {
         const deletePromises = selectedIds.map(id =>
-          authFetch(`http://localhost:8080/api/Productos/${id}`, { method: 'DELETE' })
+          authFetch(`https://resourceful-fascination-production.up.railway.app/api/Productos/${id}`, { method: 'DELETE' })
         );
 
         await Promise.all(deletePromises);
