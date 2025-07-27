@@ -618,7 +618,7 @@ document.addEventListener('DOMContentLoaded', () => {
             <div class="product-card">
                 <a href="Detalle_Productos.html?id=${playera.id}">
                     <div class="product-img">
-                        <img src="${playera.imagen?.[0] || 'img/placeholder.jpg'}" 
+                        <img src="${playera.imagen || 'img/placeholder.jpg'}" 
                              alt="${playera.nombre} - ${playera.sku}"
                              onerror="this.src='img/placeholder.jpg'">
                     </div>
@@ -631,7 +631,7 @@ document.addEventListener('DOMContentLoaded', () => {
                             data-name="${playera.nombre}"
                             data-price="${playera.precio}"
                             data-sku="${playera.sku}"
-                            data-img="${playera.imagen?.[0] || ''}">
+                            data-img="${playera.imagen || ''}">
                         Agregar al carrito
                     </button>
                 </div>
@@ -734,7 +734,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const id = producto.id || '';
         const nombre = producto.nombre || 'Producto sin nombre';
         const precio = producto.precio ? producto.precio.toFixed(2) : '0.00';
-        const imagen = producto.imagen?.[0] || 'img/placeholder.jpg';
+        const imagen = producto.imagen || 'img/placeholder.jpg';
         const cantidad = item.cantidad || 1;
 
         return `

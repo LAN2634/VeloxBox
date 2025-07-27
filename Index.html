@@ -627,7 +627,7 @@
               <div class="image-content">
                 <span class="overlay"></span>
                 <div class="card-image">
-                  <img src="${producto.imagen?.[0] || 'img/placeholder.jpg'}" 
+                  <img src="${producto.imagen || 'img/placeholder.jpg'}" 
                        alt="${producto.nombre}" 
                        class="card-img"
                        onerror="this.src='img/placeholder.jpg'">

@@ -196,7 +196,7 @@
         tr.innerHTML = `
         <td><input type="checkbox" class="product-checkbox"></td>
         <td>
-          <img src="${producto.imagen?.[0] || 'img/placeholder.png'}" class="miniatura-tabla">
+          <img src="${producto.imagen || 'img/placeholder.png'}" class="miniatura-tabla">
           ${producto.nombre}
         </td>
         <td>${producto.sku}</td>

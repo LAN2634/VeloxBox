@@ -765,7 +765,7 @@
 
             // 3. Imagen
             const imgElement = document.getElementById('product-image');
-            imgElement.src = producto.imagen?.[0] || 'img/placeholder.jpg';
+            imgElement.src = producto.imagen || 'img/placeholder.jpg';
             imgElement.alt = producto.nombre || 'Producto';
 
 
@@ -789,7 +789,7 @@
                 buyBtn.dataset.id = producto.id;
                 buyBtn.dataset.name = producto.nombre;
                 buyBtn.dataset.price = producto.precio;
-                buyBtn.dataset.img = producto.imagen?.[0] || '';
+                buyBtn.dataset.img = producto.imagen || '';
                 buyBtn.dataset.sku = producto.sku || '';
             }
         }
@@ -822,7 +822,7 @@
         <div class="product-card">
             <a href="Detalle_Productos.html?id=${producto.id}">
                 <div class="product-img">
-                    <img src="${producto.imagen?.[0] || 'img/placeholder.jpg'}"
+                    <img src="${producto.imagen || 'img/placeholder.jpg'}"
                          alt="${producto.nombre}"
                          onerror="this.src='img/placeholder.jpg'">
                 </div>
@@ -834,7 +834,7 @@
                         data-id="${producto.id}"
                         data-name="${producto.nombre}"
                         data-price="${producto.precio}"
-                        data-img="${producto.imagen?.[0] || ''}"
+                        data-img="${producto.imagen || ''}"
                         data-sku="${producto.sku || ''}">
                     Agregar al carrito
                 </button>
@@ -979,7 +979,7 @@
                 const id = producto.id || '';
                 const nombre = producto.nombre || 'Producto sin nombre';
                 const precio = producto.precio ? producto.precio.toFixed(2) : '0.00';
-                const imagen = producto.imagen?.[0] || 'img/placeholder.jpg';
+                const imagen = producto.imagen || 'img/placeholder.jpg';
                 const cantidad = item.cantidad || 1;
 
 

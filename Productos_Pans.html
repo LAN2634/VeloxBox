@@ -601,7 +601,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // ================ CARGAR ITEMS DEL CARRITO ================
     async function loadCartItems() {
       try {
-        const response = await fetch('http://localhost:9090/api/carrito/items');
+        const response = await fetch('https://a-adirproductos-production.up.railway.app/api/carrito');
         if (!response.ok) throw new Error("Error al cargar el carrito");
 
         const items = await response.json();
@@ -635,7 +635,7 @@ document.addEventListener('DOMContentLoaded', () => {
         <div class="product-card">
             <a href="Detalle_Productos.html?id=${pan.id}">
                 <div class="product-img">
-                    <img src="${pan.imagen?.[0] || 'img/placeholder.jpg'}" 
+                    <img src="${pan.imagen || 'img/placeholder.jpg'}" 
                          alt="${pan.nombre} - ${pan.sku}"
                          onerror="this.src='img/placeholder.jpg'">
                 </div>
@@ -648,7 +648,7 @@ document.addEventListener('DOMContentLoaded', () => {
                         data-name="${pan.nombre}"
                         data-price="${pan.precio}"
                         data-sku="${pan.sku}"
-                        data-img="${pan.imagen?.[0] || ''}">
+                        data-img="${pan.imagen || ''}">
                     Agregar al carrito
                 </button>
             </div>
@@ -751,7 +751,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const id = producto.id || '';
         const nombre = producto.nombre || 'Producto sin nombre';
         const precio = producto.precio ? producto.precio.toFixed(2) : '0.00';
-        const imagen = producto.imagen?.[0] || 'img/placeholder.jpg';
+        const imagen = producto.imagen || 'img/placeholder.jpg';
         const cantidad = item.cantidad || 1;
 
         return `
@@ -828,7 +828,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const id = producto.id || '';
         const nombre = producto.nombre || 'Producto sin nombre';
         const precio = producto.precio ? producto.precio.toFixed(2) : '0.00';
-        const imagen = producto.imagen?.[0] || 'img/placeholder.jpg';
+        const imagen = producto.imagen || 'img/placeholder.jpg';
         const cantidad = item.cantidad || 1;
 
         return `
